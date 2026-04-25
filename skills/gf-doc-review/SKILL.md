@@ -1,14 +1,14 @@
 ---
 name: gf-doc-review
-version: 0.2.0
-description: Use when GuanFu brainstorms, plans, ADRs, reviews, compound notes, AGENTS routing, or project docs need quality review before another agent depends on them.
+version: 0.3.0
+description: Use when GuanFu brainstorms, plans, ADRs, reviews, compound notes, AGENTS routing, or project docs need handoff and lineage review before another agent depends on them.
 allowed-tools:
   - Read
   - Grep
   - Glob
   - Write
   - Edit
-  - AskUserQuestion
+  - Bash
   - Agent
 triggers:
   - /gf-doc-review
@@ -16,81 +16,176 @@ triggers:
   - review plan
   - review ADR
   - review docs
+  - handoff review
 ---
 
 # gf-doc-review
 
 ## Overview
 
-Review documents as handoff artifacts. A fresh agent should be able to continue without reading the original chat.
+Review documents as executable handoff artifacts. A fresh agent should be able to continue from docs alone.
 
-Core principle: documents are AI memory. Weak documents create weak execution.
+Core principle: documents are AI memory. Post-work document review makes the next automated step safer and reveals harness gaps.
+
+## Harness Position
+
+`gf-doc-review` is an automated post-code-review stage. It does not ask for approval. It checks lineage, fixes safe mechanical doc issues, records substantive gaps, then routes to compound, evolve, work, or stop.
 
 ## Required Artifact
 
 ```text
-docs/guanfu/reviews/docs/YYYY-MM-DD-<slug>-doc-review.md
+docs/guanfu/reviews/docs/YYYY-MM-DD-HHMM-<slug>-doc-review.md
 ```
 
 ## Workflow
 
 ### 1. Choose target docs
 
-Common targets:
+Default target set:
 
-```text
-docs/guanfu/brainstorms/*.md
-docs/guanfu/plans/*.md
-docs/guanfu/adr/*.md
-docs/guanfu/reviews/code/*.md
-docs/guanfu/compound/*.md
-docs/guanfu/evolution/*.md
-AGENTS.md or agents.md
+```bash
+find docs/guanfu/brainstorms docs/guanfu/plans docs/guanfu/adr docs/guanfu/reviews/code docs/guanfu/compound docs/guanfu/evolution -type f -name '*.md' 2>/dev/null | sort | tail -120
+[ -f AGENTS.md ] && echo AGENTS.md
+[ -f agents.md ] && echo agents.md
 ```
 
-### 2. Review for handoff quality
+Review the latest related brainstorm, active or recently completed plan, code review, ADRs, compound notes, and router instructions.
+
+### 2. Artifact Lineage Check
+
+Write:
+
+```markdown
+## Artifact Lineage
+
+| Artifact | Links to previous stage | Links to next action | Status clear | Issue |
+|---|---|---|---|---|
+| Brainstorm | | | | |
+| Plan | | | | |
+| ADR | | | | |
+| Code Review | | | | |
+| Compound Note | | | | |
+| Evolution Note | | | | |
+```
+
+A complete chain should show:
+
+```text
+brainstorm -> plan -> work log -> code review -> doc review -> compound/evolve when needed
+```
+
+### 3. Fresh Agent Handoff Test
+
+Pretend the chat transcript is gone. Answer from documents only:
+
+```markdown
+## Fresh Agent Handoff Test
+
+Can a new agent answer:
+
+| Question | Answerable? | Evidence |
+|---|---|---|
+| What is the current goal? | yes/no/partial | <path> |
+| What is active? | yes/no/partial | <path> |
+| What is completed? | yes/no/partial | <path> |
+| What is blocked? | yes/no/partial | <path> |
+| What files matter? | yes/no/partial | <path> |
+| What verification evidence exists? | yes/no/partial | <path> |
+| What should happen next? | yes/no/partial | <path> |
+
+Verdict: PASS | PARTIAL | FAIL
+```
+
+### 4. Review checks
 
 | Check | Standard |
 |---|---|
-| Source of truth | The document states what input it came from. |
-| State | ACTIVE, COMPLETED, BLOCKED, or DRAFT is explicit. |
-| Slices | Each slice has scope, verification, and exit criteria. |
-| ADR | Hard-to-reverse decisions are recorded. |
-| Verification | Commands or observable checks are present. |
-| Handoff | A fresh agent knows next skill and next action. |
+| Source of truth | Artifact states where it came from. |
+| State | DRAFT, APPROVED, ACTIVE, COMPLETED, BLOCKED, or SUPERSEDED is explicit. |
+| Slices | Each slice has scope, verification, rollback, and exit criteria. |
+| ADR | High reversal-cost decisions are recorded. |
+| Verification | Commands and freshness evidence are present. |
+| Handoff | Fresh agent knows next skill and next action. |
 | Compound | Repeated lessons are linked or flagged. |
-| Evolution | Repeated process gaps are routed to `gf-evolve`. |
+| Evolution | Process gaps are routed to `gf-evolve`. |
+| Router | AGENTS routes match actual skill names and docs paths. |
+| Taste | Quality constraints are visible for future agents. |
 
-### 3. Fix small document issues
+### 5. Safe doc fixes
 
-Allowed direct edits:
+Allowed automatic edits:
 
-- broken links
-- missing status line
-- missing next skill line
-- obvious typo in path
+- broken GuanFu path typo
+- missing `Next Artifact` when it is obvious from logs
+- missing status line when the surrounding document clearly implies status
+- router typo for `gf-*` skill names
 - template heading mismatch
+- stale date format instruction
 
-For substantive changes, record a required edit and ask the user or route to the relevant skill.
+For substantive changes, write a finding and route to the relevant skill. Do not ask the user mid-chain.
 
-### 4. Write review document
+### 6. Write doc review artifact
 
-Use `templates/doc-review.md`.
+Use `templates/doc-review.md`. Include:
 
-### 5. Handoff
+- artifact lineage table
+- fresh agent handoff test
+- safe edits applied
+- findings
+- required edits
+- compound candidates
+- evolution candidates
+- final verdict
 
-If the document blocks implementation, route to `gf-plan` or `gf-work`.
+Verdicts:
 
-If the document reveals a recurring weakness, route to `gf-compound` or `gf-evolve`.
+```text
+CLEAR
+CLEAR_WITH_FOLLOWUPS
+RETURN_TO_PLAN
+RETURN_TO_WORK
+COMPOUND_REQUIRED
+EVOLVE_REQUIRED
+BLOCKED
+```
+
+### 7. Update related plan
+
+Append:
+
+```markdown
+## Doc Review Log
+
+### <ISO timestamp> - gf-doc-review
+Review: docs/guanfu/reviews/docs/<file>.md
+Verdict: <verdict>
+Safe edits applied: <count>
+Next: /gf-compound | /gf-evolve | /gf-work | stop
+```
+
+### 8. Continue the chain
+
+Routing rules:
+
+| Doc review result | Next step |
+|---|---|
+| `CLEAR` | stop or next active slice via `/gf-work` if plan has one |
+| `CLEAR_WITH_FOLLOWUPS` | `/gf-compound` when follow-up contains a reusable lesson |
+| `RETURN_TO_PLAN` | `/gf-plan` only when planning docs cannot guide execution |
+| `RETURN_TO_WORK` | `/gf-work` when evidence or status needs implementation-side update |
+| `COMPOUND_REQUIRED` | `/gf-compound` |
+| `EVOLVE_REQUIRED` | `/gf-compound` first, then `/gf-evolve` |
+| `BLOCKED` | `/gf-compound` with blocker evidence |
 
 ## Common Mistakes
 
 | Mistake | Fix |
 |---|---|
 | Treating docs as decoration | Review them as executable handoff context. |
-| Passing vague plans | Require verification and exit criteria. |
-| Ignoring AGENTS router drift | Check router names and paths. |
-| Editing meaning silently | Ask or record required edit for substantive changes. |
+| Passing vague plans | Require verification, rollback, and exit criteria. |
+| Ignoring router drift | Check exact skill names, docs paths, and stage order. |
+| Editing meaning silently | Record a finding and route to the owning skill. |
+| Missing lineage | Add previous/next artifact links. |
 
 ## Completion
 
@@ -98,7 +193,8 @@ Report:
 
 ```text
 STATUS: DONE | DONE_WITH_CONCERNS | BLOCKED
-REVIEW: docs/guanfu/reviews/docs/YYYY-MM-DD-<slug>-doc-review.md
-VERDICT: CLEAR | CLEAR_WITH_FOLLOWUPS | BLOCKED
-NEXT: gf-work | gf-code-review | gf-compound | gf-evolve | stop
+REVIEW: docs/guanfu/reviews/docs/YYYY-MM-DD-HHMM-<slug>-doc-review.md
+VERDICT: CLEAR | CLEAR_WITH_FOLLOWUPS | RETURN_TO_PLAN | RETURN_TO_WORK | COMPOUND_REQUIRED | EVOLVE_REQUIRED | BLOCKED
+HANDOFF_TEST: PASS | PARTIAL | FAIL
+NEXT: /gf-work | /gf-compound | /gf-evolve | /gf-plan | stop
 ```

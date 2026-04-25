@@ -1,45 +1,34 @@
-# GuanFu Evolution: <change>
+# GuanFu Evolution: <title>
 
-Date: <YYYY-MM-DD>
-Status: PROPOSED | APPLIED | SUPERSEDED
-Target Skill: gf-init | gf-brainstorm | gf-plan | gf-work | gf-code-review | gf-doc-review | gf-compound | gf-evolve
-Source:
-- <compound note / review / user feedback / pressure scenario>
+Date: <ISO timestamp>
+Status: PROPOSED | RED_RECORDED | APPLIED | VALIDATED | NEEDS_MORE_WORK | SUPERSEDED
+Target Skill: <gf-skill>
+Source Failure: <path or quote>
+Source Compound Note: <path or none>
+Supersedes: <path or none>
 
-## Trigger
+## Real Failure
 
-## Observed Failure
+## Baseline Pressure Scenario
 
-## Expected Behavior
+## Baseline Agent Behavior
 
-## Root Cause
+Method: fresh-agent | simulated-from-evidence
+Observed failure:
+- <specific behavior>
+Rationalization:
+- <why the skill allowed it>
 
-## Proposed Patch
+## Failure Pattern
 
-Files:
-- `skills/<skill>/SKILL.md`
-- `templates/<template>.md`
-- `tests/pressure-scenarios.md`
+## Patch
 
-## Pressure Scenario
+## Exact Text Changed
 
-Prompt:
+## Re-test Result
 
-```text
-<scenario prompt>
-```
+## Remaining Risk
 
-Expected behavior:
+## Changelog Entry
 
-```text
-<expected behavior>
-```
-
-## Validation
-
-Commands:
-- `bash scripts/gf-validate.sh`
-
-Result:
-
-## Release Note
+## Rollback Plan

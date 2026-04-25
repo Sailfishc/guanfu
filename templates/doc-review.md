@@ -1,28 +1,37 @@
-# Doc Review: <title>
+# Document Review: <title>
 
-Generated: <ISO timestamp>
-Status: OPEN | CLEAR | CLEAR_WITH_FOLLOWUPS | BLOCKED
-Target Docs:
-- <path>
+Status: DRAFT
+Date: <ISO timestamp>
+Target Docs: <paths>
+Reviewer: <agent>
 
-## Verdict
+## Artifact Lineage
 
-- Handoff Quality: PASS | FAIL
-- State Clarity: PASS | FAIL
-- Slice Quality: PASS | FAIL | NOT APPLICABLE
-- Verification: PASS | FAIL | NOT APPLICABLE
-- ADR Coverage: PASS | NEEDED | NOT APPLICABLE
-- Compound Coverage: PASS | NEEDED | NOT APPLICABLE
+| Artifact | Links to previous stage | Links to next action | Status clear | Issue |
+|---|---|---|---|---|
+
+## Fresh Agent Handoff Test
+
+| Question | Answerable? | Evidence |
+|---|---|---|
+| What is the current goal? | | |
+| What is active? | | |
+| What is completed? | | |
+| What is blocked? | | |
+| What files matter? | | |
+| What verification evidence exists? | | |
+| What should happen next? | | |
+
+Verdict: PASS | PARTIAL | FAIL
+
+## Safe Edits Applied
 
 ## Findings
 
-| ID | Severity | Document | Evidence | Impact | Required Edit |
-|---|---|---|---|---|---|
-
 ## Required Edits
 
-## Suggested Edits
+## Compound Candidates
 
-## Follow-up
+## Evolution Candidates
 
-Next skill:
+## Next Step

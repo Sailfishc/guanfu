@@ -1,8 +1,9 @@
-# ADR: <decision title>
+# ADR: <decision>
 
-Date: <YYYY-MM-DD>
-Status: Proposed | Accepted | Superseded
-Related Plan: ../plans/<plan-file>.md
+Status: DRAFT | ACCEPTED | SUPERSEDED
+Date: <ISO timestamp>
+Plan: <path>
+Supersedes: <path or none>
 
 ## Context
 
@@ -10,20 +11,13 @@ Related Plan: ../plans/<plan-file>.md
 
 ## Alternatives Considered
 
-### Option A
-Pros:
-Cons:
-
-### Option B
-Pros:
-Cons:
+| Alternative | Pros | Cons | Reversal Cost | Decision |
+|---|---|---|---|---|
 
 ## Consequences
-
-Positive:
-Negative:
-Risks:
 
 ## Reversal Cost
 
 ## Verification
+
+## Follow-up Work

@@ -1,38 +1,42 @@
 # GuanFu Router
 
-When the user request matches a GuanFu stage, use the corresponding skill before answering ad hoc:
+Use these skills before answering directly when the request matches:
 
-- Repository setup, first-time harness initialization, docs contract, router setup, or code explore setup -> `gf-init`.
-- Fuzzy idea, early requirement, product or engineering concept, unclear problem, "help me think" -> `gf-brainstorm`.
-- Approved brainstorm/spec and request for implementation plan, slices, ADR, architecture plan -> `gf-plan`.
-- Implementation of an approved active plan slice -> `gf-work`.
-- Code review, diff review, test review, slice completion review -> `gf-code-review`.
-- Plan review, ADR review, brainstorm review, review document review, handoff quality review -> `gf-doc-review`.
-- Mistake, repeated bug, review lesson, failed command, "avoid this next time" -> `gf-compound`.
-- Skill improvement, repeated workflow failure, new pressure scenario, package iteration -> `gf-evolve`.
+- New repo, missing docs harness, missing routing, or first-time setup -> `/gf-init`
+- New idea, unclear requirement, feature concept, product thought, or "help me think" -> `/gf-brainstorm`
+- Approved brainstorm, implementation plan, architecture, slices, milestones -> `/gf-plan`
+- Active plan exists and user asks to implement, continue, build, fix, or work -> `/gf-work`
+- Code changed, tests changed, diff changed, or implementation evidence needs review -> `/gf-code-review`
+- Brainstorm, plan, ADR, review, compound, AGENTS routing, or handoff docs need review -> `/gf-doc-review`
+- A mistake, repeated failure, bad assumption, missed edge case, flaky workflow, or review pattern appears -> `/gf-compound`
+- A GuanFu skill, template, router, pressure scenario, validation script, or standard needs improvement -> `/gf-evolve`
 
-Recommended sequence:
+Default sequence:
 
 ```text
-gf-init -> gf-brainstorm -> gf-plan -> gf-work -> gf-code-review -> gf-doc-review -> gf-compound -> gf-evolve
+gf-init -> gf-brainstorm -> gf-plan -> gf-work -> gf-code-review -> gf-doc-review -> gf-compound -> gf-evolve when needed
 ```
 
-Do not skip stages because the task feels simple. Small tasks are where hidden assumptions leak.
+## GuanFu Harness Contract
 
-## GuanFu Taste Constraints
+- Human loop stages: `gf-brainstorm` and `gf-plan`. Use these stages to align goal, constraints, success criteria, failure modes, and taste.
+- Automated stages: `gf-work`, `gf-code-review`, `gf-doc-review`, `gf-compound`, and `gf-evolve`. After plan approval, proceed through the chain without mid-execution user prompts.
+- Approved plans should include `Execution Mode: AUTOMATED_AFTER_PLAN`.
+- During automated execution, record anomalies, make the smallest safe decision, and let review/compound/evolve calibrate afterward.
+- First failure is a signal. Repeated failure is a harness gap. Record both.
 
-- Documents are memory. If future agents need context, write it down.
-- Plan and review before execution. Target 80% planning/review and 20% implementation.
-- Work in small slices. One active slice at a time.
-- Keep `docs/guanfu/plans/*-plan.md` current. Plan status must be `ACTIVE`, `COMPLETED`, `PAUSED`, or `ABANDONED`.
-- Mark exactly one `Active Slice`, or `none`.
-- For behavior changes, write or update tests before implementation and verify they fail for the expected reason.
-- Create ADRs for decisions that are expensive to reverse.
-- Review for patterns, not just bugs. Repeated mistakes become compound notes.
-- Prefer automation over memory. A test beats a reminder.
-- Do not hide scope drift. Update the plan before expanding work.
-- Track skill improvement opportunities in `docs/guanfu/evolution/`.
-- Use `gf-evolve` when a compound note should update a GuanFu skill.
+## GuanFu Taste
+
+- Values: reduce AI collaboration failure modes and amplify AI leverage.
+- Documents are project memory. Put durable context in `docs/guanfu/`.
+- Brainstorm before plan. Plan before work. Review after work. Compound after mistakes. Evolve after repeated or process-level failure.
+- Use small verifiable slices. Keep exactly one active slice in a plan.
+- Plan and Work share one living plan document.
+- A slice completes after fresh verification evidence is recorded after the final code change.
+- Architecture decisions that are hard to reverse need an ADR in `docs/guanfu/adr/`.
+- Review captures patterns, user impact, and future guardrails.
+- Mistakes become guardrails: tests, scripts, checklist changes, AGENTS updates, ADRs, template edits, or skill evolution.
+- Skills are living artifacts. Real failures should update skills, templates, pressure scenarios, or router rules through `gf-evolve`.
 
 ## GuanFu Document Contract
 

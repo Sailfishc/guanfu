@@ -3,19 +3,28 @@ set -euo pipefail
 
 DRY_RUN=0
 FORCE=0
+MODE="new"
+
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --dry-run) DRY_RUN=1; shift ;;
     --force) FORCE=1; shift ;;
+    --new) MODE="new"; shift ;;
+    --refresh) MODE="refresh"; shift ;;
+    --audit) MODE="audit"; shift ;;
     -h|--help)
       cat <<'HELP'
-Usage: gf-init.sh [--dry-run] [--force]
+Usage: gf-init.sh [--new|--refresh|--audit] [--dry-run] [--force]
 
-Creates the GuanFu AI engineering docs contract:
-  AGENTS.md / agents.md router section
-  docs/guanfu/context, brainstorms, plans, reviews/code, reviews/docs,
-  docs/guanfu/adr, compound, standards, evolution
-  templates for brainstorm, plan/work, reviews, ADR, compound notes, evolution notes
+Creates or refreshes the GuanFu AI engineering harness:
+  AGENTS.md / agents.md router and taste contract
+  docs/guanfu/ context, brainstorms, plans, reviews, ADRs, compound, standards, evolution
+  templates aligned with the current GuanFu skill package
+
+Modes:
+  --new       first-time initialization, default
+  --refresh   refresh router/templates/docs contract, preserving existing files unless --force
+  --audit     print missing or stale harness elements only
 
 Product code stays untouched.
 HELP
@@ -71,7 +80,57 @@ append_if_missing() {
   fi
 }
 
+audit() {
+  local missing=0
+  local required_dirs=(
+    docs/guanfu/context
+    docs/guanfu/brainstorms
+    docs/guanfu/plans
+    docs/guanfu/reviews/code
+    docs/guanfu/reviews/docs
+    docs/guanfu/adr
+    docs/guanfu/compound
+    docs/guanfu/standards
+    docs/guanfu/evolution
+  )
+  for d in "${required_dirs[@]}"; do
+    if [[ -d "$d" ]]; then
+      say "OK dir: $d"
+    else
+      say "MISSING dir: $d"
+      missing=1
+    fi
+  done
+  local agents="AGENTS.md"
+  [[ -f agents.md && ! -f AGENTS.md ]] && agents="agents.md"
+  if [[ -f "$agents" ]] && grep -q "## GuanFu Router" "$agents"; then
+    say "OK router: $agents"
+  else
+    say "MISSING router: $agents"
+    missing=1
+  fi
+  if [[ -f "$agents" ]] && grep -q "AUTOMATED_AFTER_PLAN" "$agents"; then
+    say "OK harness contract: $agents"
+  else
+    say "MISSING harness contract: $agents"
+    missing=1
+  fi
+  if [[ -f docs/guanfu/compound/index.md ]]; then
+    say "OK compound index: docs/guanfu/compound/index.md"
+  else
+    say "MISSING compound index: docs/guanfu/compound/index.md"
+    missing=1
+  fi
+  return "$missing"
+}
+
+if [[ "$MODE" == "audit" ]]; then
+  audit
+  exit $?
+fi
+
 say "GuanFu init root: $ROOT"
+say "Mode: $MODE"
 
 for d in \
   docs/guanfu/context \
@@ -108,21 +167,31 @@ Use these skills before answering directly when the request matches:
 - Code changed, tests changed, diff changed, or implementation evidence needs review -> \`/gf-code-review\`
 - Brainstorm, plan, ADR, review, compound, AGENTS routing, or handoff docs need review -> \`/gf-doc-review\`
 - A mistake, repeated failure, bad assumption, missed edge case, flaky workflow, or review pattern appears -> \`/gf-compound\`
-- A GuanFu skill, template, router, pressure scenario, or standard needs improvement -> \`/gf-evolve\`
+- A GuanFu skill, template, router, pressure scenario, validation script, or standard needs improvement -> \`/gf-evolve\`
 
-Default rule: create or update the stage document before coding."
+Default sequence:
+
+\`gf-init -> gf-brainstorm -> gf-plan -> gf-work -> gf-code-review -> gf-doc-review -> gf-compound -> gf-evolve when needed\`"
+
+append_if_missing "$AGENTS_FILE" "## GuanFu Harness Contract" "## GuanFu Harness Contract
+
+- Human loop stages: \`gf-brainstorm\` and \`gf-plan\`. Use these stages to align goal, constraints, success criteria, failure modes, and taste.
+- Automated stages: \`gf-work\`, \`gf-code-review\`, \`gf-doc-review\`, \`gf-compound\`, and \`gf-evolve\`. After plan approval, proceed through the chain without mid-execution user prompts.
+- Approved plans should include \`Execution Mode: AUTOMATED_AFTER_PLAN\`.
+- During automated execution, record anomalies, make the smallest safe decision, and let review/compound/evolve calibrate afterward.
+- First failure is a signal. Repeated failure is a harness gap. Record both."
 
 append_if_missing "$AGENTS_FILE" "## GuanFu Taste" "## GuanFu Taste
 
 - Values: reduce AI collaboration failure modes and amplify AI leverage.
 - Documents are project memory. Put durable context in \`docs/guanfu/\`.
-- Brainstorm before plan. Plan before work. Review before ship. Compound after mistakes.
+- Brainstorm before plan. Plan before work. Review after work. Compound after mistakes. Evolve after repeated or process-level failure.
 - Use small verifiable slices. Keep exactly one active slice in a plan.
 - Plan and Work share one living plan document.
-- A slice completes after verification evidence is recorded.
+- A slice completes after fresh verification evidence is recorded after the final code change.
 - Architecture decisions that are hard to reverse need an ADR in \`docs/guanfu/adr/\`.
-- Review captures patterns and user impact.
-- Mistakes become guardrails: tests, checklist changes, AGENTS updates, ADRs, template edits, or skill evolution.
+- Review captures patterns, user impact, and future guardrails.
+- Mistakes become guardrails: tests, scripts, checklist changes, AGENTS updates, ADRs, template edits, or skill evolution.
 - Skills are living artifacts. Real failures should update skills, templates, pressure scenarios, or router rules through \`gf-evolve\`."
 
 write_file "docs/guanfu/README.md" "# GuanFu Docs
@@ -141,14 +210,13 @@ AI work in this repository is organized as durable documents.
 - \`standards/\` stores review rubrics and taste constraints.
 - \`evolution/\` stores skill evolution notes and pressure test results.
 
-Documents are source of truth for future agents.
+## Harness Contract
 
-## Code Explore Reports
+Human loop: \`gf-brainstorm\` and \`gf-plan\`.
 
-Add first report here:
+Automated chain after approved plan: \`gf-work -> gf-code-review -> gf-doc-review -> gf-compound -> gf-evolve when needed\`.
 
-- \`context/code-explore-YYYY-MM-DD.md\`
-"
+First failure creates signal. Repeated failure triggers evolution."
 
 write_file "docs/guanfu/context/README.md" "# Code Context
 
@@ -156,13 +224,13 @@ Store baseline and targeted code exploration reports here.
 
 Naming:
 
-\`code-explore-YYYY-MM-DD.md\`
+\`code-explore-YYYY-MM-DD-HHMM.md\`
 
 Each report should include repo purpose, architecture, test commands, key directories, risk areas, patterns to reuse, and documentation gaps."
 
 write_file "docs/guanfu/context/CODE_EXPLORE_TEMPLATE.md" "# Code Explore: <scope>
 
-Date: <YYYY-MM-DD>
+Date: <ISO timestamp>
 Branch: <branch>
 Explorer: <agent>
 
@@ -189,16 +257,37 @@ Explorer: <agent>
 
 write_file "docs/guanfu/brainstorms/BRAINSTORM_TEMPLATE.md" "# Brainstorm: <title>
 
-Status: DRAFT
-Date: <YYYY-MM-DD>
-Owner: <name or agent>
+Generated: <ISO timestamp>
+Status: DRAFT | APPROVED | SUPERSEDED
+Readiness: COMPLETE | PARTIAL
 Source: <original prompt or link>
+Idea Type: <product | engineering | architecture | agent-workflow | process | research | skill>
 
 ## Raw Idea
 
 ## Reframed Idea
 
-## User / Customer / Actor
+## Context Recovered
+
+## Question Trace
+
+| Turn | Question | User Signal | Coverage Improved |
+|---:|---|---|---|
+
+## Coverage Report
+
+| Field | Score | Evidence | Remaining Gap |
+|---|---:|---|---|
+
+## GuanFu Value Mapping
+
+| Value | Specific meaning in this brainstorm |
+|---|---|
+| AI failure eliminated | |
+| AI leverage amplified | |
+| AI potential unlocked | |
+
+## Target Actor
 
 ## Pain or Job
 
@@ -206,98 +295,113 @@ Source: <original prompt or link>
 
 ## Constraints
 
-## Options Considered
-
-| Option | Description | Pros | Cons | Decision |
-|---|---|---|---|---|
-| A | | | | |
-| B | | | | |
-| C | | | | |
-
-## Recommended Direction
-
-## Premises
-
-1.
-2.
-3.
+## Failure Modes
 
 ## Success Criteria
 
-## Non-goals
+## Taste Bar
+
+## Premises
+
+## Options Considered
+
+## Recommended Direction
+
+## Scope Boundary
+
+### In scope
+
+### Later
+
+## Planning Risks
 
 ## Open Questions
 
 ## Handoff to Plan
 
 Next skill: /gf-plan
+
+## Skill Feedback
 "
 
 write_file "docs/guanfu/plans/PLAN_TEMPLATE.md" "# Plan: <title>
 
-Plan Status: ACTIVE
-Active Slice: S1
-Date: <YYYY-MM-DD>
-Source Brainstorm: <path>
+Generated: <ISO timestamp>
+Plan Status: ACTIVE | PAUSED | COMPLETED | ABANDONED
+Active Slice: S1 | none
+Execution Mode: AUTOMATED_AFTER_PLAN
+Source: <brainstorm path>
+Previous Artifact: <path>
+Next Artifact: /gf-work
 Related ADRs: <paths>
 Related Compound Notes: <paths>
-Related Evolution Notes: <paths>
+Supersedes: <path or none>
 
 ## Goal
 
 ## Constraints
 
-## Architecture Summary
+## Code Explore Summary
+
+## ADR Decision Matrix
+
+| Decision | Reversible? | Affects data? | Affects public API? | Cross-module? | New dependency? | ADR needed? |
+|---|---|---|---|---|---|---|
 
 ## Slice Index
 
-| Slice | Status | Goal | Files / Areas | Test First | Verification | Notes |
-|---|---|---|---|---|---|---|
-| S1 | ACTIVE | | | | | |
-| S2 | TODO | | | | | |
-
-Status values: TODO, ACTIVE, COMPLETED, DEFERRED, BLOCKED.
+| Slice | Status | Risk | Outcome | Verification | Review Focus |
+|---|---|---|---|---|---|
+| S1 | ACTIVE | | | | |
 
 ## Slices
 
-### S1: <name>
+### Slice S1: <name>
 
 Status: ACTIVE
+Risk: LOW | MEDIUM | HIGH
 
-#### User-visible outcome
+#### Outcome
+
+#### Entry Conditions
 
 #### Scope
 
-#### Out of scope
+#### Out of Scope
 
-#### Files / APIs expected to change
+#### Files / APIs Expected To Change
 
-#### RED tests
+#### Test-First Plan
 
-#### Implementation notes
+#### Verification Commands
 
-#### Verification commands
+#### Rollback / Revert Path
 
-#### Completion evidence
+#### Review Focus
+
+#### Compound Triggers
+
+#### Exit Criteria
+
+#### Completion Evidence
 
 ## Implementation Log
 
-Append entries during /gf-work.
+## Anomaly Log
 
 ## Code Review Log
 
-Append links to /gf-code-review outputs.
-
 ## Doc Review Log
 
-Append links to /gf-doc-review outputs.
+## Compound / Evolution Log
 "
 
 write_file "docs/guanfu/adr/0000-template.md" "# ADR: <decision>
 
-Status: DRAFT
-Date: <YYYY-MM-DD>
+Status: DRAFT | ACCEPTED | SUPERSEDED
+Date: <ISO timestamp>
 Plan: <path>
+Supersedes: <path or none>
 
 ## Context
 
@@ -305,12 +409,14 @@ Plan: <path>
 
 ## Alternatives Considered
 
-| Alternative | Pros | Cons | Why not selected |
-|---|---|---|---|
+| Alternative | Pros | Cons | Reversal Cost | Decision |
+|---|---|---|---|---|
 
 ## Consequences
 
 ## Reversal Cost
+
+## Verification
 
 ## Follow-up Work
 "
@@ -318,65 +424,78 @@ Plan: <path>
 write_file "docs/guanfu/reviews/code/CODE_REVIEW_TEMPLATE.md" "# Code Review: <title>
 
 Status: DRAFT
-Date: <YYYY-MM-DD>
+Date: <ISO timestamp>
 Plan: <path>
-Diff Range: <base..head>
-Reviewer: <agent/human>
+Slice: <slice>
+Diff Range: <base..head or WORKTREE>
+Reviewer: <agent>
 
-## Code Explore Summary
+## Review Scope Check
 
-## Review Verdict
+## Verification Freshness
 
-PASS / PASS_WITH_FIXES / BLOCKED
+| Evidence | Command | Claimed Result | Fresh After Last Code Change | Covers Exit Criteria | Verdict |
+|---|---|---|---|---|---|
+
+## Verdict
+
+CLEAR | CLEAR_WITH_FOLLOWUPS | RETURN_TO_WORK | RETURN_TO_PLAN | COMPOUND_REQUIRED | EVOLVE_REQUIRED | BLOCKED
 
 ## Findings
-
-| ID | Severity | Area | Evidence | Pattern | User Impact | Recommended Fix |
-|---|---|---|---|---|---|---|
-
-Severity values: BLOCKER, FIX, TASTE, NIT.
-
-## Tests Reviewed
 
 ## Scope Drift
 
 ## ADR Notes
 
-## Follow-up Compound Notes
+## Compound Candidates
+
+## Evolution Candidates
+
+## Next Step
 "
 
 write_file "docs/guanfu/reviews/docs/DOC_REVIEW_TEMPLATE.md" "# Document Review: <title>
 
 Status: DRAFT
-Date: <YYYY-MM-DD>
+Date: <ISO timestamp>
 Target Docs: <paths>
-Reviewer: <agent/human>
+Reviewer: <agent>
 
-## Verdict
+## Artifact Lineage
 
-PASS / PASS_WITH_FIXES / BLOCKED
+| Artifact | Links to previous stage | Links to next action | Status clear | Issue |
+|---|---|---|---|---|
 
-## Checks
+## Fresh Agent Handoff Test
 
-| Check | Result | Notes |
+| Question | Answerable? | Evidence |
 |---|---|---|
-| Source of truth explicit | | |
-| ACTIVE / COMPLETED state clear | | |
-| Slices independently executable | | |
-| Acceptance criteria testable | | |
-| ADRs present for hard-to-reverse decisions | | |
-| No vague placeholders | | |
-| Verification commands present | | |
-| Handoff works for a fresh agent | | |
+| What is the current goal? | | |
+| What is active? | | |
+| What is completed? | | |
+| What is blocked? | | |
+| What files matter? | | |
+| What verification evidence exists? | | |
+| What should happen next? | | |
+
+Verdict: PASS | PARTIAL | FAIL
+
+## Safe Edits Applied
 
 ## Findings
 
 ## Required Edits
+
+## Compound Candidates
+
+## Evolution Candidates
+
+## Next Step
 "
 
 write_file "docs/guanfu/compound/COMPOUND_NOTE_TEMPLATE.md" "# Compound Note: <lesson>
 
-Date: <YYYY-MM-DD>
+Date: <ISO timestamp>
 Source: <plan/review/test/failure>
 Type: mistake | pattern | preference | architecture | testing | process | tool | docs | taste | skill
 Confidence: <1-10>
@@ -389,64 +508,94 @@ Confidence: <1-10>
 
 ## Why It Was Missed
 
-## Guardrail
+## Failure Budget Status
 
-Choose one or more:
+Occurrence: FIRST_SEEN | REPEATED | UNKNOWN
+Decision: RECORD_LESSON | STRENGTHEN_GUARDRAIL | ROUTE_TO_EVOLVE
 
-- Test added:
-- Checklist changed:
-- AGENTS.md rule added:
-- ADR written:
-- Skill evolution proposed:
-- Review rubric updated:
+## Reusable Rule
+
+## Guardrail Decision
+
+Chosen guardrail:
+- [ ] Test
+- [ ] Script
+- [ ] Review checklist
+- [ ] AGENTS rule
+- [ ] ADR
+- [ ] Template update
+- [ ] Skill patch
+- [ ] No guardrail, reason: <explicit reason>
+
+Owner skill: <gf-skill or project-only>
+Applied now: yes/no
+Follow-up: <path or next skill>
+Verification: <how future agents know this guardrail worked>
+
+## Retrieval Metadata
+
+Applies To:
+- Skill:
+- Stage:
+- Files / Areas:
+- Keywords:
+- Trigger:
+
+Supersedes: <path or none>
+Related Notes:
+- <path>
 
 ## How Future Agents Should Use This
-
-## Links
 "
 
 write_file "docs/guanfu/compound/index.md" "# GuanFu Compound Index
 
-Append links to compound notes here.
-
-| Date | Type | Lesson | Guardrail | Source |
-|---|---|---|---|---|
+| Date | Type | Lesson | Guardrail | Owner Skill | Trigger | Source |
+|---|---|---|---|---|---|---|
 "
 
-write_file "docs/guanfu/evolution/EVOLUTION_TEMPLATE.md" "# GuanFu Evolution: <change>
+write_file "docs/guanfu/evolution/EVOLUTION_TEMPLATE.md" "# GuanFu Evolution: <title>
 
-Date: <YYYY-MM-DD>
-Status: PROPOSED | APPLIED | SUPERSEDED
+Date: <ISO timestamp>
+Status: PROPOSED | RED_RECORDED | APPLIED | VALIDATED | NEEDS_MORE_WORK | SUPERSEDED
 Target Skill: <gf-skill>
-Source:
-- <compound note / review / user feedback / pressure scenario>
+Source Failure: <path or quote>
+Source Compound Note: <path or none>
+Supersedes: <path or none>
 
-## Trigger
+## Real Failure
 
-## Observed Failure
+## Baseline Pressure Scenario
 
-## Expected Behavior
+## Baseline Agent Behavior
 
-## Root Cause
+## Failure Pattern
 
-## Proposed Patch
+## Patch
 
-## Pressure Scenario
+## Exact Text Changed
 
-## Validation
+## Re-test Result
 
-## Release Note
+## Remaining Risk
+
+## Changelog Entry
+
+## Rollback Plan
 "
 
 write_file "docs/guanfu/standards/review-rubric.md" "# GuanFu Review Rubric
 
-Use this during /gf-code-review and /gf-doc-review.
+## Harness Principle
+
+Before execution: discuss deeply through brainstorm and plan. During execution: follow the approved plan automatically. After execution: review, compound, and evolve.
 
 ## Code Review
 
-- Spec compliance: does the implementation match the active plan slice?
+- Spec compliance: implementation matches the active plan slice.
 - Correctness: edge cases, errors, retries, empty states, concurrency, data loss.
-- Tests: RED witnessed, meaningful assertions, failure modes covered, focused mocks.
+- Verification freshness: commands ran after final code changes.
+- Tests: meaningful assertions, failure modes covered, focused mocks.
 - Architecture: clear boundaries, low coupling, explicit state, reversible decisions.
 - Security and trust: auth, permissions, injection, secrets, unsafe output, data exposure.
 - Taste: smaller API, simpler names, fewer moving parts, readable future diffs.
@@ -455,7 +604,7 @@ Use this during /gf-code-review and /gf-doc-review.
 
 - Documents provide enough context for a fresh agent to continue.
 - Active and completed states are explicit.
-- Slices have tests and verification commands.
+- Slices have tests, verification commands, rollback, and exit criteria.
 - ADR exists for high-reversal-cost choices.
 - Open questions are real blockers with owners or resolution paths.
 
@@ -465,7 +614,8 @@ Use this during /gf-code-review and /gf-doc-review.
 - Expected behavior is observable.
 - The proposed patch changes the smallest necessary surface.
 - A pressure scenario exists before the skill update lands.
+- Retest result is recorded.
 "
 
-say "DONE: GuanFu docs initialized."
-say "NEXT: run /gf-init code explore step and save docs/guanfu/context/code-explore-YYYY-MM-DD.md"
+say "DONE: GuanFu docs initialized or refreshed."
+say "NEXT: run /gf-init code explore step and save docs/guanfu/context/code-explore-YYYY-MM-DD-HHMM.md"

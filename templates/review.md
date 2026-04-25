@@ -1,44 +1,42 @@
 # Code Review: <title>
 
-Generated: <ISO timestamp>
-Status: OPEN | CLEAR | CLEAR_WITH_FOLLOWUPS | BLOCKED
-Plan: <path or none>
-Branch: <branch>
-Base: <base or unknown>
-Reviewer: <agent or inline>
+Status: DRAFT
+Date: <ISO timestamp>
+Plan: <path>
+Slice: <slice>
+Diff Range: <base..head or WORKTREE>
+Reviewer: <agent>
 
-## Summary
+## Review Scope Check
+
+## Verification Freshness
+
+| Evidence | Command | Claimed Result | Fresh After Last Code Change | Covers Exit Criteria | Verdict |
+|---|---|---|---|---|---|
 
 ## Verdict
 
-- Plan Compliance: PASS | FAIL | NOT AVAILABLE
-- Code Quality: PASS | FAIL
-- Tests: PASS | FAIL | PARTIAL
-- ADR: PASS | NEEDED | CONFLICT
-- Compound Candidates: <count>
+CLEAR | CLEAR_WITH_FOLLOWUPS | RETURN_TO_WORK | RETURN_TO_PLAN | COMPOUND_REQUIRED | EVOLVE_REQUIRED | BLOCKED
 
 ## Findings
 
-### F1: <title>
-Severity: P0 | P1 | P2 | P3
-Action: BLOCKER | FIX_NOW | FOLLOW_UP | NOTE
-Category:
+### Finding <ID>: <title>
+Severity: P0 BLOCKER | P1 FIX_NOW | P2 FOLLOW_UP | P3 NOTE
 Location:
 Evidence:
 Pattern:
-User Impact:
-Recommendation:
-Compound Candidate: yes/no
-
-## Verification Evidence
-
-Commands reviewed or run:
-- `<command>` - PASS | FAIL | NOT RUN, <reason>
+Why this happened:
+User impact:
+Recommended fix:
+Compound candidate: yes/no
+Evolution candidate: yes/no
 
 ## Scope Drift
 
 ## ADR Notes
 
-## Compound Notes To Create
+## Compound Candidates
 
-## Final Recommendation
+## Evolution Candidates
+
+## Next Step

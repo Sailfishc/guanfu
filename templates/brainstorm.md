@@ -1,15 +1,36 @@
 # Brainstorm: <title>
 
-Status: DRAFT
-Date: <YYYY-MM-DD>
-Owner: <name or agent>
+Generated: <ISO timestamp>
+Status: DRAFT | APPROVED | SUPERSEDED
+Readiness: COMPLETE | PARTIAL
 Source: <original prompt or link>
+Idea Type: <product | engineering | architecture | agent-workflow | process | research | skill>
 
 ## Raw Idea
 
 ## Reframed Idea
 
-## User / Customer / Actor
+## Context Recovered
+
+## Question Trace
+
+| Turn | Question | User Signal | Coverage Improved |
+|---:|---|---|---|
+
+## Coverage Report
+
+| Field | Score | Evidence | Remaining Gap |
+|---|---:|---|---|
+
+## GuanFu Value Mapping
+
+| Value | Specific meaning in this brainstorm |
+|---|---|
+| AI failure eliminated | |
+| AI leverage amplified | |
+| AI potential unlocked | |
+
+## Target Actor
 
 ## Pain or Job
 
@@ -17,28 +38,30 @@ Source: <original prompt or link>
 
 ## Constraints
 
-## Options Considered
-
-| Option | Description | Pros | Cons | Decision |
-|---|---|---|---|---|
-| A | | | | |
-| B | | | | |
-| C | | | | |
-
-## Recommended Direction
-
-## Premises
-
-1.
-2.
-3.
+## Failure Modes
 
 ## Success Criteria
 
-## Non-goals
+## Taste Bar
+
+## Premises
+
+## Options Considered
+
+## Recommended Direction
+
+## Scope Boundary
+
+### In scope
+
+### Later
+
+## Planning Risks
 
 ## Open Questions
 
 ## Handoff to Plan
 
 Next skill: /gf-plan
+
+## Skill Feedback

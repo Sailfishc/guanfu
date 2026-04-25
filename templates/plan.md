@@ -1,57 +1,70 @@
 # Plan: <title>
 
 Generated: <ISO timestamp>
-Plan Status: ACTIVE
-Active Slice: none
-Source Brainstorm: <path>
-Repo: <repo or unknown>
-Branch: <branch or unknown>
+Plan Status: ACTIVE | PAUSED | COMPLETED | ABANDONED
+Active Slice: S1 | none
+Execution Mode: AUTOMATED_AFTER_PLAN
+Source: <brainstorm path>
+Previous Artifact: <path>
+Next Artifact: /gf-work
+Related ADRs: <paths>
+Related Compound Notes: <paths>
+Supersedes: <path or none>
 
 ## Goal
 
-## Non-Goals
+## Constraints
 
-## Context from Code Explore
+## Code Explore Summary
 
-## Relevant Compound Notes
+## ADR Decision Matrix
 
-## Decisions
+| Decision | Reversible? | Affects data? | Affects public API? | Cross-module? | New dependency? | ADR needed? |
+|---|---|---|---|---|---|---|
 
-## ADRs
+## Slice Index
+
+| Slice | Status | Risk | Outcome | Verification | Review Focus |
+|---|---|---|---|---|---|
+| S1 | ACTIVE | | | | |
 
 ## Slices
 
 ### Slice S1: <name>
-Status: TODO
-Goal:
-Files likely touched:
-Steps:
-1.
-2.
-Verification:
-- `<command>`
-Exit criteria:
-- <observable proof>
-Review notes:
 
-## Test Strategy
+Status: ACTIVE
+Risk: LOW | MEDIUM | HIGH
 
-## Documentation Strategy
+#### Outcome
 
-## Risks and Mitigations
+#### Entry Conditions
 
-| Risk | Mitigation | Owner |
-|---|---|---|
+#### Scope
 
-## Open Questions
+#### Out of Scope
 
-| Question | Blocking? | Resolution |
-|---|---|---|
+#### Files / APIs Expected To Change
 
-## Work Log
+#### Test-First Plan
+
+#### Verification Commands
+
+#### Rollback / Revert Path
+
+#### Review Focus
+
+#### Compound Triggers
+
+#### Exit Criteria
+
+#### Completion Evidence
+
+## Implementation Log
+
+## Anomaly Log
 
 ## Code Review Log
 
 ## Doc Review Log
 
-## Completion Criteria
+## Compound / Evolution Log

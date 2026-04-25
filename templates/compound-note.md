@@ -1,43 +1,53 @@
-# Compound Note: <key>
+# Compound Note: <lesson>
 
-Date: <YYYY-MM-DD>
-Type: bug | review-pattern | process | architecture | tooling | taste | skill
-Status: ACTIVE | SUPERSEDED
-Severity: LOW | MEDIUM | HIGH
-Related Plan: <path or none>
-Related Review: <path or none>
-Related ADR: <path or none>
-Related Evolution: <path or none>
-Files:
-- <file>
+Date: <ISO timestamp>
+Source: <plan/review/test/failure>
+Type: mistake | pattern | preference | architecture | testing | process | tool | docs | taste | skill
+Confidence: <1-10>
 
 ## What Happened
 
+## Evidence
+
 ## Root Cause
 
-## Missed Signal
+## Why It Was Missed
 
-## Prevention Rule
+## Failure Budget Status
 
-## Verification
+Occurrence: FIRST_SEEN | REPEATED | UNKNOWN
+Decision: RECORD_LESSON | STRENGTHEN_GUARDRAIL | ROUTE_TO_EVOLVE
 
-Commands or checks:
-- `<command>`
-Expected result:
-- <result>
+## Reusable Rule
 
-## Automation Candidate
+## Guardrail Decision
 
-Test:
-Lint/check:
-Template update:
-AGENTS.md update:
-Skill evolution:
+Chosen guardrail:
+- [ ] Test
+- [ ] Script
+- [ ] Review checklist
+- [ ] AGENTS rule
+- [ ] ADR
+- [ ] Template update
+- [ ] Skill patch
+- [ ] No guardrail, reason: <explicit reason>
 
-## Example
+Owner skill: <gf-skill or project-only>
+Applied now: yes/no
+Follow-up: <path or next skill>
+Verification: <how future agents know this guardrail worked>
 
-Bad:
+## Retrieval Metadata
 
-Good:
+Applies To:
+- Skill:
+- Stage:
+- Files / Areas:
+- Keywords:
+- Trigger:
 
-## Search Keywords
+Supersedes: <path or none>
+Related Notes:
+- <path>
+
+## How Future Agents Should Use This
