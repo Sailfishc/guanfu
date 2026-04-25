@@ -1,227 +1,147 @@
 ---
 name: gf-work
-version: 0.3.0
-description: Use when implementing an approved active GuanFu plan slice in an existing repository after the user has approved the plan.
-allowed-tools:
-  - Read
-  - Grep
-  - Glob
-  - Write
-  - Edit
-  - Bash
-  - Agent
-triggers:
-  - /gf-work
-  - implement slice
-  - start work
-  - work on plan
-  - execute plan
+description: Use when implementing an approved active GuanFu plan slice in an existing repository.
 ---
+
 
 # gf-work
 
-## Overview
+## Purpose
 
 Implement exactly one active plan slice, update the living plan, and leave fresh verification evidence.
 
-Core principle: after plan approval, execution is automatic. Do the planned work, record anomalies, verify, then continue directly to review.
+After plan approval, execution is autonomous. Do the work, record assumptions, verify, then hand off to review.
 
-## Harness Position
+## Autonomous contract
 
-`gf-work` is part of the automated execution chain:
+Continue without routine prompts. When the plan is imperfect, choose the smallest safe interpretation consistent with the approved goal, record the assumption, and surface it in review.
 
-```text
-gf-work -> gf-code-review -> gf-doc-review -> gf-compound -> gf-evolve when needed
-```
+Stop only for destructive or irreversible external action, missing credentials, legal/compliance/security ambiguity requiring human authority, or architecture conflict that invalidates the approved goal.
 
-Do not ask the user mid-execution. When reality differs from the plan, record it in the plan's `Anomaly Log`, make the smallest safe decision, and let review/compound/evolve calibrate the process afterward.
+## Work entry check
 
-## Hard Gate
-
-Start from an approved `docs/guanfu/plans/*-plan.md` whose `Plan Status` is `ACTIVE` and `Execution Mode` is `AUTOMATED_AFTER_PLAN` or equivalent.
-
-Work on one active slice. Scope expansion becomes a new TODO slice or a review finding.
-
-## Required Artifact
-
-`gf-work` updates the active plan document:
-
-```text
-docs/guanfu/plans/YYYY-MM-DD-HHMM-<slug>-plan.md
-```
-
-It may create code, tests, and local docs required by the active slice.
-
-## Workflow
-
-### 1. Load active context
-
-Run:
+Load plans, compound notes, ADRs, and recent reviews:
 
 ```bash
 find docs/guanfu/plans -type f -name '*-plan.md' 2>/dev/null | sort | tail -30
-find docs/guanfu/compound -type f -name '*.md' 2>/dev/null | sort | tail -80
-find docs/guanfu/adr -type f -name '*.md' 2>/dev/null | sort | tail -40
+find docs/guanfu/compound -type f -name '*.md' 2>/dev/null | sort | tail -50
+find docs/guanfu/adr -type f -name '*.md' 2>/dev/null | sort | tail -30
+find docs/guanfu/reviews -type f -name '*.md' 2>/dev/null | sort | tail -30
 git status --short 2>/dev/null || true
-git log --oneline -20 2>/dev/null || true
 ```
 
-Read the active plan, related brainstorm, ADRs, and relevant compound notes.
-
-### 2. Work Entry Check
-
-Print before editing:
+Output:
 
 ```markdown
 ## Work Entry Check
-
 Plan: <path>
 Plan Status: ACTIVE | PAUSED | COMPLETED | ABANDONED | UNKNOWN
-Execution Mode: AUTOMATED_AFTER_PLAN | UNKNOWN
+Plan Approval: APPROVED | DRAFT | UNKNOWN
+Execution Mode: AUTOMATED_AFTER_PLAN | DISABLED | UNKNOWN
 Active Slice: <slice id or none>
 Multiple Active Plans Found: yes/no
-Decision: WORK | RETURN_TO_PLAN | BLOCKED
-Reason: <one sentence>
+Decision: WORK | MARK_BLOCKED | RETURN_TO_PLAN
 ```
 
 Rules:
 
-- `WORK` only when one active plan and one active slice are clear.
-- `RETURN_TO_PLAN` when slice scope, exit criteria, or verification is too vague for safe implementation.
-- `BLOCKED` when repo state or tooling prevents work. Write a blocked entry and continue to `gf-code-review` or `gf-compound` only if there is useful evidence.
+- `Plan Approval: APPROVED` and `Execution Mode: AUTOMATED_AFTER_PLAN` are required for normal work.
+- Multiple active plans -> choose the one matching the user request or most recent approved plan, then record the choice.
+- Missing active slice -> mark plan blocked and route to `/gf-doc-review`.
 
-### 3. Retrieve relevant compound notes
+## Load relevant compound memory
 
-Use the active slice's files, APIs, keywords, risk areas, and review focus to match `docs/guanfu/compound/index.md` and specific notes. Record:
+Read `docs/guanfu/compound/index.md` first. Load notes whose keywords, files, areas, or owner skill match the active slice.
 
-```markdown
-## Compound Notes Considered
-- <path>: <rule applied>
-```
-
-### 4. Start the slice
-
-Update the plan before code changes:
+Append to the plan:
 
 ```markdown
-## Implementation Log
-
-### <ISO timestamp> - gf-work start
-Slice: S<n>
-Intent: <one sentence>
-Compound notes considered:
-- <path>
+## Relevant Compound Notes
+- <path>: <lesson applied>
 ```
 
-### 5. Follow test-first execution
+## Start the slice
+
+Append:
+
+```markdown
+### <ISO timestamp> - gf-work started <slice>
+Assumptions:
+- <assumption or none>
+Relevant compound notes:
+- <path or none>
+```
+
+## Test-first implementation
 
 For behavior changes:
 
-1. write or update the focused test
-2. run it and capture expected RED result
+1. write or update the failing test
+2. run it and capture expected failure
 3. implement minimal code
-4. run focused verification
-5. run slice verification commands
-6. run broader verification if the plan requires it
+4. run focused test
+5. run broader verification from the plan
 
-If no automated test is suitable, record the reason and use the plan's observable verification.
+For docs/config/process changes, create a concrete verification check.
 
-### 6. Keep scope bounded
+## Scope control
 
 Allowed work:
 
 - files listed in the active slice
-- direct dependencies required for the slice
-- tests and docs required for the slice
-- minimal plan updates that document actual execution
+- direct dependencies needed by the slice
+- tests, docs, and config required by the slice
 
-Unexpected work handling:
+When new work appears:
 
-```markdown
-## Anomaly Log
+- add it as a follow-up slice for P2/P3
+- create a review-focus note when it may affect correctness
+- mark the current slice `BLOCKED` when it invalidates the approved goal
 
-### <ISO timestamp>
-Observed: <what differed from the plan>
-Decision: <smallest safe action taken>
-Future handling: review | compound | evolve | new slice
-```
+## Fresh verification gate
 
-Use this rule:
-
-| Situation | Action |
-|---|---|
-| Minor implementation detail differs | Record anomaly and continue. |
-| Additional small support change is required | Do it, record reason, review later. |
-| New feature or broad refactor appears | Add TODO slice, keep current slice focused. |
-| Verification fails | Fix within current slice when cause is in scope. Record evidence. |
-| Unsafe or destructive uncertainty appears | Stop code changes, mark slice BLOCKED, route evidence to review/compound. |
-
-### 7. Fresh Verification Check
-
-Before marking completed, print and write into the plan:
+Before marking complete, run:
 
 ```markdown
 ## Fresh Verification Check
-
-Last code change: <git diff summary or timestamp>
-Verification command: `<command>`
+Last code change: <timestamp or git diff summary>
+Verification command: <command>
 Verification ran after final code change: yes/no
 Result: PASS | FAIL | SKIPPED
 Covers Exit Criteria: yes/no
 Decision: MARK_COMPLETED | KEEP_ACTIVE | BLOCKED
 ```
 
-A slice reaches `COMPLETED` only when verification ran after the final code change and covers the exit criteria.
+A completed slice requires verification after final code change. If verification cannot run, mark `DONE_WITH_CONCERNS` and record the reason.
 
-### 8. Update living plan
+## Update living plan
 
-On completion:
+Set slice status to `COMPLETED` or `BLOCKED`. Record:
 
 ```markdown
-### Slice S<n>: <name>
-Status: COMPLETED
-
 #### Completion Evidence
 - Command: `<command>`
-- Result: PASS
-- Ran after final code change: yes
-- Output summary: <concise excerpt>
-- Files changed: <paths>
-- Anomalies: <none or links>
+- Result: PASS | FAIL | SKIPPED
+- Ran after final code change: yes/no
+- Files changed: <files>
+- Assumptions made: <list>
+- Review focus: <what review must inspect>
 ```
 
-Then set `Active Slice` to the next TODO slice or `none`.
+Set `Active Slice` to the next TODO slice or `none`.
 
-### 9. Continue to review
+## Continue
 
-Immediately continue to:
-
-```text
-NEXT: /gf-code-review
-```
-
-Do not wait for approval between work and review.
-
-## Common Mistakes
-
-| Mistake | Fix |
-|---|---|
-| Coding from chat context | Read and update the active plan. |
-| Working multiple slices | Finish one active slice and record evidence. |
-| Stopping to ask about minor deviations | Record anomaly and continue. |
-| Claiming completion from confidence | Record fresh verification output. |
-| Reusing stale test output | Run verification after final code change. |
-| Losing a process failure | Add compound/evolve trigger in the plan. |
+After the slice is completed or blocked, continue directly to `/gf-code-review`.
 
 ## Completion
 
-Report:
-
 ```text
 STATUS: DONE | DONE_WITH_CONCERNS | BLOCKED
-PLAN_UPDATED: docs/guanfu/plans/YYYY-MM-DD-HHMM-<slug>-plan.md
-SLICE: S<n> COMPLETED | BLOCKED | ACTIVE
+PLAN_UPDATED: <path>
+SLICE: <id> COMPLETED | BLOCKED
 VERIFICATION: <commands and results>
-ANOMALIES: <count and summary>
+ASSUMPTIONS_RECORDED: yes/no
 NEXT: /gf-code-review
 ```
+

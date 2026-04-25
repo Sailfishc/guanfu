@@ -1,121 +1,102 @@
 ---
 name: gf-plan
-version: 0.3.0
 description: Use when an approved brainstorm, design, or product decision exists and the user wants implementation slices, architecture decisions, ADRs, or an active engineering plan before coding.
-allowed-tools:
-  - Read
-  - Grep
-  - Glob
-  - Write
-  - Edit
-  - Bash
-  - AskUserQuestion
-  - Agent
-  - WebSearch
-triggers:
-  - /gf-plan
-  - create plan
-  - implementation plan
-  - plan this
-  - ADR
 ---
+
 
 # gf-plan
 
-## Overview
+## Purpose
 
-Convert an approved brainstorm into a living implementation plan with small slices, explicit verification, ADRs, and an execution chain.
+Turn an approved brainstorm into a living implementation plan with slices, ADR decisions, verification commands, rollback paths, and an autonomous execution contract.
 
-Core principle: this is the second human-loop stage. Align the target here. After approval, execution should proceed automatically through work, review, compound, and evolve when needed.
+This is a human-loop stage. Ask for decisions that affect goal, scope, architecture, slice order, verification, risk, or taste. After plan approval, execution becomes autonomous.
 
-## Harness Position
+## Boundary
 
-`gf-plan` is a human-loop stage. Use AskUserQuestion to resolve plan-changing ambiguity, select tradeoffs, and approve the final plan.
+Planning only. Product code changes belong to `/gf-work`.
 
-After the plan is approved, downstream stages should avoid human prompts. They record deviations, execute the slice, review the result, compound lessons, and evolve the harness from evidence.
-
-## Hard Gate
-
-Do not implement code in this skill. The output is a plan document. `gf-work` updates that same document during implementation.
-
-## Required Artifacts
-
-Primary artifact:
+Required artifact:
 
 ```text
 docs/guanfu/plans/YYYY-MM-DD-HHMM-<slug>-plan.md
 ```
 
-Create ADRs when needed:
-
-```text
-docs/guanfu/adr/YYYY-MM-DD-HHMM-<decision>.md
-```
-
-## Workflow
-
-### 1. Load source of truth
+## Input readiness
 
 Read:
 
+- latest approved `docs/guanfu/brainstorms/*.md`
+- related `docs/guanfu/context/*.md`
+- `docs/guanfu/compound/index.md` and relevant notes
+- `docs/guanfu/evolution/*.md` when skill behavior matters
+- `AGENTS.md` or `agents.md`
+- existing ADRs and related plans
+
+Use Bash when useful:
+
 ```bash
-find docs/guanfu/brainstorms docs/guanfu/context docs/guanfu/compound docs/guanfu/adr docs/guanfu/plans -type f -name '*.md' 2>/dev/null | sort | tail -120
-[ -f AGENTS.md ] && sed -n '1,240p' AGENTS.md
-[ -f agents.md ] && sed -n '1,240p' agents.md
-git log --oneline -20 2>/dev/null || true
+find docs/guanfu -maxdepth 3 -type f -name '*.md' 2>/dev/null | sort | tail -120
+git branch --show-current 2>/dev/null || true
+git status --short 2>/dev/null || true
 ```
 
-Choose the latest relevant approved brainstorm or design. If multiple candidates exist, ask the user to choose.
-
-### 2. Input Readiness Gate
-
-Before writing the plan, print:
+Before writing the plan, output:
 
 ```markdown
 ## Plan Input Check
-
-Source: <brainstorm path>
+Source: <brainstorm path or source>
 Source Status: APPROVED | DRAFT | PARTIAL | UNKNOWN
 Readiness: COMPLETE | PARTIAL | UNKNOWN
 Open Questions Blocking Plan: yes/no
+Plan-Changing Assumptions:
+- <assumption or none>
 Decision: PLAN | RETURN_TO_BRAINSTORM | PLAN_WITH_RISKS
-Reason: <one sentence>
 ```
 
-Gate rules:
+Rules:
 
 - `APPROVED + COMPLETE` -> `PLAN`.
-- `APPROVED + PARTIAL` -> ask the user whether to plan with explicit risks or return to `gf-brainstorm`.
-- `DRAFT` or `UNKNOWN` -> return to `gf-brainstorm` unless the user explicitly approves planning with risks.
+- `PARTIAL` -> `PLAN_WITH_RISKS`, with risks in the plan.
+- `DRAFT` or `UNKNOWN` -> ask whether to return to `/gf-brainstorm` or continue with explicit risk.
 
-### 3. Run targeted code explore
+## Code explore
 
-For repo-bound work, dispatch a read-only code explore agent before slicing.
+When the plan touches existing code, dispatch an independent read-only code explore agent.
 
 Prompt:
 
 ```text
-You are exploring repository context for a GuanFu plan. Read only. Identify files likely touched, existing patterns, tests, commands, integration points, risk areas, ADR candidates, and compound notes relevant to the approved brainstorm. Return concise findings and recommended slice boundaries.
+Explore the codebase for this GuanFu plan.
+Read only. Return likely files, current patterns, integration points, test commands, risks, dependencies, ADR candidates, relevant compound notes, and prior review patterns.
 ```
 
-Save or reference the findings in the plan. If code explore is unavailable, inspect directly and record the limitation under `Planning Risks`.
+## Discuss plan-changing gaps
 
-### 4. Create ADR decision matrix
+Ask one focused question at a time when a missing decision changes slice order, architecture, verification, risk, or taste. Use AskUserQuestion for explicit plan-changing choices and final approval.
 
-For each architectural decision, fill:
+Typical plan questions:
+
+- Which slice should create value or learning first?
+- Which behavior must remain stable?
+- Which verification command proves each slice?
+- Which decision has high reversal cost?
+- Which failure is acceptable in the first run and should be captured for review?
+
+## ADR matrix
+
+For meaningful decisions, include:
 
 ```markdown
 | Decision | Reversible? | Affects data? | Affects public API? | Cross-module? | New dependency? | ADR needed? |
 |---|---|---|---|---|---|---|
 ```
 
-ADR is required when a decision affects data, public API, cross-module boundaries, new dependencies, routing, persistent state, security, or has high reversal cost.
+Create an ADR when reversal cost is high, data/API changes exist, a new dependency is added, or an agent routing/harness decision changes future behavior.
 
-### 5. Slice the work
+## Slice schema
 
-A valid slice has one user-visible or test-visible outcome and can be reviewed independently.
-
-Required slice schema:
+Each slice must use:
 
 ```markdown
 ### Slice S<n>: <name>
@@ -124,140 +105,74 @@ Status: TODO | ACTIVE | COMPLETED | BLOCKED | DEFERRED
 Risk: LOW | MEDIUM | HIGH
 
 #### Outcome
-<visible or test-visible result>
-
 #### Entry Conditions
-<what must be true before work starts>
-
 #### Scope
-<work allowed in this slice>
-
 #### Out of Scope
-<work deferred or forbidden>
-
 #### Files / APIs Expected To Change
-<paths, modules, commands, APIs>
-
 #### Test-First Plan
-<tests to write or update, including expected RED behavior when applicable>
-
 #### Verification Commands
-`<command>`
-
 #### Rollback / Revert Path
-<how to back out safely>
-
 #### Review Focus
-<what gf-code-review should inspect hardest>
-
 #### Compound Triggers
-<what kind of failure should become a compound note>
-
 #### Exit Criteria
-<observable proof of completion>
-
 #### Completion Evidence
-<left blank for gf-work>
 ```
 
 Exactly one slice starts as `ACTIVE`. Others start as `TODO`.
 
-### 6. Write living plan
+## Autonomous execution contract
 
-The plan must include:
-
-```markdown
-Plan Status: ACTIVE | PAUSED | COMPLETED | ABANDONED
-Active Slice: S1 | none
-Source:
-Previous Artifact:
-Next Artifact: /gf-work
-Related Compound Notes:
-Related ADRs:
-Supersedes:
-```
-
-Include:
-
-- goal
-- constraints
-- code explore summary
-- ADR decision matrix
-- slice index
-- full slice details
-- execution chain
-- planning risks
-- open questions
-- implementation log placeholder
-- review log placeholders
-- compound/evolution hooks
-
-### 7. Plan Review Gate
-
-Before approval, print:
+Write this section into the plan:
 
 ```markdown
-## Plan Review Check
+## Autonomous Execution Contract
 
-| Check | Result | Evidence |
-|---|---|---|
-| Source approved | PASS/PARTIAL/FAIL | <path> |
-| Exactly one active slice | PASS/PARTIAL/FAIL | <slice> |
-| Every slice has verification | PASS/PARTIAL/FAIL | <summary> |
-| ADR matrix complete | PASS/PARTIAL/FAIL | <summary> |
-| Rollback path exists | PASS/PARTIAL/FAIL | <summary> |
-| Execution chain clear | PASS/PARTIAL/FAIL | <summary> |
-| Can fresh agent execute | PASS/PARTIAL/FAIL | <summary> |
+After this plan is approved:
+- `/gf-work` executes the active slice without routine user prompts.
+- `/gf-code-review` reviews the result and routes findings without routine user prompts.
+- `/gf-doc-review` checks handoff quality without routine user prompts.
+- `/gf-compound` records reusable lessons when failures or patterns appear.
+- `/gf-evolve` updates skills/templates/pressure scenarios when the harness gap is real.
+
+Allowed autonomous decisions:
+- infer small implementation details consistent with the approved plan
+- add focused tests that prove slice behavior
+- record assumptions in the work log
+- create follow-up slices for P2 findings
+- route P0/P1 findings back to `/gf-work`
+- write compound notes and evolution notes from observed failures
+
+Stop only for destructive or irreversible external action, missing credentials or access, legal/compliance/security ambiguity requiring human authority, or architecture conflict that invalidates the approved goal.
 ```
 
-### 8. Approval gate
+## Write living plan
 
-Ask the user to approve before execution.
-
-Options:
-
-```text
-A) Approve plan and start /gf-work automatically
-B) Revise specific sections
-C) Return to /gf-brainstorm
-D) Keep as draft
-```
-
-If approved, set:
+Use `docs/guanfu/plans/PLAN_TEMPLATE.md` when available. Header must include:
 
 ```markdown
 Plan Status: ACTIVE
+Plan Approval: DRAFT
 Active Slice: S1
-Approved By: <user>
-Approved At: <timestamp>
+Execution Mode: DISABLED
+Source Brainstorm: <path>
+```
+
+## Approval gate
+
+Ask the user:
+
+```text
+A) Approve plan and start autonomous execution at /gf-work S1
+B) Revise slices or decisions
+C) Return to /gf-brainstorm
+```
+
+When approved, set:
+
+```markdown
+Plan Approval: APPROVED
 Execution Mode: AUTOMATED_AFTER_PLAN
 ```
 
-Then hand off directly:
+Then continue to `/gf-work`.
 
-```text
-NEXT: /gf-work S1
-```
-
-## Common Mistakes
-
-| Mistake | Fix |
-|---|---|
-| Planning from a draft brainstorm | Run the Input Readiness Gate. |
-| Creating vague milestones | Use slices with entry conditions, verification, and exit criteria. |
-| Leaving all slices TODO | Mark exactly one active slice. |
-| Hiding architecture decisions | Fill the ADR matrix and write ADRs. |
-| Missing rollback | Every slice needs a revert or rollback path. |
-| Treating execution as another discussion phase | Get approval here, then downstream stages execute and review. |
-
-## Completion
-
-Report:
-
-```text
-STATUS: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT
-PLAN: docs/guanfu/plans/YYYY-MM-DD-HHMM-<slug>-plan.md
-ACTIVE_SLICE: S1
-EXECUTION_MODE: AUTOMATED_AFTER_PLAN
-NEXT: /gf-work S1
-```

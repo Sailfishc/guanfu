@@ -18,8 +18,8 @@ Pass criteria:
 
 - `skills/gf-init/assets/templates/*.md` exists
 - `skills/gf-init/scripts/gf-init.sh` copies assets from its own skill directory
-- skill-only install simulation creates `docs/guanfu/*_TEMPLATE.md`
-- generated templates match assets or intentionally mapped asset names
+- skill-only install simulation creates `docs/guanfu/templates/*.md`
+- generated templates match `skills/gf-init/assets/templates/*.md`
 
 ## Scenario: gf-init script split from skill
 

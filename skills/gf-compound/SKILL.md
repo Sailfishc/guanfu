@@ -1,114 +1,77 @@
 ---
 name: gf-compound
-version: 0.3.0
-description: Use when a mistake, bug, failed verification, review finding, repeated confusion, taste gap, or project-specific lesson should become reusable engineering knowledge.
-allowed-tools:
-  - Read
-  - Grep
-  - Glob
-  - Write
-  - Edit
-  - Bash
-  - Agent
-triggers:
-  - /gf-compound
-  - capture learning
-  - avoid this next time
-  - mistake log
-  - lesson learned
-  - compound note
+description: Use when a mistake, bug, failed verification, review finding, repeated confusion, taste mismatch, or project-specific lesson should become reusable engineering knowledge.
 ---
+
 
 # gf-compound
 
-## Overview
+## Purpose
 
-Turn mistakes, review findings, taste gaps, and hard-won lessons into reusable project memory and guardrails.
+Turn failures, review findings, taste mismatches, and process surprises into reusable project memory.
 
-Core principle: first failure is a signal. Repeated failure is a harness gap. Compound notes turn signals into future leverage.
+A compound note should change future behavior. It must name the guardrail or explain why a guardrail is unnecessary.
 
-## Harness Position
+## Autonomous contract
 
-`gf-compound` is an automated post-review stage. It does not ask the user to decide mid-chain. It records what happened, selects the strongest guardrail, updates the compound index, and routes skill/process gaps to `gf-evolve`.
+Continue without routine prompts. Capture the lesson, update the index, and route to `/gf-evolve` when the failure is repeated or caused by a skill/template/router gap.
 
-## Required Artifacts
-
-Create one note:
+## Required artifacts
 
 ```text
 docs/guanfu/compound/YYYY-MM-DD-HHMM-<key>.md
-```
-
-Update:
-
-```text
 docs/guanfu/compound/index.md
 ```
 
-If the lesson concerns GuanFu behavior, route to `gf-evolve` after writing the note.
+## Inputs
 
-## Workflow
+Read the source evidence:
 
-### 1. Gather evidence
+- failed command or test output
+- code review finding
+- doc review finding
+- plan anomaly
+- user taste correction
+- repeated confusion
+- prior compound notes with similar keywords
 
-Read relevant sources:
+## Failure budget status
 
-```bash
-find docs/guanfu/plans docs/guanfu/reviews docs/guanfu/adr docs/guanfu/evolution -type f -name '*.md' 2>/dev/null | sort | tail -120
-find docs/guanfu/compound -type f -name '*.md' 2>/dev/null | sort | tail -120
-git status --short 2>/dev/null || true
-git log --oneline -20 2>/dev/null || true
+Classify:
+
+```text
+FIRST_SEEN | REPEATED | UNKNOWN
 ```
 
-Use evidence from review findings, plan work log, failing command output, git diff, ADRs, user feedback, and repeated agent behavior.
+Decision:
 
-### 2. Classify the lesson
+```text
+RECORD_LESSON | STRENGTHEN_GUARDRAIL | ROUTE_TO_EVOLVE
+```
 
-| Type | Use when |
-|---|---|
-| bug | Defect reached implementation, review, or production. |
-| review-pattern | Review found a recurring quality issue. |
-| process | Workflow skipped a gate or caused confusion. |
-| architecture | Structural decision created leverage or risk. |
-| tooling | Command, environment, or setup caused wasted time. |
-| docs | Artifact could not support fresh-agent handoff. |
-| taste | Product or code-quality judgment should guide future work. |
-| skill | GuanFu skill behavior needs improvement. |
+Guideline:
 
-### 3. Determine failure budget status
+- first seen: record lesson and lightweight prevention rule
+- repeated: add or strengthen a guardrail
+- skill/template/router gap: route to `/gf-evolve`
+
+## Root cause
 
 Write:
 
 ```markdown
-## Failure Budget Status
-
-Occurrence: FIRST_SEEN | REPEATED | UNKNOWN
-First seen evidence: <path or none>
-Similar prior notes:
-- <path or none>
-Decision: RECORD_LESSON | STRENGTHEN_GUARDRAIL | ROUTE_TO_EVOLVE
+## What Happened
+## Evidence
+## Root Cause
+## Missed Signal
+## Reusable Rule
 ```
 
-Rules:
+Focus on the pattern, not only the incident.
 
-- `FIRST_SEEN`: record lesson and choose a guardrail.
-- `REPEATED`: strengthen guardrail and route to `gf-evolve` when the existing harness failed to prevent recurrence.
-- `UNKNOWN`: search index and proceed conservatively.
+## Guardrail decision
 
-### 4. Extract reusable rule
-
-A note must answer:
-
-1. What happened?
-2. Why did it happen?
-3. What signal should have caught it earlier?
-4. What rule prevents it next time?
-5. How can a future agent verify the rule was followed?
-6. Which skill or stage should load this lesson?
-
-### 5. Guardrail Decision
-
-This section is mandatory:
+Every note must include:
 
 ```markdown
 ## Guardrail Decision
@@ -121,82 +84,40 @@ Chosen guardrail:
 - [ ] ADR
 - [ ] Template update
 - [ ] Skill patch
+- [ ] Pressure scenario
 - [ ] No guardrail, reason: <explicit reason>
 
 Owner skill:
 - gf-brainstorm | gf-plan | gf-work | gf-code-review | gf-doc-review | gf-compound | gf-evolve | project-only
 
-Applied now: yes/no
-Follow-up: <path or next skill>
-Verification: <how future agents know this guardrail worked>
+Applied now:
+- yes/no
+
+Follow-up:
+- <path or next skill>
 ```
 
-Prefer executable guardrails. A test, script, checklist, or template field beats a reminder.
+## Retrieval metadata
 
-### 6. Retrieval metadata
-
-Add metadata so future stages can find the note:
+Include:
 
 ```markdown
 ## Retrieval Metadata
-
 Applies To:
-- Skill: <gf-skill or project-only>
-- Stage: brainstorm | plan | work | code-review | doc-review | compound | evolve
-- Files / Areas: <paths or modules>
-- Keywords: <search terms>
-- Trigger: <when future agents should load this>
-
-Supersedes: <path or none>
+- Skill:
+- Stage:
+- Files / Areas:
+- Keywords:
+- Trigger:
+Supersedes:
 Related Notes:
-- <path>
 ```
 
-### 7. Write compound note
+Update `docs/guanfu/compound/index.md` with the lesson, guardrail, owner skill, trigger, and source.
 
-Use `templates/compound-note.md`. Include evidence, failure budget status, guardrail decision, retrieval metadata, and future usage.
+## Continue
 
-### 8. Update index
+- project-only lesson -> return to the active flow.
+- repeated issue -> continue to `/gf-evolve` if a skill/template/router/pressure scenario should change.
+- review finding remains unfixed -> route to `/gf-work` with a repair slice.
 
-Append to `docs/guanfu/compound/index.md`:
-
-```markdown
-| Date | Type | Lesson | Guardrail | Owner Skill | Trigger | Source |
-|---|---|---|---|---|---|---|
-```
-
-If the index uses an older schema, extend it safely and keep existing rows.
-
-### 9. Continue to evolve when needed
-
-Route to `gf-evolve` when:
-
-- the note type is `skill`
-- a repeated failure survived an existing guardrail
-- a skill asked too few questions, drafted too early, skipped verification, paused during execution, or missed a required artifact
-- a template or router gap caused the failure
-
-## Common Mistakes
-
-| Mistake | Fix |
-|---|---|
-| Writing "be careful" | Write a concrete prevention rule and verification method. |
-| Capturing symptoms only | Name root cause and missed signal. |
-| Creating notes nobody can find | Add retrieval metadata and index row. |
-| Using prose when a test can prevent recurrence | Prefer executable guardrails. |
-| Stopping at first-failure blame | Treat first failure as signal and improve the harness. |
-| Missing repeated-failure escalation | Route repeated failures to `gf-evolve`. |
-
-## Completion
-
-Report:
-
-```text
-STATUS: DONE | DONE_WITH_CONCERNS | BLOCKED
-NOTE: docs/guanfu/compound/YYYY-MM-DD-HHMM-<key>.md
-INDEX: updated | not updated, <reason>
-OCCURRENCE: FIRST_SEEN | REPEATED | UNKNOWN
-GUARDRAIL: test | script | checklist | ADR | AGENTS | template | skill-patch | none
-OWNER_SKILL: <gf-skill or project-only>
-NEXT: /gf-evolve | /gf-work | stop
-```

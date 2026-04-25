@@ -1,29 +1,27 @@
 # Manifest
 
-- `CHANGELOG.md`
-- `MANIFEST.md`
-- `README.guanfu.md`
-- `README.md`
-- `VALIDATION.md`
-- `VERSION`
-- `bin/gf-init.sh`
-- `scripts/gf-init.sh`
-- `scripts/gf-validate.sh`
-- `skills/gf-brainstorm/SKILL.md`
-- `skills/gf-code-review/SKILL.md`
-- `skills/gf-compound/SKILL.md`
-- `skills/gf-doc-review/SKILL.md`
-- `skills/gf-evolve/SKILL.md`
+Version: 0.4.1
+
+## Runtime skills
+
 - `skills/gf-init/SKILL.md`
-- `skills/gf-init/gf-init.sh`
+- `skills/gf-init/scripts/gf-init.sh`
+- `skills/gf-init/assets/templates/*.md`
+- `skills/gf-brainstorm/SKILL.md`
 - `skills/gf-plan/SKILL.md`
 - `skills/gf-work/SKILL.md`
-- `templates/AGENTS.guanfu.md`
-- `templates/adr.md`
-- `templates/brainstorm.md`
-- `templates/compound-note.md`
-- `templates/doc-review.md`
-- `templates/plan.md`
-- `templates/review.md`
-- `templates/skill-evolution.md`
+- `skills/gf-code-review/SKILL.md`
+- `skills/gf-doc-review/SKILL.md`
+- `skills/gf-compound/SKILL.md`
+- `skills/gf-evolve/SKILL.md`
+- `skills/gf-evolve/references/skill-packaging-contract.md`
+- `skills/gf-evolve/references/pressure-scenarios.md`
+
+## Package helpers
+
+- `scripts/gf-validate.sh`
 - `tests/pressure-scenarios.md`
+
+## Runtime source of truth
+
+`gf-init` owns runtime initialization assets. Package-root `templates/`, `scripts/gf-init.sh`, and `bin/gf-init.sh` are intentionally absent.
