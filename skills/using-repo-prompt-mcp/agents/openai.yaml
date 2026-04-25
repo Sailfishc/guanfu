@@ -1,0 +1,13 @@
+interface:
+  display_name: "Repo Prompt MCP Context"
+  short_description: "Use Repo Prompt MCP for repository context discovery, CodeMaps, selection, prompt handoff, workspace-aware reads, and git-aware context."
+  default_prompt: "Use Repo Prompt MCP for repository-wide context discovery and context orchestration before planning, debugging, reviewing, or refactoring code."
+
+policy:
+  allow_implicit_invocation: true
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "RepoPrompt"
+      description: "Repo Prompt MCP server for repository context discovery, CodeMaps, selection management, prompt handoff, read_file, and git-aware context."
