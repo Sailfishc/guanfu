@@ -24,4 +24,6 @@ Positive:
 Negative:
 Risks:
 
+## Reversal Cost
+
 ## Verification

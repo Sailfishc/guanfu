@@ -1,4 +1,4 @@
-# Review: <title>
+# Code Review: <title>
 
 Generated: <ISO timestamp>
 Status: OPEN | CLEAR | CLEAR_WITH_FOLLOWUPS | BLOCKED
@@ -14,7 +14,6 @@ Reviewer: <agent or inline>
 - Plan Compliance: PASS | FAIL | NOT AVAILABLE
 - Code Quality: PASS | FAIL
 - Tests: PASS | FAIL | PARTIAL
-- Docs: PASS | FAIL | NOT NEEDED
 - ADR: PASS | NEEDED | CONFLICT
 - Compound Candidates: <count>
 
@@ -26,20 +25,19 @@ Action: BLOCKER | FIX_NOW | FOLLOW_UP | NOTE
 Category:
 Location:
 Evidence:
+Pattern:
 User Impact:
 Recommendation:
 Compound Candidate: yes/no
 
 ## Verification Evidence
 
-Commands run:
+Commands reviewed or run:
 - `<command>` - PASS | FAIL | NOT RUN, <reason>
 
 ## Scope Drift
 
 ## ADR Notes
-
-## Documentation Notes
 
 ## Compound Notes To Create
 

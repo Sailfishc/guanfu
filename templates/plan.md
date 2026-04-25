@@ -1,7 +1,7 @@
 # Plan: <title>
 
 Generated: <ISO timestamp>
-Status: ACTIVE
+Plan Status: ACTIVE
 Active Slice: none
 Source Brainstorm: <path>
 Repo: <repo or unknown>
@@ -13,7 +13,11 @@ Branch: <branch or unknown>
 
 ## Context from Code Explore
 
+## Relevant Compound Notes
+
 ## Decisions
+
+## ADRs
 
 ## Slices
 
@@ -46,6 +50,8 @@ Review notes:
 
 ## Work Log
 
-## Review Log
+## Code Review Log
+
+## Doc Review Log
 
 ## Completion Criteria

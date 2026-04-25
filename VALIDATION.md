@@ -1,16 +1,33 @@
 # Validation Notes
 
-What was checked in this package:
+Package version: 0.2.0
 
-- YAML frontmatter includes `name` and `description` for every skill.
-- Descriptions start with `Use when...` and avoid summarizing the workflow.
-- `ce-init.sh` passes `bash -n`.
-- `ce-init.sh --dry-run` runs without creating files.
-- `ce-init.sh` was executed in a temporary git repo and created the expected docs contract.
-- A second run is idempotent: existing files are skipped and router sections are not duplicated.
+Checked locally:
 
-What still needs project-local validation:
+- Every skill directory uses the `gf-*` prefix.
+- Every skill frontmatter includes `name` and `description`.
+- Every skill description starts with `Use when...`.
+- Every expected skill exists: `gf-init`, `gf-brainstorm`, `gf-plan`, `gf-work`, `gf-code-review`, `gf-doc-review`, `gf-compound`, `gf-evolve`.
+- Generated project docs use `docs/guanfu/`.
+- `scripts/gf-init.sh` passes `bash -n`.
+- `scripts/gf-init.sh --dry-run` runs without writing project files.
+- `scripts/gf-validate.sh` passes on this package.
 
-- Run the pressure scenarios in `tests/pressure-scenarios.md` with actual subagents before deploying broadly.
-- Run `/ce-init` inside the target repo and confirm the code-explore report is useful.
-- Run one full cycle on a small feature: `/ce-brainstorm -> /ce-plan -> /ce-work -> /ce-code-review -> /ce-compound`.
+Recommended project-local validation:
+
+1. Install the skills into `~/.claude/skills/` or `~/.agents/skills/`.
+2. Run `/gf-init` in a small real repo.
+3. Confirm `docs/guanfu/context/code-explore-YYYY-MM-DD.md` captures useful repo context.
+4. Run one complete feature cycle:
+
+```text
+/gf-brainstorm
+/gf-plan
+/gf-work
+/gf-code-review
+/gf-doc-review
+/gf-compound
+/gf-evolve
+```
+
+5. Trigger `/gf-evolve` from a real failure and verify the skill/template/test changes improve future behavior.

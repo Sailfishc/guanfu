@@ -1,12 +1,13 @@
 # Compound Note: <key>
 
 Date: <YYYY-MM-DD>
-Type: bug | review-pattern | process | architecture | tooling | taste
+Type: bug | review-pattern | process | architecture | tooling | taste | skill
 Status: ACTIVE | SUPERSEDED
 Severity: LOW | MEDIUM | HIGH
 Related Plan: <path or none>
 Related Review: <path or none>
 Related ADR: <path or none>
+Related Evolution: <path or none>
 Files:
 - <file>
 
@@ -31,6 +32,7 @@ Test:
 Lint/check:
 Template update:
 AGENTS.md update:
+Skill evolution:
 
 ## Example
 
