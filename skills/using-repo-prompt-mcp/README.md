@@ -1,45 +1,32 @@
 # using-repo-prompt-mcp
 
-A cross-platform Agent Skill for using Repo Prompt MCP as the preferred repository context layer.
-
-## What it does
-
-This skill routes repository-wide context work through Repo Prompt MCP:
-
-- repository structure
-- file and symbol search
-- CodeMaps
-- context builder
-- workspace context
-- selection management
-- prompt handoff
-- workspace-aware reads
-- git-aware context
-
-Implementation, tests, build commands, commits, and PR work stay with the agent's native tools.
+A compact Agent Skill that routes repository-wide context work through Repo Prompt MCP.
 
 ## Install
 
-For Claude Code:
+Claude Code:
 
 ```bash
 cp -R using-repo-prompt-mcp ~/.claude/skills/
 ```
 
-For Codex:
+Codex:
 
 ```bash
 cp -R using-repo-prompt-mcp ~/.agents/skills/
 ```
 
-For repo-scoped use, copy to `.claude/skills/` for Claude Code or `.agents/skills/` for Codex.
+Repo-scoped use:
 
-## Codex metadata
+```bash
+cp -R using-repo-prompt-mcp .claude/skills/   # Claude Code
+cp -R using-repo-prompt-mcp .agents/skills/   # Codex
+```
 
-`agents/openai.yaml` is included for Codex. It declares UI metadata, implicit invocation policy, and the Repo Prompt MCP dependency.
+## Platform notes
 
-Claude Code uses `SKILL.md` and referenced files.
+Claude Code uses `SKILL.md` and optional reference files.
 
-## MCP server name
+Codex also reads `agents/openai.yaml` for UI metadata, invocation policy, and MCP dependency declaration.
 
-The default server prefix is `RepoPrompt`. Update the prefix in the markdown files when your MCP server is registered under another name.
+Default MCP server prefix: `RepoPrompt`.
