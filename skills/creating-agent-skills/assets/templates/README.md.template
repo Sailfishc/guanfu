@@ -1,0 +1,31 @@
+# {{Skill Title}}
+
+## What this skill is for
+
+{{purpose}}
+
+## Install for Codex
+
+```bash
+mkdir -p .agents/skills
+cp -R skills/{{skill_name}} .agents/skills/
+```
+
+## Install for Claude Code
+
+```bash
+mkdir -p .claude/skills
+cp -R skills/{{skill_name}} .claude/skills/
+```
+
+## Use
+
+```text
+${{skill_name}} {{example_prompt}}
+```
+
+## Evaluate
+
+```bash
+node evals/scripts/run-evals.mjs --mode candidate
+```

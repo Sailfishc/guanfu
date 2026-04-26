@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "2.1.0",
+  "app": { "name": "", "slug": "" },
+  "component": { "name": "", "slug": "", "purpose": "", "screens": [], "confidence": "low|medium|high" },
+  "props": [],
+  "states": [],
+  "interactions": [],
+  "tokens": [],
+  "assets": [],
+  "acceptance": [],
+  "evidence": []
+}

@@ -1,0 +1,18 @@
+{
+  "title": "Sample Card Grid",
+  "viewport": "desktop",
+  "notes": ["Generated as a script smoke test", "Uses only rough layout blocks"],
+  "screens": [
+    {
+      "name": "Cards Home",
+      "purpose": "Browse saved UI references and open a card",
+      "layout": [
+        {"type": "sidebar", "title": "Navigation", "items": ["Home", "Cards", "Canvases", "Notes", "Trash"]},
+        {"type": "header", "text": "Cards"},
+        {"type": "toolbar", "items": ["Search", "New card", "Filter"]},
+        {"type": "card", "title": "UI/UX document card", "body": "Preview, title, metadata, status"},
+        {"type": "card", "title": "Frontend sketch card", "body": "Thumbnail and open action"}
+      ]
+    }
+  ]
+}

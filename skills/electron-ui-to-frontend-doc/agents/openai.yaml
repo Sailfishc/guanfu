@@ -1,0 +1,6 @@
+interface:
+  display_name: "Electron UI to Frontend Doc"
+  short_description: "Convert a named Electron app into a Codex-ready frontend UI implementation handoff."
+  default_prompt: "Use electron-ui-to-frontend-doc on /Applications/<App>.app. Output root: ./electron-ui-docs. Target output: Codex handoff + frontend documentation pack."
+policy:
+  allow_implicit_invocation: true

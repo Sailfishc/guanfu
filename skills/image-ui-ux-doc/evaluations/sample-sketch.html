@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang='en'>
+<head>
+  <meta charset='utf-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1' />
+  <title>Sample Card Grid</title>
+  <style>
+    :root { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1f2937; background: #f8fafc; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 32px; }
+    .wrap { max-width: 1180px; margin: 0 auto; }
+    .meta { margin-bottom: 24px; padding: 16px 18px; border: 1px solid #d1d5db; border-radius: 18px; background: white; }
+    .meta h1 { margin: 0 0 8px; font-size: 28px; }
+    .meta p, .meta li { color: #4b5563; }
+    .screen { margin: 24px 0; }
+    .screen-title { margin-bottom: 12px; }
+    .screen-title h2 { margin: 0; }
+    .screen-title p { margin: 4px 0 0; color: #6b7280; }
+    .shell { min-height: 560px; display: block; border: 1px solid #cbd5e1; border-radius: 24px; background: #ffffff; overflow: hidden; }
+    .shell.with-sidebar { display: grid; grid-template-columns: 240px 1fr; }
+    .sidebar { padding: 20px; border-right: 1px solid #e5e7eb; background: #f9fafb; }
+    .sidebar strong { display: block; margin-bottom: 14px; }
+    .sidebar a { display: block; padding: 10px 12px; margin: 6px 0; border: 1px solid #e5e7eb; border-radius: 12px; color: #374151; text-decoration: none; background: white; }
+    .content { padding: 22px; display: grid; gap: 16px; align-content: start; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px; border: 1px solid #e5e7eb; border-radius: 18px; }
+    .eyebrow { margin: 0 0 4px; color: #6b7280; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+    h1, h2, h3 { line-height: 1.15; }
+    h1 { margin: 0; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 10px; padding: 14px; border: 1px dashed #cbd5e1; border-radius: 16px; background: #f8fafc; }
+    .pill { display: inline-flex; align-items: center; min-height: 32px; padding: 6px 10px; border: 1px solid #d1d5db; border-radius: 999px; background: white; color: #374151; }
+    .panel, .card { padding: 18px; border: 1px solid #e5e7eb; border-radius: 18px; background: #ffffff; }
+    .card p { color: #4b5563; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: left; }
+    th { background: #f9fafb; font-weight: 600; }
+    .form { display: grid; gap: 12px; max-width: 520px; }
+    label { display: grid; gap: 6px; color: #374151; }
+    input { min-height: 42px; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 12px; font: inherit; }
+    .button { min-height: 40px; padding: 0 14px; border: 1px solid #111827; border-radius: 12px; background: #111827; color: white; font: inherit; }
+    .list { list-style: none; padding: 0; margin: 12px 0 0; }
+    .list li { display: flex; justify-content: space-between; gap: 12px; padding: 12px; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 8px; }
+    .muted { color: #6b7280; }
+    @media (max-width: 760px) {
+      body { padding: 16px; }
+      .shell.with-sidebar { display: block; }
+      .sidebar { border-right: 0; border-bottom: 1px solid #e5e7eb; }
+      .topbar { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class='wrap'>
+    <section class='meta'>
+      <h1>Sample Card Grid</h1>
+      <p>Viewport: desktop. Rough layout sketch for UI/UX discussion, not production frontend code.</p>
+      <ul><li>Generated as a script smoke test</li><li>Uses only rough layout blocks</li></ul>
+    </section>
+    
+    <section class='screen'>
+      <div class='screen-title'>
+        <h2>Cards Home</h2>
+        <p>Browse saved UI references and open a card</p>
+      </div>
+      <div class='shell with-sidebar'>
+        
+        <aside class='sidebar'><!-- Navigation region -->
+          <strong>Navigation</strong>
+          <a href='#'>Home</a><a href='#'>Cards</a><a href='#'>Canvases</a><a href='#'>Notes</a><a href='#'>Trash</a>
+        </aside>
+        
+        <main class='content'>
+        <header class='topbar'><!-- Main page heading from the confirmed UI doc -->
+          <div>
+            <p class='eyebrow'>UI sketch</p>
+            <h1>Cards</h1>
+          </div>
+          <button class='button'>Primary action</button>
+        </header>
+        
+        <section class='toolbar'><!-- Search, filters, and page-level actions -->
+          <span class='pill'>Search</span><span class='pill'>New card</span><span class='pill'>Filter</span>
+        </section>
+        
+    <section class='card'><!-- Generic content block -->
+      <h3>UI/UX document card</h3>
+      <p>Preview, title, metadata, status</p>
+      <div class='pills'></div>
+    </section>
+    
+    <section class='card'><!-- Generic content block -->
+      <h3>Frontend sketch card</h3>
+      <p>Thumbnail and open action</p>
+      <div class='pills'></div>
+    </section>
+    </main>
+      </div>
+    </section>
+    
+  </div>
+</body>
+</html>

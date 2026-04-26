@@ -1,0 +1,7 @@
+interface:
+  display_name: "Building Code Context"
+  short_description: "Curates multi-file context packs for planning, debugging, review, refactor, and handoff."
+  default_prompt: "Use this to build a handoff-ready context pack before multi-file planning, debugging, review, refactor, or agent handoff."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,47 @@
+---
+name: {{skill_name}}
+description: Use when {{trigger_conditions}}. Trigger on {{trigger_phrases}}. Route {{route_away_tasks}} to {{alternate_workflow}}.
+---
+
+# {{Skill Title}}
+
+## Core principle
+
+{{one_sentence_principle}}
+
+## When to use
+
+- {{use_case_1}}
+- {{use_case_2}}
+- {{use_case_3}}
+
+Route these tasks elsewhere:
+
+- {{route_away_1}}
+- {{route_away_2}}
+
+## Workflow
+
+1. {{step_1}}
+2. {{step_2}}
+3. {{step_3}}
+
+## Output contract
+
+```text
+{{OUTPUT_HEADER}}
+- {{field_1}}:
+- {{field_2}}:
+- {{field_3}}:
+```
+
+## References
+
+- `references/{{reference_file}}.md` for {{reference_purpose}}
+
+## Common failure modes
+
+| Failure mode | Fix |
+|---|---|
+| {{failure_1}} | {{fix_1}} |
+| {{failure_2}} | {{fix_2}} |

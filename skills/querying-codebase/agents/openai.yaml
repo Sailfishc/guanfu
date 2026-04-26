@@ -1,0 +1,7 @@
+interface:
+  display_name: "Querying Codebase"
+  short_description: "Finds implementations, related files, tests, config, schemas, and call chains."
+  default_prompt: "Use this to answer a repository question by locating concrete files, symbols, tests, config, and call sites."
+
+policy:
+  allow_implicit_invocation: true

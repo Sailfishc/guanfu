@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "2.1.0",
+  "app": { "name": "", "slug": "", "source": "" },
+  "colors": [],
+  "typography": [],
+  "spacing": [],
+  "radii": [],
+  "shadows": [],
+  "borders": [],
+  "motion": [],
+  "provenance": { "source": [], "runtime": [], "screenshot": [], "inferred": [] }
+}

@@ -1,0 +1,5 @@
+## Skill routing
+
+Use `${{skill_name}}` when the user asks for {{trigger_summary}}.
+
+Route {{route_away_summary}} to {{alternate_workflow}}.
