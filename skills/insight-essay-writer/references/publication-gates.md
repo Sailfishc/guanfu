@@ -1,35 +1,24 @@
-# Publication Gates v4
+# Publication Gates
 
 ## Reader Gain Gate
 
-Before drafting, define:
+Before outlining, define:
 
 ```text
 Primary reader:
 Their current confusion:
-What they will understand after reading:
-What decision they can make differently:
-What sentence they can repeat to another person:
-Which paragraph creates the strongest “I got something” moment:
-Reader-gain artifact:
+What they understand after reading:
+What decision they make differently:
+What sentence they can repeat:
+What section creates the strongest payoff:
+Reader gain artifact:
 ```
 
-Score 1-5:
-
-| Gate | 5/5 |
-|---|---|
-| Self-relevance | Reader sees themselves in the opening |
-| Surprise | The thesis reframes a familiar thing |
-| Actionability | Reader can change a decision or workflow |
-| Shareability | Reader can forward it with one sentence |
-| Emotional clarity | The article has stakes, tension, or relief |
-| Artifact value | The article includes a useful decision tool |
-
-Any score below 4 requires a revised thesis, reader, opening, or artifact.
+Hard fail when the first 300 words do not make the reader feel the problem.
 
 ## One Spine Gate
 
-Pick one main spine:
+Choose one spine:
 
 - Career transition
 - Team operating system
@@ -40,44 +29,57 @@ Pick one main spine:
 - Product workflow
 - Tool-selection decision
 - Work process change
+- Organization design
 
-Secondary concepts must serve the spine. Competing concepts go to future article ideas.
+Move competing insights to future article ideas.
 
 ## Publication Hygiene Gate
 
-The public article starts with title and body. Keep these out unless explicitly requested:
+The final public article starts with title and article body. Keep these internal:
 
-- Source map
-- Thesis tournament
-- Old assumption list
-- Internal cost table
-- Quality score
-- Prompt notes
-- Roadmap
-- Generation notes
-- “how this was generated” explanations
+```text
+source map
+old assumption list
+cost-change table
+thesis tournament
+quality scorecard
+title scoring
+roadmap
+generation notes
+prompt notes
+```
 
-Use `资料来源` only when factual traceability helps the reader or the user asked for citations.
-
-## Framework-to-prose translation
-
-| Internal tool | Public expression |
-|---|---|
-| Old assumption | Why the old way used to work |
-| Cost-change table | What became cheap, what became scarce |
-| New scarcity | The new bottleneck |
-| Thesis tournament | Not shown |
-| Quality score | Not shown |
-| Roadmap | Not shown |
-| Source-relative originality | Reflected by a fresh angle, not named |
+Use a short `资料来源` section only when needed.
 
 ## Concept Restraint Gate
 
-A publishable article usually has:
+A strong essay usually has:
 
 - One main thesis.
-- One main mechanism name, optional.
-- Up to three supporting concepts.
-- One major table or artifact, unless the article is a decision matrix.
+- One named mechanism or none.
+- Three to six sub-mechanisms.
+- One reader artifact.
 
-If the article reads like a taxonomy, reduce concepts before rewriting sentences.
+If three concepts all feel like titles, choose one and save the rest.
+
+## Opening Gate
+
+The opening should do at least two:
+
+- Show a concrete failure.
+- Name a familiar reader situation.
+- Expose a tension.
+- Raise the decision the article will change.
+
+If a polished reference exists, the opening must differ.
+
+## Publish-Polish Gate
+
+Before final output, check:
+
+- Title is natural.
+- Headings are natural.
+- Reader artifact works.
+- Claims are calibrated.
+- Direct positive claim pass is complete.
+- No workbench content leaks into the article.

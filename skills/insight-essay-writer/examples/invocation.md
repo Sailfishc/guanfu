@@ -1,37 +1,31 @@
 # Invocation Examples
 
-## Article only
+## Draft from raw material
 
 ```text
-Use insight-essay-writer. Read the attached transcript and write a publishable Chinese essay. Keep all research notes internal.
+Use insight-essay-writer. Read the attached transcript and write a publishable Chinese essay. Keep research notes internal. Make the title and headings natural and reader-facing.
 ```
 
-## Multiple documents
+## Draft with polished reference
 
 ```text
-Use insight-essay-writer. These articles and events look related. Find the strongest thesis and produce a publishable article with a natural title.
+Use insight-essay-writer. I attached one polished yage article and the same raw interview source. Write a publishable article from a distinct angle. Avoid copying the reference opening, title pattern, and section order.
 ```
 
-## Same source plus polished reference
+## Review
 
 ```text
-Use insight-essay-writer. One attachment is a polished reference essay and another is the raw source. Write our article from a fresh angle. Do not reuse the reference opening, title pattern, or section order. Include a reader-facing decision tool.
+Use insight-essay-writer. Review this draft for insight depth, reader gain, title quality, heading quality, originality, claim calibration, and publication readiness. Return 好的 / 不好的 / 改进.
 ```
 
-## Expert memo
+## Multiple model drafts
 
 ```text
-Use insight-essay-writer. Write for AI product team leaders. Prioritize mechanism depth, original angle, and actionable team changes.
+Use insight-essay-writer in Best-of-N mode. Compare these two drafts from the same source. Pick the champion, extract useful parts from the other draft, and recommend a merged publication direction.
 ```
 
-## Review mode
+## Ask for analysis pack
 
 ```text
-Use insight-essay-writer in review mode. Score this draft for insight, reader gain, title quality, source-relative originality, and publication cleanliness. Return 好的 / 不好的 / 改进.
-```
-
-## Full process requested
-
-```text
-Use insight-essay-writer. Return two files: article.md and analysis_pack.md.
+Use insight-essay-writer. Produce the final article first, then a separate analysis_pack with source map, thesis tournament, title scoring, and quality score.
 ```

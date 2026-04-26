@@ -1,6 +1,6 @@
 interface:
   display_name: "Insight Essay Writer"
-  short_description: "Turn source materials into publishable high-insight Chinese longform articles."
-  default_prompt: "Use insight-essay-writer to extract an original thesis from the provided materials and write a publishable Chinese longform article."
+  short_description: "Turns materials and model drafts into publishable high-insight Chinese essays"
+  default_prompt: "Use insight-essay-writer. Read the attached materials and write a publishable Chinese essay. Keep research notes internal. Make the title and headings natural and reader-facing."
 policy:
   allow_implicit_invocation: true

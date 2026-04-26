@@ -1,63 +1,63 @@
-# Pressure Scenarios v4
+# Pressure Scenarios
 
-Use these to test the skill in a fresh agent.
+Use these with a fresh agent to test the skill.
 
-## Scenario 1: Avoid visible scaffolding
+## 1. Strong reference essay overlap
 
-Prompt: “Read this transcript and write a blog post.”
+Input: a polished yage essay plus the same raw transcript.
+Expected: final article has a different opening, title pattern, section order, at least 30% underused examples, and a distinct reader artifact.
+Fail: article reuses the same opening scene and thesis structure.
 
-Expected:
-- Returns article only.
-- No Source Map, Thesis Tournament, scorecard, roadmap, or internal notes.
+## 2. Stiff title pressure
 
-## Scenario 2: Title naturalness
+Input: source material where internal analysis naturally produces old/new cost table.
+Expected: title translates the cost shift into a reader-facing consequence.
+Fail: title contains `旧价格表`, `新价格表`, `成本结构`, `模式`, or `框架`.
 
-Prompt: “Write an article from this AI coding workshop.”
+## 3. Stiff heading leak
 
-Expected:
-- Title avoids `旧价格表`, `新价格表`, `成本结构`, and `质量评分`.
-- Title names a concrete reader-facing promise.
+Input: draft outline with headings like `旧成本结构`, `新稀缺`, `读者决策表`.
+Expected: final article uses natural headings such as `以前，PM 的价值来自降低执行浪费`.
+Fail: public article exposes internal analysis labels.
 
-## Scenario 3: Reader gain artifact
+## 4. Weak reader artifact
 
-Prompt: “Write for PMs from this AI product interview.”
+Input: essay draft with a table whose title says “三个场景” but table has five rows.
+Expected: artifact title and rows are consistent, distinct, and decision-changing.
+Fail: artifact is present but sloppy or unusable.
 
-Expected:
-- Opening makes PMs feel addressed in first 300 words.
-- Article includes one decision table, checklist, field guide, or operating model.
-- Artifact changes what a PM does this week.
+## 5. Overbroad claim pressure
 
-## Scenario 4: Reference overlap
+Input: article draft with claims like “代码成本趋近于零” and “PM 不再需要 PRD”.
+Expected: claims are scoped to concrete contexts or rewritten as cost shifts.
+Fail: final article keeps absolute claims without boundary.
 
-Prompt: “Here is a polished essay from Yage and the same source transcript. Write our version.”
+## 6. Workbench leakage
 
-Expected:
-- Different opening scene.
-- Different title syntax.
-- Different section path.
-- At least 30% of examples come from underused source material.
-- Includes a new reader-gain artifact.
+Input: user asks for a publishable article.
+Expected: no source map, thesis tournament, quality score, or roadmap in final response.
+Fail: output shows research process before article.
 
-## Scenario 5: Concept restraint
+## 7. Deep but dry article
 
-Prompt: “Use these 6 related articles and find the strongest thesis.”
+Input: technical workshop transcript.
+Expected: article includes one usable decision table, checklist, field guide, or operating model.
+Fail: article only explains concepts.
 
-Expected:
-- One main spine.
-- Competing theses become supporting examples or future article notes.
+## 8. Too many concepts
 
-## Scenario 6: Full process requested
+Input: multi-source pack with many possible theses.
+Expected: one main spine, extra insights omitted or listed only in analysis_pack when requested.
+Fail: article becomes a taxonomy with 8+ mechanisms.
 
-Prompt: “Show your process and final article.”
+## 9. Best-of-N variance
 
-Expected:
-- Separates `analysis_pack` from `article`.
-- Public article stays clean.
+Input: two model outputs, one with better angle, one with better polish.
+Expected: skill picks a champion, salvages strengths, and recommends a merged publication direction.
+Fail: skill treats both as equal or rewrites from scratch without using their strengths.
 
-## Scenario 7: Review mode, good / bad / improve
+## 10. Direct positive claim style
 
-Prompt: “Evaluate this article: 1. 好的 2. 不好的 3. 改进.”
-
-Expected:
-- Uses the requested three-part structure.
-- Also includes score, title diagnosis, originality diagnosis, and skill/process changes when relevant.
+Input: draft with many `不是 A，而是 B` constructions.
+Expected: final version states the positive claim directly.
+Fail: contrastive negative phrasing remains throughout.
