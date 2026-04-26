@@ -46,8 +46,8 @@ done
 [[ ! -f scripts/gf-init.sh ]] || fail "runtime gf-init script must live under skills/gf-init/scripts/, not package root scripts/"
 [[ ! -d bin ]] || fail "runtime gf-init wrapper must not live in package root bin/"
 
-legacy_prefix="c""e-"
-if grep -RIn --exclude='gf-validate.sh' "$legacy_prefix" README.md skills tests scripts VALIDATION.md MANIFEST.md CHANGELOG.md >/tmp/guanfu-legacy-prefix.txt 2>/dev/null; then
+legacy_prefix_re='(^|[^[:alnum:]_])c'"e-"'[[:alnum:]_-]+'
+if grep -RInE --exclude='gf-validate.sh' "$legacy_prefix_re" README.md skills tests scripts VALIDATION.md MANIFEST.md CHANGELOG.md >/tmp/guanfu-legacy-prefix.txt 2>/dev/null; then
   cat /tmp/guanfu-legacy-prefix.txt >&2
   fail "legacy ce-* prefix found"
 fi
