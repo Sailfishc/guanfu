@@ -1,50 +1,42 @@
-# Quality Rubric v5
+# Quality Rubric v6
 
-Target: 90+. Minimum publishable: 88.
+Score the finished article as a public article, not as a research memo.
 
-| Dimension | Points | What good looks like |
+| Dimension | Points | High score means |
 |---|---:|---|
-| Thesis sharpness | 10 | One sentence changes a decision |
-| Source transformation | 10 | Materials become a portable mechanism |
-| Source-relative originality | 10 | Distinct from polished references or sibling drafts |
-| Reader self-relevance | 10 | Reader feels the problem early |
-| Reader actionability | 10 | Reader knows what to do differently |
-| Reader-gain artifact quality | 10 | Tool is accurate, compact, and decision-changing |
-| Narrative smoothness | 8 | Reader feels carried, not lectured |
-| Concept restraint | 8 | One spine, few concepts, no taxonomy bloat |
-| Title quality | 8 | Natural, specific, curiosity-creating |
-| Heading naturalness | 6 | H2/H3 sound like article prose |
-| Evidence and boundary cases | 6 | Concrete source details plus edge cases |
-| Claim calibration | 4 | Bold claims scoped and credible |
-| Chinese naturalness and direct claims | 6 | Concrete, direct, low translationese |
+| Thesis sharpness | 10 | One clear, decision-changing claim |
+| Source transformation | 10 | Source material becomes a portable mechanism |
+| Source-relative originality | 10 | Differs from polished references in angle, examples, structure, or tool |
+| Reader self-relevance | 10 | Target reader sees themselves early |
+| Reader actionability | 10 | Reader knows what decision changes |
+| Reader-gain artifact quality | 10 | The artifact can guide real work |
+| Narrative smoothness | 10 | The article flows without framework drag |
+| Title and heading quality | 10 | Natural, specific, reader-facing, directly positive |
+| Evidence and boundary cases | 8 | Concrete details plus credible edge cases |
+| Chinese naturalness and direct positive style | 6 | Clean Chinese prose with direct claims |
+| Claim calibration | 4 | Bold claims are scoped and fair |
+| Source voice integrity | 2 | No invented first-hand access |
+
+Target: 90+. Minimum publishable score: 88.
 
 ## Hard gates
 
+- Source voice integrity failure: rewrite source claims before returning.
+- Source-relative originality < 8: change opening, structure, thesis mode, or example mix.
 - Reader self-relevance < 8: rewrite opening and reader framing.
-- Source-relative originality < 8 when a polished reference exists: change thesis, opening, section order, evidence mix, or artifact.
-- Reader-gain artifact quality < 8: add or improve an artifact.
+- Reader-gain artifact quality < 8: improve the decision tool.
 - Narrative smoothness < 8: reduce framework density.
-- Concept restraint < 8: merge or cut secondary mechanisms.
-- Title quality < 8: regenerate titles.
-- Heading naturalness < 8: rewrite H2/H3.
+- Title and heading quality < 8: regenerate titles and headings.
 - Claim calibration < 8: scope or soften overbroad claims.
-- Publication hygiene failure: remove internal workbench content.
+- Publication hygiene failure: remove internal process content.
 
-## Review output
+## Review output shortcut
 
 ```text
 Verdict:
 Score:
-Target reader:
-Reader gain:
 好的:
 不好的:
 改进:
-Title diagnosis:
-Heading diagnosis:
-Originality diagnosis:
-Reader artifact diagnosis:
-Claim calibration diagnosis:
-Most important rewrite direction:
 Skill/process changes needed:
 ```

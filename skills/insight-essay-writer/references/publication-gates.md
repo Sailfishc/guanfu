@@ -83,3 +83,11 @@ Before final output, check:
 - Claims are calibrated.
 - Direct positive claim pass is complete.
 - No workbench content leaks into the article.
+
+
+## Source Voice Integrity Gate
+
+Before final output, verify how the author knows each named fact. Podcasts, transcripts, clippings, and reference essays should be attributed as materials. First-person interview language is reserved for actual first-hand interviews.
+
+Failing example: `当我问 Cat Wu...`
+Passing example: `Cat Wu 在 Lenny’s Podcast 访谈里说...`

@@ -1,63 +1,51 @@
-# Pressure Scenarios
+# Pressure scenarios v6
 
-Use these with a fresh agent to test the skill.
+Use these to test whether the skill resists common failures.
 
-## 1. Strong reference essay overlap
+## 1. Source voice hallucination
 
-Input: a polished yage essay plus the same raw transcript.
-Expected: final article has a different opening, title pattern, section order, at least 30% underused examples, and a distinct reader artifact.
-Fail: article reuses the same opening scene and thesis structure.
+Input: podcast transcript and reference essay. Ask for a publishable article.
 
-## 2. Stiff title pressure
+Failure: article says `当我问 Cat Wu...` even though the author did not interview her.
 
-Input: source material where internal analysis naturally produces old/new cost table.
-Expected: title translates the cost shift into a reader-facing consequence.
-Fail: title contains `旧价格表`, `新价格表`, `成本结构`, `模式`, or `框架`.
+Pass: article says `Cat Wu 在访谈里说...` or attributes to the podcast.
 
-## 3. Stiff heading leak
+## 2. Negative-contrast title
 
-Input: draft outline with headings like `旧成本结构`, `新稀缺`, `读者决策表`.
-Expected: final article uses natural headings such as `以前，PM 的价值来自降低执行浪费`.
-Fail: public article exposes internal analysis labels.
+Input: PM article draft. Ask for title candidates.
+
+Failure: chosen title uses `没有消失，只是`, `不是...而是`, or `不再是...`.
+
+Pass: chosen title states a direct positive claim.
+
+## 3. Overbroad trend claim
+
+Input: AI coding or AI PM materials.
+
+Failure: article says `执行成本趋近于零`, `PRD 被取代`, or `PM 不再需要...` without scope.
+
+Pass: article scopes claims to source context and cost shifts.
 
 ## 4. Weak reader artifact
 
-Input: essay draft with a table whose title says “三个场景” but table has five rows.
-Expected: artifact title and rows are consistent, distinct, and decision-changing.
-Fail: artifact is present but sloppy or unusable.
+Input: article with a simple `类型 / 信号 / 动作` table.
 
-## 5. Overbroad claim pressure
+Failure: table summarizes ideas but cannot guide a real meeting.
 
-Input: article draft with claims like “代码成本趋近于零” and “PM 不再需要 PRD”.
-Expected: claims are scoped to concrete contexts or rewritten as cost shifts.
-Fail: final article keeps absolute claims without boundary.
+Pass: table includes default path, exit condition, owner, review cadence, escalation trigger, or what to avoid when useful.
 
-## 6. Workbench leakage
+## 5. Best-of-N averaging
 
-Input: user asks for a publishable article.
-Expected: no source map, thesis tournament, quality score, or roadmap in final response.
-Fail: output shows research process before article.
+Input: two drafts. One has stronger spine, the other has a better section.
 
-## 7. Deep but dry article
+Failure: merged direction blends both structures equally.
 
-Input: technical workshop transcript.
-Expected: article includes one usable decision table, checklist, field guide, or operating model.
-Fail: article only explains concepts.
+Pass: one champion remains the base; only selected modules are salvaged.
 
-## 8. Too many concepts
+## 6. Reference essay overlap
 
-Input: multi-source pack with many possible theses.
-Expected: one main spine, extra insights omitted or listed only in analysis_pack when requested.
-Fail: article becomes a taxonomy with 8+ mechanisms.
+Input: raw transcript plus a polished reference essay using a familiar opening.
 
-## 9. Best-of-N variance
+Failure: new article reuses the same opening scene and section order.
 
-Input: two model outputs, one with better angle, one with better polish.
-Expected: skill picks a champion, salvages strengths, and recommends a merged publication direction.
-Fail: skill treats both as equal or rewrites from scratch without using their strengths.
-
-## 10. Direct positive claim style
-
-Input: draft with many `不是 A，而是 B` constructions.
-Expected: final version states the positive claim directly.
-Fail: contrastive negative phrasing remains throughout.
+Pass: new article differs on at least two of opening, main mechanism, reader artifact, ending decision, section order, emphasized source details.

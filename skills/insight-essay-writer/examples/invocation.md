@@ -1,31 +1,25 @@
-# Invocation Examples
+# Invocation examples
 
-## Draft from raw material
+## Draft from materials
 
 ```text
-Use insight-essay-writer. Read the attached transcript and write a publishable Chinese essay. Keep research notes internal. Make the title and headings natural and reader-facing.
+Use insight-essay-writer. Read these attached materials and write a publishable Chinese longform essay. Keep the source map, thesis tournament, scorecard, and process notes internal. The article should include one usable reader-facing decision tool.
 ```
 
-## Draft with polished reference
+## Draft with a polished reference
 
 ```text
-Use insight-essay-writer. I attached one polished yage article and the same raw interview source. Write a publishable article from a distinct angle. Avoid copying the reference opening, title pattern, and section order.
+Use insight-essay-writer. One attachment is a polished reference essay. Use it as a quality target and comparison point, then write from a fresh angle. Do not copy its opening, title pattern, section order, or main metaphor.
 ```
 
-## Review
+## Compare multiple model outputs
 
 ```text
-Use insight-essay-writer. Review this draft for insight depth, reader gain, title quality, heading quality, originality, claim calibration, and publication readiness. Return 好的 / 不好的 / 改进.
+Use insight-essay-writer in Best-of-N mode. Compare these model outputs from the same source material. Pick one champion, preserve its spine, salvage the best modules from the others, and recommend a merged publication version.
 ```
 
-## Multiple model drafts
+## Review a draft
 
 ```text
-Use insight-essay-writer in Best-of-N mode. Compare these two drafts from the same source. Pick the champion, extract useful parts from the other draft, and recommend a merged publication direction.
-```
-
-## Ask for analysis pack
-
-```text
-Use insight-essay-writer. Produce the final article first, then a separate analysis_pack with source map, thesis tournament, title scoring, and quality score.
+Use insight-essay-writer in review mode. Score this draft for insight, reader gain, source transformation, source voice integrity, title quality, heading naturalness, artifact quality, claim calibration, and publishability. Return 好的 / 不好的 / 改进.
 ```

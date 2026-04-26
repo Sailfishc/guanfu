@@ -1,46 +1,47 @@
-# Reader Artifact QA
+# Reader Artifact QA Gate
 
-## Goal
+Every publishable essay should contain one reader-facing artifact unless the user asked for a pure narrative essay.
 
-The article must give the primary reader a usable object, not just a clever idea.
-
-Good artifacts:
+## Acceptable artifact types
 
 - Decision table
-- Role-change checklist
+- Checklist
 - Operating model
 - Failure-mode list
 - Before/after workflow
 - Field guide
-- Requirement triage table
-- Task-routing matrix
+- Diagnostic question set
+- Demand-routing table
 
-## Artifact QA gate
+## QA checklist
 
-Before final output, check:
+The artifact must pass all checks:
 
-1. **Title matches content.** The heading promises exactly what the artifact does.
-2. **Rows are distinct.** No two rows say the same thing with different words.
-3. **Each row changes a decision.** A reader can use it in a real meeting or task.
-4. **Primary-reader language.** The artifact speaks to the chosen reader, not the author.
-5. **Introduced before, interpreted after.** The article explains why the artifact exists and what it means.
-6. **Concise enough to reuse.** Prefer 4-7 rows unless the domain demands more.
+1. The title matches the rows or checks.
+2. Rows are mutually distinct.
+3. Each row changes a real decision.
+4. The language is written for the primary reader.
+5. The artifact is introduced before it appears.
+6. The article interprets it after it appears.
+7. It can guide a real meeting or personal workflow tomorrow.
 
-## Common fixes
+## Upgrade triggers
 
-| Problem | Fix |
+Upgrade if the artifact feels like summary rather than decision support.
+
+Common upgrades:
+
+| Weak artifact | Upgrade |
 |---|---|
-| Table title says 3 scenarios but has 5 rows | Rename the title or reduce rows |
-| Rows overlap | Merge similar rows and sharpen distinctions |
-| Rows describe facts only | Add a decision or action for each row |
-| Artifact appears suddenly | Add a short setup paragraph before it |
-| Artifact ends the section cold | Add a paragraph interpreting the pattern |
+| Type / signal / action | Add default path or exit condition |
+| Role advice | Add owner and review cadence |
+| Failure modes | Add warning sign and response |
+| Model/tool matrix | Add when to avoid each choice |
+| Product demand table | Add escalation trigger |
 
-## Strong artifact pattern
+## Bad signs
 
-| Demand type | Best next move | Why |
-|---|---|---|
-| User pain is clear, model boundary is uncertain | Research preview | Real use reveals whether the model is ready |
-| Behavior quality is hard to describe | Write evals | Tests make success repeatable |
-| Security, billing, permissions, enterprise promise | PRD and review | Mistake cost is high |
-| Temporary model weakness | Removable scaffold | New models may make it obsolete |
+- The table repeats the article instead of helping the reader act.
+- Rows overlap.
+- The table title promises three cases and the body has five unrelated rows.
+- It uses author-facing labels such as `artifact`, `framework`, or `decision matrix` when natural prose would work better.

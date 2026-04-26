@@ -1,47 +1,46 @@
-# Section Heading Naturalization
+# Section Heading Guide
 
-## Goal
+Headings should sound like a public article. They should move the argument forward, not reveal the research template.
 
-Headings must feel like public article headings. They should move the reader through the argument, not reveal the internal analysis template.
-
-## Hard ban for public headings
-
-Avoid these labels in the final article:
+## Avoid internal labels
 
 ```text
-旧价格表, 新价格表, 旧成本结构, 新稀缺, 成本结构, 机制, 边界案例, 读者决策表, 质量评分, roadmap, source map, thesis tournament, scorecard, analysis framework
+旧价格表
+新价格表
+旧成本结构
+新稀缺
+边界案例
+读者决策表
+质量评分
+Source Map
+Thesis Tournament
 ```
 
 ## Better heading patterns
 
-| Internal label | Reader-facing heading |
+- Past workflow in reader language.
+- Changed condition.
+- New bottleneck.
+- Failure mode.
+- Practical decision.
+
+## Conversions
+
+| Internal heading | Reader-facing heading |
 |---|---|
-| Old assumption | 为什么老办法曾经有效 |
-| Cost change | 真正变贵的是反馈 |
-| New scarcity | 代码变快以后，判断开始变贵 |
-| Mechanism | 让团队跑得快的，是发布通道 |
-| Reader decision table | AI 产品需求该怎么处理 |
-| Boundary cases | 快起来以后，团队会欠下什么债 |
-| Action framework | 团队今天可以先改哪几件事 |
+| 旧成本结构 | 以前，PM 的价值来自降低执行浪费 |
+| 新稀缺 | 代码变快以后，判断开始变贵 |
+| 机制一：上下文反馈 | 让 agent 留在智能区 |
+| 边界案例 | 快起来以后，团队会欠下什么债 |
+| 读者决策表 | AI 产品需求该怎么处理 |
+| 结论 | 最后的稀缺是能承担判断的人 |
 
-## Heading tests
+## Direct positive heading pass
 
-A heading passes when:
+Rewrite headings that use negative contrast:
 
-1. A reader understands why the section matters.
-2. The heading has a concrete subject.
-3. It sounds natural outside the skill context.
-4. It advances a causal step.
-5. It does not sound like a consulting slide label.
-
-## Fast rewrite method
-
-When a heading feels internal, ask:
-
-```text
-What does this section prove for the reader?
-What decision or bottleneck changes here?
-What sentence would a reader say to a colleague?
-```
-
-Use the answer as the heading.
+| Weak | Strong |
+|---|---|
+| PM 没有消失，只是换了瓶颈 | PM 的新瓶颈是判断 |
+| 不是更快写代码，而是接住速度 | 产品团队要学会接住速度 |
+| PRD 没消失，只是换了角色 | PRD 的一部分角色正在迁移到 eval |

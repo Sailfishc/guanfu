@@ -1,4 +1,4 @@
-# Title Guide v5
+# Title Guide v6
 
 A title should make the reader want the article, not display the internal analysis framework.
 
@@ -23,6 +23,7 @@ Score 1-5:
 | Specificity | Does it avoid broad trend language? |
 | Reader gain | Does it imply a useful judgment? |
 | Originality | Does it avoid polished reference title syntax? |
+| Positive claim | Does it avoid negative contrast? |
 
 Pick the highest total. If tied, pick the more natural title.
 
@@ -33,6 +34,8 @@ Keep these out of H1, and usually out of H2:
 ```text
 旧价格表
 新价格表
+旧成本结构
+新稀缺
 成本结构
 source map
 thesis tournament
@@ -41,6 +44,15 @@ roadmap
 scorecard
 分析框架
 读者决策表
+```
+
+Reject these title skeletons:
+
+```text
+不是 A，而是 B
+A 没有消失，只是 B
+不再是 A，是 B
+真正的 X 不是 Y
 ```
 
 ## Convert internal phrases
@@ -70,3 +82,4 @@ Repeat a skeleton only when it is clearly the best title.
 - Familiar role + new bottleneck.
 - Source-specific scene + portable implication.
 - Surprising product behavior + decision payoff.
+- Team workflow + what it must learn to support.

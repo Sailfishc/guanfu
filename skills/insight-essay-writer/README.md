@@ -1,15 +1,15 @@
-# insight-essay-writer v5 publish-polish
+# insight-essay-writer v6 publish-polish
 
-Turns source materials, polished reference essays, and multiple model drafts into publishable Chinese longform essays with deep insight and high reader gain.
+Use this skill to turn one or more source materials into a publishable high-insight Chinese longform essay.
 
-## What's new in v5
+v6 focuses on final publication quality:
 
-- Section Heading Naturalization Gate: public headings no longer leak internal analysis labels.
-- Reader Artifact QA Gate: every decision table, checklist, or field guide must actually help the reader decide.
-- Reference Distance Gate: strong reference essays must differ by opening, reader, mechanism, artifact, ending, structure, or evidence mix.
-- Claim Calibration Gate: sharp claims get scope, source anchors, and boundary cases.
-- Best-of-N Mode: compare multiple model drafts, pick a champion, then salvage the best parts from the others.
-- Direct Positive Claim Pass: rewrite contrastive negative constructions into direct positive claims.
+- honest source voice, so secondary materials never sound like first-hand interviews
+- direct positive titles and thesis sentences
+- stronger claim calibration for trend claims
+- reader artifacts that work as real decision tools
+- Best-of-N synthesis that preserves the champion draft's spine
+- clean public output with research notes kept internal
 
 ## Install
 
@@ -17,14 +17,24 @@ Claude Code:
 
 ```bash
 mkdir -p ~/.claude/skills
-unzip insight-essay-writer-v5-publish-polish.zip -d ~/.claude/skills
+unzip insight-essay-writer-v6-publish-polish.zip -d ~/.claude/skills
 ```
 
 Codex:
 
 ```bash
 mkdir -p ~/.agents/skills
-unzip insight-essay-writer-v5-publish-polish.zip -d ~/.agents/skills
+unzip insight-essay-writer-v6-publish-polish.zip -d ~/.agents/skills
 ```
 
-Claude.ai: upload the zip as a custom Skill.
+## Example prompt
+
+```text
+Use insight-essay-writer. Read the attached materials and write a publishable Chinese essay. Keep all research notes internal. Make the title and section headings natural, and include one usable reader-facing decision tool.
+```
+
+Best-of-N review:
+
+```text
+Use insight-essay-writer in Best-of-N mode. Compare these drafts from the same source material. Pick the champion, salvage the best modules from the other drafts, and identify skill improvements.
+```

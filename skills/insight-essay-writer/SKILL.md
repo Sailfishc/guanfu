@@ -9,7 +9,7 @@ description: Use when turning articles, transcripts, documents, events, releases
 
 Write a publishable Chinese essay with a real argument. Keep the research workbench internal. The article must give readers a portable insight, felt payoff, and one usable decision tool.
 
-Insight comes first. Reader gain turns insight into value. Publication polish makes the article feel finished.
+Insight comes first. Reader gain turns insight into value. Publication polish makes the article feel finished. Source voice must stay honest: use the true relationship to the material and never invent first-hand access.
 
 ## Default deliverable
 
@@ -23,7 +23,7 @@ Keep source maps, thesis tournaments, internal cost tables, scorecards, roadmaps
 
 For review requests, return verdict, score, diagnosis, and concrete revision plan. Rewrite only when asked.
 
-For multiple model drafts from the same materials, use Best-of-N mode: pick a champion draft, salvage the strongest angle or section from the others, then recommend a merged publication version.
+For multiple model drafts from the same materials, use Best-of-N mode: pick one champion draft, preserve its spine, salvage the strongest modules from the others, and recommend a merged publication version. Do not average drafts.
 
 ## Priority order
 
@@ -32,7 +32,8 @@ For multiple model drafts from the same materials, use Best-of-N mode: pick a ch
 3. Reader gain. The reader should know what they learned and what decision changes.
 4. Publication polish. The article should read like a finished article, not a research memo.
 5. Natural title and headings. Internal analysis labels stay internal.
-6. Source-relative originality. A polished reference is a comparison target, not a template to follow.
+6. Source-relative originality. A polished reference is a comparison target.
+7. Source voice integrity. The article preserves whether material came from an interview, transcript, podcast, report, draft, or the author’s own work.
 
 ## Internal workflow
 
@@ -55,7 +56,10 @@ Insight Essay Progress
 - [ ] Draft outline with natural headings
 - [ ] Run pre-draft gates
 - [ ] Write publishable article
-- [ ] Run publication polish passes
+- [ ] Run source voice integrity gate
+- [ ] Run direct positive title and prose passes
+- [ ] Run claim calibration gate
+- [ ] Upgrade reader artifact if needed
 - [ ] Run quality gate
 - [ ] Rewrite once if score < 90 or a hard gate fails
 ```
@@ -81,6 +85,7 @@ Use this internally:
 |---|---|
 | Key fact | Specific event, number, quote, tool, actor, workflow, or failure |
 | Source | File, link, speaker, timestamp, or document title |
+| Source relationship | First-hand interview, podcast transcript, report, draft, clipping, or secondary note |
 | Surface topic | What the material appears to discuss |
 | Old assumption | Hidden premise that made the old workflow sensible |
 | Changed cost | Time, money, execution, verification, trust, coordination, compliance, attention |
@@ -113,7 +118,7 @@ Use this internally:
 | Old cost condition | New cost condition | New bottleneck | Who feels it | Decision change |
 |---|---|---|---|---|
 
-This is an analysis tool. In the public article, translate it into natural prose or a reader-facing table. Keep these internal labels out of public titles and section headings: `旧价格表`, `新价格表`, `成本结构`, `cost table`, `quality gate`, `roadmap`, `scorecard`, `source map`, `thesis tournament`, `分析框架`.
+This is an analysis tool. In the public article, translate it into natural prose or a reader-facing table. Keep these internal labels out of public titles and section headings: `旧价格表`, `新价格表`, `旧成本结构`, `新稀缺`, `成本结构`, `cost table`, `quality gate`, `roadmap`, `scorecard`, `source map`, `thesis tournament`, `分析框架`.
 
 ## 5. Run the thesis tournament
 
@@ -222,12 +227,13 @@ Generate at least 20 titles in four groups:
 
 Title hard rules:
 
-- Keep internal labels out of H1 and usually H2: `旧价格表`, `新价格表`, `成本结构`, `source map`, `thesis tournament`, `quality gate`, `roadmap`, `scorecard`, `分析框架`.
+- Keep internal labels out of H1 and usually H2: `旧价格表`, `新价格表`, `旧成本结构`, `新稀缺`, `成本结构`, `source map`, `thesis tournament`, `quality gate`, `roadmap`, `scorecard`, `分析框架`, `读者决策表`.
 - Avoid repeated title skeletons across drafts, especially `X 的新 Y` and `当 X，Y 该 Z` when recently used.
 - Avoid copying a polished reference title's syntax.
 - Prefer concrete subject + changed decision.
+- Run the Direct Positive Title Gate: reject `不是 A，而是 B`, `A 没有消失，只是 B`, `不再是 A，是 B`, `真正的 X 不是 Y`.
 
-See [title-guide.md](references/title-guide.md).
+See [title-guide.md](references/title-guide.md) and [direct-positive-title.md](references/direct-positive-title.md).
 
 ## 11. Draft the outline
 
@@ -259,7 +265,8 @@ Score before writing:
 | Old assumption | Explicit and historically rational |
 | Cost change | Drives the article under the surface |
 | Originality | Clearly differs from polished references |
-| Title | Natural, specific, curiosity-creating |
+| Source voice | Source relationship is known and safe to state |
+| Title | Natural, specific, curiosity-creating, directly positive |
 | Headings | Natural, causal, reader-facing |
 | Evidence | At least 12 concrete details available |
 | Artifact | One useful reader-facing decision tool planned |
@@ -289,12 +296,13 @@ Writing rules:
 Publication hygiene rules:
 
 - Do not include Source Map, Thesis Tournament, Old Assumptions, Cost-Structure Table, scorecards, roadmap, prompt notes, or generation notes in the public article.
-- Do not expose internal headings like `旧假设`, `新价格表`, `质量评分`, `读者决策表`, `Source Notes` unless the user asked for notes.
+- Do not expose internal headings like `旧假设`, `新价格表`, `旧成本结构`, `新稀缺`, `质量评分`, `读者决策表`, `Source Notes` unless the user asked for notes.
 - Use `资料来源` only when source transparency helps the reader or the user asked for citations.
 
 Chinese style rules:
 
 - Use direct positive claims.
+- Avoid contrastive negative constructions in titles, headings, and key claims.
 - Avoid stiff framework language in public titles and headings.
 - Cut explanatory repetition after the causal step is clear.
 - Turn abstract nouns into actors, actions, and consequences.
@@ -316,7 +324,7 @@ Convert internal headings into reader-facing headings:
 | 边界案例 | 快起来以后，团队会欠下什么债 |
 | 读者决策表 | AI 产品需求该怎么处理 |
 
-### Reader Artifact QA Gate
+### Reader Artifact QA and Upgrade Gate
 
 The reader-gain artifact must pass:
 
@@ -326,17 +334,38 @@ The reader-gain artifact must pass:
 4. Language is for the primary reader.
 5. The article explains how to use it.
 
-### Claim Calibration Gate
+If a table only has `type / signal / action`, consider adding one of: owner, exit condition, review cadence, default path, escalation trigger, or what to avoid. A strong artifact can guide a real meeting tomorrow.
 
-Scan for overbroad phrases: `趋近于零`, `消失`, `完全替代`, `彻底改变`, `唯一`, `必然`, `所有团队`, `所有人`, `已经结束`.
+### Source Voice Integrity Gate
+
+Scan for first-person source claims. Unless the author personally conducted the interview or experiment, remove phrases like `当我问`, `我采访了`, `他告诉我`, `我们聊到`, `在我的访谈里`.
+
+Safe patterns:
+
+```text
+Cat Wu 在访谈里说...
+Lenny 问到...
+材料显示...
+这段访谈给出的信号是...
+```
+
+See [source-voice-integrity.md](references/source-voice-integrity.md).
+
+### Claim Calibration Gate v2
+
+Scan for overbroad phrases: `趋近于零`, `消失`, `完全替代`, `彻底改变`, `唯一`, `必然`, `所有团队`, `所有人`, `已经结束`, `不再需要`, `取代`.
 
 For each, add a scope condition, replace with cost-shift language, add a boundary case, or anchor it to a concrete source example.
 
-Preferred pattern:
+Preferred patterns:
 
 ```text
 在 [specific context] 里，[old cost] 下降后，[new bottleneck] 更显性。
+对这类任务来说，[old action] 已经便宜到可以先试。
+当 [workflow] 进入高频循环，[new bottleneck] 成为主要瓶颈。
 ```
+
+See [claim-calibration.md](references/claim-calibration.md).
 
 ### Direct Positive Claim Pass
 
@@ -348,6 +377,7 @@ Convert:
 不是 A，而是 B
 A 不是重点，B 才是重点
 不是因为 X，而是因为 Y
+A 没有消失，只是 B
 ```
 
 Into:
@@ -356,7 +386,10 @@ Into:
 B 是重点。
 Y 解释了这件事。
 真正变化发生在 B。
+A 的价值迁移到 B。
 ```
+
+See [direct-positive-claims.md](references/direct-positive-claims.md).
 
 ## 15. Quality gate
 
@@ -369,26 +402,24 @@ Score the draft out of 100:
 | Source-relative originality | 10 |
 | Reader self-relevance | 10 |
 | Reader actionability | 10 |
-| Reader-gain artifact | 10 |
+| Reader-gain artifact quality | 10 |
 | Narrative smoothness | 10 |
-| Concept restraint | 8 |
-| Title quality | 8 |
-| Heading naturalness | 6 |
-| Evidence and boundary cases | 6 |
-| Chinese naturalness | 6 |
+| Title and heading quality | 10 |
+| Evidence and boundary cases | 8 |
+| Chinese naturalness and direct positive style | 6 |
 | Claim calibration | 4 |
+| Source voice integrity | 2 |
 
 Target: 90+. Minimum publishable score: 88.
 
 Hard gates:
 
+- Source voice integrity failure: rewrite source claims before returning.
 - Source-relative originality < 8: change opening, structure, thesis mode, or example mix.
 - Reader self-relevance < 8: rewrite opening and reader framing.
-- Reader-gain artifact < 8: improve the decision tool.
+- Reader-gain artifact quality < 8: improve the decision tool.
 - Narrative smoothness < 8: reduce framework density.
-- Concept restraint < 8: merge or remove secondary mechanisms.
-- Title quality < 8: regenerate titles.
-- Heading naturalness < 8: rewrite section headings.
+- Title and heading quality < 8: regenerate titles and headings.
 - Claim calibration < 8: scope or soften overbroad claims.
 - Publication hygiene failure: remove internal process content before returning.
 
@@ -398,13 +429,16 @@ If score is below 90 or any hard gate fails, rewrite once focusing on the lowest
 
 When the user provides multiple drafts from different models using the same skill:
 
-1. Score each draft on insight, reader gain, source transformation, originality, narrative smoothness, publishability.
+1. Score each draft on insight, reader gain, source transformation, originality, narrative smoothness, publishability, source voice, artifact quality, and claim calibration.
 2. Pick one champion draft.
-3. Extract salvageable strengths from other drafts: sharper title, stronger opening, better mechanism, better table, stronger boundary case, better ending.
-4. Recommend a merged publication version: champion plus selected upgrades.
-5. If asked, produce the merged article directly.
+3. Preserve the champion's spine.
+4. Extract salvageable modules from other drafts: title, opening, core metaphor, decision table, boundary section, underused source detail, ending sentence.
+5. Recommend a merged publication version: champion plus selected upgrades.
+6. Identify skill defects exposed by model variance.
 
-Do not try to make every model output identical. Use model variance to discover angles, then publish the champion.
+Do not average drafts. Do not merge every good paragraph. Model variance is useful for discovering angles; publication quality comes from one strong spine.
+
+See [best-of-n.md](references/best-of-n.md).
 
 ## Review mode
 
@@ -421,13 +455,14 @@ Reader gain:
 Title diagnosis:
 Heading diagnosis:
 Originality diagnosis:
+Source voice diagnosis:
 Reader-gain artifact diagnosis:
 Claim calibration diagnosis:
 Most important rewrite direction:
 Skill/process changes needed:
 ```
 
-Review the article as a reader-facing piece. Penalize visible research scaffolding, stiff titles or headings, framework overload, copied openings, copied section order, weak reader payoff, missing or broken decision tools, and overbroad claims.
+Review the article as a reader-facing piece. Penalize visible research scaffolding, stiff titles or headings, framework overload, copied openings, copied section order, weak reader payoff, missing or broken decision tools, invented source access, and overbroad claims.
 
 ## Common failure modes
 
@@ -437,9 +472,11 @@ Review the article as a reader-facing piece. Penalize visible research scaffoldi
 | Insight is deep but dry | Add reader pain, felt stakes, and a decision payoff |
 | Too close to a reference essay | Change opening, title syntax, section order, examples; choose adjacent or missing-angle thesis |
 | Internal analysis appears in final | Move maps, tournaments, scores, and notes into `analysis_pack` |
+| Title uses negative contrast | Rewrite as direct positive claim |
 | Title feels like a framework | Generate natural problem/mechanism/decision/reader-gain titles |
 | Section headings feel like templates | Rewrite them as public article headings |
-| Reader artifact is present but weak | Make it mutually distinct, decision-changing, and reader-facing |
+| Reader artifact is present but weak | Add exit conditions, owners, defaults, or escalation triggers |
+| Source voice invents access | Replace first-person interview language with the true source relationship |
 | Too many concepts compete | Pick one spine and one main mechanism |
 | Mechanism name feels invented | Explain it in prose or choose a plainer phrase |
 | Cost table becomes the article | Convert it into narrative tension and a reader-useful artifact |
@@ -453,12 +490,15 @@ Review the article as a reader-facing piece. Penalize visible research scaffoldi
 - See [originality-gate.md](references/originality-gate.md) for avoiding reference-essay overlap.
 - See [reader-gain-artifacts.md](references/reader-gain-artifacts.md) for decision tools and action frameworks.
 - See [reader-artifact-qa.md](references/reader-artifact-qa.md) for artifact quality checks.
+- See [reader-artifact-upgrade.md](references/reader-artifact-upgrade.md) for turning simple tables into meeting-ready tools.
 - See [title-guide.md](references/title-guide.md) for title patterns and anti-patterns.
+- See [direct-positive-title.md](references/direct-positive-title.md) for title-level positive claims.
 - See [section-heading-guide.md](references/section-heading-guide.md) for natural public headings.
 - See [publication-gates.md](references/publication-gates.md) for reader gain, one-spine, and publication polish.
 - See [claim-calibration.md](references/claim-calibration.md) for scoping bold claims.
+- See [source-voice-integrity.md](references/source-voice-integrity.md) for preserving source relationships.
 - See [reference-distance.md](references/reference-distance.md) for polished-reference distance checks.
 - See [direct-positive-claims.md](references/direct-positive-claims.md) for the direct positive prose pass.
 - See [best-of-n.md](references/best-of-n.md) for comparing multiple model drafts.
-- See [quality-rubric.md](references/quality-rubric.md) for v5 scoring.
+- See [quality-rubric.md](references/quality-rubric.md) for v6 scoring.
 - See [workflow-templates.md](references/workflow-templates.md) for internal tables.
