@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "4.0.0",
+  "goal": "Implement the UI described by the Electron inspection pack.",
+  "readOrder": [
+    "00-meta/manifest.json",
+    "00-meta/app-context.json",
+    "00-meta/capability-ledger.json",
+    "05-ui-ux-report/inspection-report.md",
+    "05-ui-ux-report/design-tokens.json",
+    "05-ui-ux-report/component-inventory.md",
+    "05-ui-ux-report/interaction-matrix.md",
+    "06-codex-tasks/acceptance-checklist.md"
+  ],
+  "slices": [
+    {
+      "id": "slice-01",
+      "title": "Render first visible component with tokens",
+      "deliverables": ["component", "story/example", "visual check"],
+      "acceptance": ["default state matches inspected evidence", "tokens are centralized", "unknown states are documented"],
+      "provenanceRequired": true
+    }
+  ],
+  "unknowns": []
+}

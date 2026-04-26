@@ -1,0 +1,13 @@
+interface:
+  display_name: "Electron App Inspection Harness"
+  short_description: "Inspect Electron apps with MCP, CDP, Playwright/Puppeteer, asar analysis, OS automation, and Codex-ready tasks."
+policy:
+  allow_implicit_invocation: true
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "chrome-devtools"
+      description: "Chrome DevTools MCP for runtime DOM, CSS, console, network, screenshots, and performance traces."
+    - type: "mcp"
+      value: "playwright"
+      description: "Playwright MCP for browser/UI exploration, accessibility snapshots, interactions, and test generation."
