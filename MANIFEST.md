@@ -1,28 +1,37 @@
-# Manifest
-
-Version: 0.4.1
+# GuanFu v0.5 Manifest
 
 ## Runtime skills
 
-- `skills/gf-brainstorm/SKILL.md`
-- `skills/gf-plan/SKILL.md`
-- `skills/gf-work/SKILL.md`
-- `skills/gf-code-review/SKILL.md`
-- `skills/gf-doc-review/SKILL.md`
-- `skills/gf-compound/SKILL.md`
-- `skills/gf-evolve/SKILL.md`
-- `skills/gf-evolve/references/pressure-scenarios.md`
+- `skills/gf-brainstorm/`
+- `skills/gf-plan/`
+- `skills/gf-backlog/`
+- `skills/gf-work/`
+- `skills/gf-qa/`
+- `skills/gf-code-review/`
+- `skills/gf-architecture-review/`
+- `skills/gf-doc-review/`
+- `skills/gf-compound/`
+- `skills/gf-evolve/`
+- `skills/gf-init/`
+- `skills/gf-guardrails/`
 
-## Shared template examples
+## Runtime scripts
 
-- `skills/gf-init/assets/templates/plan.md`
-- `skills/gf-init/assets/templates/skill-evolution.md`
-
-## Package helpers
-
+- `skills/gf-init/scripts/gf-init.sh`
+- `skills/gf-guardrails/scripts/block-dangerous-git.sh`
+- `skills/gf-guardrails/scripts/install-git-guardrails.sh`
 - `scripts/gf-validate.sh`
 - `tests/pressure-scenarios.md`
+- `VALIDATION_RUN.txt`
 
-## Runtime source of truth
+## Template extras
 
-Package-root `templates/`, `scripts/gf-init.sh`, and `bin/gf-init.sh` are intentionally absent. The remaining `skills/gf-init/assets/templates/` files are shared examples, not an installable runtime skill surface.
+- `skills/gf-init/assets/templates/best-practices.md`
+
+## Important docs
+
+- `README.md`
+- `README.guanfu.md`
+- `CHANGELOG.md`
+- `VALIDATION.md`
+- `docs/guanfu/best-practices/GUANFU_WORKFLOW_BEST_PRACTICES.md`

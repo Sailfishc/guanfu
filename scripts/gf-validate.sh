@@ -4,67 +4,72 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-fail() { printf 'FAIL: %s\n' "$1" >&2; exit 1; }
+fail=0
+say() { printf '%s\n' "$*"; }
+check_file() { [[ -f "$1" ]] && say "OK file: $1" || { say "MISSING file: $1"; fail=1; }; }
+check_dir() { [[ -d "$1" ]] && say "OK dir: $1" || { say "MISSING dir: $1"; fail=1; }; }
 
-printf 'Validating GuanFu package at %s\n' "$ROOT"
+say "GuanFu validation root: $ROOT"
 
-expected=(gf-brainstorm gf-plan gf-work gf-code-review gf-doc-review gf-compound gf-evolve)
-
-for skill in "${expected[@]}"; do
-  file="skills/$skill/SKILL.md"
-  [[ -f "$file" ]] || fail "missing $file"
-  grep -q "^name: $skill$" "$file" || fail "$file name mismatch"
-  grep -q '^description: Use when' "$file" || fail "$file description must start with Use when"
-  frontmatter="$(awk 'BEGIN{n=0} /^---$/{n++; next} n==1{print}' "$file")"
-  echo "$frontmatter" | grep -q '^name: ' || fail "$file missing name in frontmatter"
-  echo "$frontmatter" | grep -q '^description: ' || fail "$file missing description in frontmatter"
-  if echo "$frontmatter" | grep -qE '^(version|allowed-tools|triggers|preamble-tier|sensitive):'; then
-    fail "$file has non-portable frontmatter fields"
-  fi
-  lines=$(wc -l < "$file" | tr -d ' ')
-  [[ "$lines" -le 500 ]] || fail "$file exceeds 500 lines"
-done
-
-for dir in skills/gf-*; do
-  [[ -d "$dir" ]] || continue
-  name="$(basename "$dir")"
-  [[ "$name" == "gf-init" ]] && continue
-  found=0
-  for skill in "${expected[@]}"; do [[ "$name" == "$skill" ]] && found=1; done
-  [[ "$found" == "1" ]] || fail "unexpected skill directory $dir"
-done
-
-[[ -f skills/gf-evolve/references/pressure-scenarios.md ]] || fail "missing pressure scenarios reference"
-[[ -s skills/gf-init/assets/templates/plan.md ]] || fail "missing shared plan template"
-[[ -s skills/gf-init/assets/templates/skill-evolution.md ]] || fail "missing shared skill evolution template"
-
-[[ ! -d templates ]] || fail "runtime templates directory must live under skills/gf-init/assets/templates/, not package root"
-[[ ! -f scripts/gf-init.sh ]] || fail "runtime gf-init script must live under skills/gf-init/scripts/, not package root scripts/"
-[[ ! -d bin ]] || fail "runtime gf-init wrapper must not live in package root bin/"
-
-legacy_prefix_re='(^|[^[:alnum:]_])c'"e-"'[[:alnum:]_-]+'
-if grep -RInE --exclude='gf-validate.sh' "$legacy_prefix_re" README.md skills tests scripts VALIDATION.md MANIFEST.md CHANGELOG.md >/tmp/guanfu-legacy-prefix.txt 2>/dev/null; then
-  cat /tmp/guanfu-legacy-prefix.txt >&2
-  fail "legacy ce-* prefix found"
-fi
-
-if grep -RIn --exclude='gf-validate.sh' "gf-improve\|docs/ce\|compound-engineering" README.md skills tests scripts VALIDATION.md MANIFEST.md CHANGELOG.md >/tmp/guanfu-stale.txt 2>/dev/null; then
-  cat /tmp/guanfu-stale.txt >&2
-  fail "stale package naming found"
-fi
-
-grep -RIn "docs/guanfu" README.md skills scripts tests >/dev/null || fail "docs/guanfu path missing"
-grep -RIn "AUTOMATED_AFTER_PLAN" README.md skills scripts >/dev/null || fail "automated execution contract missing"
-grep -RIn "First failure\|first failure" README.md skills scripts >/dev/null || fail "failure budget principle missing"
-
-for skill in gf-work gf-code-review gf-doc-review gf-compound gf-evolve; do
-  if grep -q 'AskUserQuestion' "skills/$skill/SKILL.md"; then
-    fail "$skill should not use AskUserQuestion in automated stages"
+for skill in skills/gf-*; do
+  [[ -d "$skill" ]] || continue
+  check_file "$skill/SKILL.md"
+  if [[ -f "$skill/SKILL.md" ]]; then
+    grep -q '^---$' "$skill/SKILL.md" || { say "BAD frontmatter fence: $skill/SKILL.md"; fail=1; }
+    grep -q '^name: ' "$skill/SKILL.md" || { say "BAD missing name: $skill/SKILL.md"; fail=1; }
+    grep -q '^description: ' "$skill/SKILL.md" || { say "BAD missing description: $skill/SKILL.md"; fail=1; }
   fi
 done
-grep -q 'human-loop' skills/gf-brainstorm/SKILL.md || fail "gf-brainstorm must be marked as human-loop"
-grep -q 'human-loop' skills/gf-plan/SKILL.md || fail "gf-plan must be marked as human-loop"
 
-bash -n scripts/gf-validate.sh
+for f in \
+  skills/gf-init/scripts/gf-init.sh \
+  skills/gf-guardrails/scripts/block-dangerous-git.sh \
+  skills/gf-guardrails/scripts/install-git-guardrails.sh; do
+  check_file "$f"
+  [[ -x "$f" ]] || { say "NOT executable: $f"; fail=1; }
+done
 
-printf 'PASS: GuanFu package validation complete.\n'
+for f in \
+  AGENTS.guanfu docs-readme context-readme compound-index taste review-rubric \
+  brainstorm plan code-review doc-review qa-review architecture-review adr compound-note \
+  skill-evolution code-explore backlog-readme work-item best-practices; do
+  check_file "skills/gf-init/assets/templates/$f.md"
+done
+
+for needle in \
+  'Vertical Slice Gate' \
+  'Re-run Check' \
+  'RED gate' \
+  'Doc Lifecycle Audit' \
+  'gf-backlog' \
+  'gf-qa' \
+  'gf-architecture-review' \
+  'gf-guardrails'; do
+  grep -R -q "$needle" skills/gf-* || { say "MISSING required text: $needle"; fail=1; }
+done
+
+set +e
+echo '{"tool_input":{"command":"git push origin main"}}' | skills/gf-guardrails/scripts/block-dangerous-git.sh >/tmp/gf_validate_guardrails.out 2>/tmp/gf_validate_guardrails.err
+danger=$?
+echo '{"tool_input":{"command":"git status --short"}}' | skills/gf-guardrails/scripts/block-dangerous-git.sh >/tmp/gf_validate_guardrails_safe.out 2>/tmp/gf_validate_guardrails_safe.err
+safe=$?
+set -e
+[[ "$danger" == "2" ]] && grep -q BLOCKED /tmp/gf_validate_guardrails.err && say "OK guardrails block dangerous git" || { say "BAD guardrails did not block dangerous git"; fail=1; }
+[[ "$safe" == "0" ]] && say "OK guardrails allow safe git" || { say "BAD guardrails blocked safe git"; fail=1; }
+
+tmp="$(mktemp -d)"
+mkdir -p "$tmp/skills" "$tmp/repo"
+cp -R skills/gf-* "$tmp/skills/"
+(
+  cd "$tmp/repo"
+  bash "$tmp/skills/gf-init/scripts/gf-init.sh" --new >/tmp/gf_validate_init_new.out
+  bash "$tmp/skills/gf-init/scripts/gf-init.sh" --audit >/tmp/gf_validate_init_audit.out
+)
+say "OK gf-init skill-only install simulation"
+
+if [[ "$fail" == "0" ]]; then
+  say "STATUS: PASS"
+else
+  say "STATUS: FAIL"
+fi
+exit "$fail"

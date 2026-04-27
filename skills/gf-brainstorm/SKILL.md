@@ -214,4 +214,3 @@ C) Keep as partial and continue with explicit planning risks
 ```
 
 When approved, set `Status: APPROVED`, then continue to `/gf-plan`.
-

@@ -10,7 +10,7 @@ description: Use when code, tests, diffs, completed plan slices, or implementati
 
 Review implementation against the active plan, code quality, tests, verification evidence, architecture, and GuanFu taste.
 
-Review catches the pattern, not just the bug. Findings route automatically to work, doc review, compound, or evolve.
+Review catches the pattern, not just the bug. Findings route automatically to work, backlog, architecture review, doc review, compound, or evolve.
 
 ## Autonomous contract
 
@@ -18,8 +18,9 @@ Continue without routine prompts.
 
 Routes:
 
-- P0/P1 inside approved scope -> create or update a repair slice and continue to `/gf-work`.
-- P2/P3 -> add follow-up or review notes and continue.
+- P0/P1 inside approved scope -> create or update a repair slice or `REVIEW_REPAIR` work item, then continue to `/gf-work`.
+- P2/P3 -> add follow-up work item or review notes and continue.
+- architecture friction, hard-to-test boundary, shallow module, or ADR drift -> route to `/gf-architecture-review`.
 - repeated mistake -> continue to `/gf-compound`.
 - skill/template/router gap -> continue to `/gf-compound`, then `/gf-evolve`.
 
@@ -31,7 +32,7 @@ Stop only for security-sensitive or destructive ambiguity requiring human author
 docs/guanfu/reviews/code/YYYY-MM-DD-HHMM-<slug>-code-review.md
 ```
 
-Also update the related plan's review log.
+Also update the related plan's review log and linked backlog item when present.
 
 ## Review scope check
 
@@ -57,12 +58,13 @@ Changed files:
 - <file>
 Plan: <path or none>
 Slice: <slice or none>
+Linked Work Item: <id/path or none>
 Decision: REVIEW | NEED_PLAN | NEED_WORK_LOG | BLOCKED
 ```
 
 ## Freshness audit
 
-Read the active plan's completion evidence and compare it to final code changes.
+Read the active plan's completion evidence, linked backlog item, and final code changes.
 
 ```markdown
 ## Verification Freshness
@@ -77,10 +79,11 @@ Weak evidence becomes a finding. Stale evidence routes to `/gf-work`.
 1. Plan compliance: scope, slice, assumptions, exit criteria.
 2. Correctness: edge cases, errors, retries, concurrency, data loss.
 3. Tests: behavior coverage, regression coverage, failure mode coverage.
-4. Architecture: boundaries, reversibility, dependencies, ADR fit.
+4. Architecture: boundaries, module depth, seams, reversibility, dependencies, ADR fit.
 5. Security/trust: auth, permissions, injection, secrets, unsafe AI output, data exposure.
-6. Taste: smaller API, readable names, less ceremony, simple future diffs.
-7. Compound signals: repeated issue, missed assumption, review pattern, skill gap.
+6. Backlog/lifecycle: linked item status, blockers, follow-up capture, stale DONE claims.
+7. Taste: smaller API, readable names, less ceremony, simple future diffs.
+8. Compound signals: repeated issue, missed assumption, review pattern, skill gap.
 
 Use an independent review subagent for non-trivial diffs.
 
@@ -94,7 +97,8 @@ Evidence:
 Pattern:
 Why this happened:
 User impact:
-Recommended route: gf-work | gf-plan | gf-compound | gf-evolve | follow-up
+Recommended route: gf-work | gf-plan | gf-backlog | gf-architecture-review | gf-compound | gf-evolve | follow-up
+Backlog item: create | update | none
 Compound candidate: yes/no
 ```
 
@@ -106,8 +110,9 @@ CLEAR | CLEAR_WITH_FOLLOWUPS | RETURN_TO_WORK | RETURN_TO_PLAN | COMPOUND_REQUIR
 
 ## Continue
 
-- `CLEAR` or `CLEAR_WITH_FOLLOWUPS` -> `/gf-doc-review`.
-- `RETURN_TO_WORK` -> update plan and continue to `/gf-work`.
+- `CLEAR` or `CLEAR_WITH_FOLLOWUPS` -> update linked work item if present, then `/gf-doc-review`.
+- `RETURN_TO_WORK` -> update plan/backlog and continue to `/gf-work`.
+- Architecture findings that change module shape -> `/gf-architecture-review` before implementation.
+- P2/P3 follow-ups -> `/gf-backlog` before handoff when they should persist.
 - `COMPOUND_REQUIRED` -> `/gf-compound`.
 - `EVOLUTION_REQUIRED` -> `/gf-compound`, then `/gf-evolve`.
-

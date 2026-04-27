@@ -5,12 +5,14 @@ Plan Status: ACTIVE | PAUSED | COMPLETED | ABANDONED
 Plan Approval: DRAFT | APPROVED
 Active Slice: S1 | none
 Execution Mode: DISABLED | AUTOMATED_AFTER_PLAN
-Source: <brainstorm path>
+Source Brainstorm: <brainstorm path or none>
+Related Work Items: <ids or none>
 Previous Artifact: <path>
 Next Artifact: /gf-work
 Related ADRs: <paths>
 Related Compound Notes: <paths>
 Supersedes: <path or none>
+Lifecycle: ACTIVE | COMPLETED | SUPERSEDED | ARCHIVED
 
 ## Goal
 
@@ -38,9 +40,9 @@ Rules:
 
 ## Slice Index
 
-| Slice | Status | Type | Blocked By | Risk | Outcome | Verification | Review Focus |
-|---|---|---|---|---|---|---|---|
-| S1 | ACTIVE | AFK | none | | | | |
+| Slice | Status | Type | Blocked By | Backlog Item | Risk | Outcome | Verification | Review Focus |
+|---|---|---|---|---|---|---|---|---|
+| S1 | ACTIVE | AFK | none | none | | | | |
 
 ## Slices
 
@@ -49,7 +51,8 @@ Rules:
 Status: ACTIVE
 Type: HITL | AFK
 Risk: LOW | MEDIUM | HIGH
-Blocked By: <slice ids or none>
+Blocked By: <slice ids, work item ids, or none>
+Backlog Item: <WI-id/path or none>
 User Stories / Requirements Covered:
 - <source requirement or none>
 
@@ -84,12 +87,28 @@ User Stories / Requirements Covered:
 
 #### Completion Evidence
 
+## Autonomous Execution Contract
+
+After this plan is approved:
+- `/gf-work` executes the active slice without routine user prompts.
+- `/gf-code-review` reviews the result and routes findings without routine user prompts.
+- `/gf-doc-review` checks handoff quality without routine user prompts.
+- `/gf-qa` records manual QA findings as backlog items when the user reports behavior problems.
+- `/gf-compound` records reusable lessons when failures or patterns appear.
+- `/gf-evolve` updates skills/templates/pressure scenarios when the harness gap is real.
+
 ## Implementation Log
 
 ## Anomaly Log
 
+## Backlog Log
+
 ## Code Review Log
 
 ## Doc Review Log
+
+## QA Log
+
+## Architecture Review Log
 
 ## Compound / Evolution Log

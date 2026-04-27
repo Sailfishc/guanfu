@@ -30,8 +30,11 @@ Read the source evidence:
 - failed command or test output
 - code review finding
 - doc review finding
+- QA finding or user taste correction
+- architecture review candidate or rejected candidate
+- backlog/work item anomaly
 - plan anomaly
-- user taste correction
+- guardrail failure
 - repeated confusion
 - prior compound notes with similar keywords
 
@@ -88,7 +91,7 @@ Chosen guardrail:
 - [ ] No guardrail, reason: <explicit reason>
 
 Owner skill:
-- gf-brainstorm | gf-plan | gf-work | gf-code-review | gf-doc-review | gf-compound | gf-evolve | project-only
+- gf-brainstorm | gf-plan | gf-backlog | gf-work | gf-qa | gf-code-review | gf-architecture-review | gf-doc-review | gf-guardrails | gf-compound | gf-evolve | project-only
 
 Applied now:
 - yes/no
@@ -119,5 +122,6 @@ Update `docs/guanfu/compound/index.md` with the lesson, guardrail, owner skill, 
 
 - project-only lesson -> return to the active flow.
 - repeated issue -> continue to `/gf-evolve` if a skill/template/router/pressure scenario should change.
-- review finding remains unfixed -> route to `/gf-work` with a repair slice.
-
+- review finding remains unfixed -> route to `/gf-backlog` and `/gf-work` with a repair item/slice.
+- architecture pattern repeats -> route to `/gf-architecture-review`.
+- executable safety gap repeats -> route to `/gf-guardrails` and `/gf-evolve` if the hook/script must change.

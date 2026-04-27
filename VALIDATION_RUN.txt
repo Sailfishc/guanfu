@@ -1,0 +1,39 @@
+GuanFu validation root: /mnt/data/guanfu-v0.5
+OK file: skills/gf-architecture-review/SKILL.md
+OK file: skills/gf-backlog/SKILL.md
+OK file: skills/gf-brainstorm/SKILL.md
+OK file: skills/gf-code-review/SKILL.md
+OK file: skills/gf-compound/SKILL.md
+OK file: skills/gf-doc-review/SKILL.md
+OK file: skills/gf-evolve/SKILL.md
+OK file: skills/gf-guardrails/SKILL.md
+OK file: skills/gf-init/SKILL.md
+OK file: skills/gf-plan/SKILL.md
+OK file: skills/gf-qa/SKILL.md
+OK file: skills/gf-work/SKILL.md
+OK file: skills/gf-init/scripts/gf-init.sh
+OK file: skills/gf-guardrails/scripts/block-dangerous-git.sh
+OK file: skills/gf-guardrails/scripts/install-git-guardrails.sh
+OK file: skills/gf-init/assets/templates/AGENTS.guanfu.md
+OK file: skills/gf-init/assets/templates/docs-readme.md
+OK file: skills/gf-init/assets/templates/context-readme.md
+OK file: skills/gf-init/assets/templates/compound-index.md
+OK file: skills/gf-init/assets/templates/taste.md
+OK file: skills/gf-init/assets/templates/review-rubric.md
+OK file: skills/gf-init/assets/templates/brainstorm.md
+OK file: skills/gf-init/assets/templates/plan.md
+OK file: skills/gf-init/assets/templates/code-review.md
+OK file: skills/gf-init/assets/templates/doc-review.md
+OK file: skills/gf-init/assets/templates/qa-review.md
+OK file: skills/gf-init/assets/templates/architecture-review.md
+OK file: skills/gf-init/assets/templates/adr.md
+OK file: skills/gf-init/assets/templates/compound-note.md
+OK file: skills/gf-init/assets/templates/skill-evolution.md
+OK file: skills/gf-init/assets/templates/code-explore.md
+OK file: skills/gf-init/assets/templates/backlog-readme.md
+OK file: skills/gf-init/assets/templates/work-item.md
+OK file: skills/gf-init/assets/templates/best-practices.md
+OK guardrails block dangerous git
+OK guardrails allow safe git
+OK gf-init skill-only install simulation
+STATUS: PASS

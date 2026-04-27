@@ -18,9 +18,20 @@ Continue without routine prompts when the change is local to GuanFu package file
 
 ## Packaging rule
 
-Runtime resources must live inside the owning skill directory. When package structure changes, update `README.md`, `MANIFEST.md`, `VALIDATION.md`, `tests/pressure-scenarios.md`, `references/pressure-scenarios.md`, and `scripts/gf-validate.sh` together.
+Runtime resources must live inside the owning skill directory.
 
-Shared examples that are not installable runtime skills must be described as such in docs and validation.
+For `gf-init`:
+
+```text
+skills/gf-init/
+  SKILL.md
+  scripts/gf-init.sh
+  assets/templates/*.md
+```
+
+`gf-init` copies templates from its own `assets/templates/`. It does not recreate templates from memory and does not depend on package-root templates.
+
+Detailed packaging checklist: read `references/skill-packaging-contract.md` when changing package structure.
 
 ## RED gate
 
@@ -63,7 +74,7 @@ Rationalization table:
 docs/guanfu/evolution/YYYY-MM-DD-HHMM-<skill-or-topic>.md
 ```
 
-Use `docs/guanfu/skill-evolution.md` when available.
+Use `docs/guanfu/evolution/EVOLUTION_TEMPLATE.md` when available.
 
 Required sections:
 
@@ -106,7 +117,17 @@ Run package validation after changes:
 bash scripts/gf-validate.sh
 ```
 
-For package-surface changes, re-read the package docs and validation files after the patch and confirm they match the current tree.
+For targeted `gf-init` changes, also simulate skill-only install:
+
+```bash
+tmp=$(mktemp -d)
+mkdir -p "$tmp/skills"
+cp -R skills/gf-* "$tmp/skills/"
+mkdir -p "$tmp/repo"
+cd "$tmp/repo"
+bash "$tmp/skills/gf-init/scripts/gf-init.sh" --new
+bash "$tmp/skills/gf-init/scripts/gf-init.sh" --audit
+```
 
 ## Status lifecycle
 
