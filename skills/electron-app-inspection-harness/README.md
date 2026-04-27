@@ -1,8 +1,8 @@
 # electron-app-inspection-harness
 
-Agent Skill for inspecting a specified Electron app with MCP, CDP, Playwright/Puppeteer, asar static analysis, OS automation, and optional app debug instrumentation.
+Agent Skill for inspecting a specified Electron app with MCP, CDP, Playwright/Puppeteer, asar static analysis, OS automation, optional app debug instrumentation, and interaction-parity workflows for Sumink-like note/editor/canvas UIs.
 
-The goal is to solve the inspection problem, not to produce a weaker fallback document. If high-value tools are missing, the skill installs low-cost local tooling or configures MCP before downgrading.
+The goal is to solve the inspection problem, then turn the evidence into small Codex implementation slices. If high-value tools are missing, the skill installs low-cost local tooling or configures MCP before downgrading. For interaction recreation, it adds state capture, token extraction, screenshot diffing, and a parity matrix.
 
 ## Install
 
@@ -37,6 +37,16 @@ Scope: whole app inventory plus deep dive on CanvasCard and SidebarNav.
 Use MCP/CDP/Playwright/Puppeteer/asar when useful. Install local capture tooling when it improves evidence quality.
 ```
 
+Sumink-style parity example:
+
+```text
+Use electron-app-inspection-harness on /Applications/Sumink.app.
+Output root: ./analysis.
+Mode: third-party-app.
+Scope: note detail default screen, sidebar states, editor blocks, backlinks, scroll/resize.
+Use parity workflow. Capture named states, extract tokens, generate implementation slices, and prepare Codex handoff.
+```
+
 ## Initialize manually
 
 ```bash
@@ -51,7 +61,7 @@ Then install local tools:
 ```bash
 bash ~/.agents/skills/electron-app-inspection-harness/scripts/bootstrap-inspection-tooling.sh \
   ./analysis/<app-slug> \
-  --profile runtime
+  --profile parity
 ```
 
 Configure Codex MCP when useful:
@@ -72,6 +82,23 @@ Attach/capture:
 bash ~/.agents/skills/electron-app-inspection-harness/scripts/scan-cdp.sh ./analysis/<app-slug>
 bash ~/.agents/skills/electron-app-inspection-harness/scripts/launch-electron-cdp.sh ./analysis/<app-slug> --app-path "/Applications/Target.app" --port 9222
 node ~/.agents/skills/electron-app-inspection-harness/scripts/capture-cdp.js --doc-root ./analysis/<app-slug> --port 9222 --label default
+```
+
+Parity extraction:
+
+```bash
+node ~/.agents/skills/electron-app-inspection-harness/scripts/extract-design-tokens-from-cdp.mjs ./analysis/<app-slug>
+node ~/.agents/skills/electron-app-inspection-harness/scripts/generate-parity-slices.mjs ./analysis/<app-slug> --profile sumink-note-editor
+node ~/.agents/skills/electron-app-inspection-harness/scripts/validate-parity-pack.mjs ./analysis/<app-slug>
+```
+
+Screenshot compare:
+
+```bash
+node ~/.agents/skills/electron-app-inspection-harness/scripts/compare-screenshots.mjs \
+  --reference ./analysis/<app-slug>/07-parity/references/note-detail-default.png \
+  --current ./analysis/<app-slug>/01-runtime/screenshots/default.png \
+  --out ./analysis/<app-slug>/07-parity/diffs/note-detail-default
 ```
 
 Static map:
@@ -105,6 +132,9 @@ analysis/<app-slug>/05-ui-ux-report/interaction-matrix.md
 analysis/<app-slug>/06-codex-tasks/codex-implementation-prompt.md
 analysis/<app-slug>/06-codex-tasks/task-contract.json
 analysis/<app-slug>/06-codex-tasks/acceptance-checklist.md
+analysis/<app-slug>/07-parity/parity-matrix.md
+analysis/<app-slug>/07-parity/implementation-slices.json
+analysis/<app-slug>/07-parity/codex-parity-prompt.md
 ```
 
 ## What changed from v3
@@ -114,3 +144,4 @@ analysis/<app-slug>/06-codex-tasks/acceptance-checklist.md
 - Missing Playwright/CDP/Puppeteer/asar becomes a recoverable capability gap.
 - Output is an inspection harness plus UI/UX report plus Codex task contract.
 - Tasks are split as vertical slices, so Codex can implement and verify small visible flows.
+- Parity mode adds state captures, design-token extraction from CDP DOM/CSS evidence, screenshot diff artifacts, and Sumink-style interaction atoms.

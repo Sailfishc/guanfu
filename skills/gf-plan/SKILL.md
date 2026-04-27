@@ -94,6 +94,30 @@ For meaningful decisions, include:
 
 Create an ADR when reversal cost is high, data/API changes exist, a new dependency is added, or an agent routing/harness decision changes future behavior.
 
+## Vertical Slice Gate
+
+Before writing slice details, reject horizontal plans. Each accepted slice must be a tracer bullet: a narrow path that crosses every layer needed for behavior-visible or verification-visible value.
+
+Write this gate table into the plan before `## Slices`:
+
+```markdown
+## Vertical Slice Gate
+
+| Slice | Type | Blocked By | End-to-End Path | Demoable / Verifiable Alone | Horizontal Smell? | Decision |
+|---|---|---|---|---|---|---|
+| S1 | AFK | none | data/state -> interface/API/command -> UI/user-visible behavior -> tests/verification | yes/no | none/schema-only/service-only/API-only/UI-only/tests-only/infra-only | ACCEPT/SPLIT/MERGE/BLOCK |
+```
+
+Rules:
+
+- A good slice crosses every layer required for user-visible behavior or concrete verification.
+- Schema-only, service-only, API-only, UI-only, or tests-only slices are suspicious. Split or merge them unless they are explicit infrastructure unlocks.
+- Infrastructure-only slices are allowed only when they unblock a later vertical slice and include a concrete verification command.
+- Every accepted slice must be demoable or verifiable on its own.
+- Prefer many thin `AFK` slices over a few broad slices. Mark `HITL` only when human taste, architecture, security, product, compliance, or irreversible judgment remains.
+- Record dependencies in `Blocked By`. A plan may describe a dependency graph, but exactly one slice starts `ACTIVE`.
+- If `Horizontal Smell?` is not `none`, set `Decision` to `SPLIT`, `MERGE`, or `BLOCK` before approval.
+
 ## Slice schema
 
 Each slice must use:
@@ -102,9 +126,19 @@ Each slice must use:
 ### Slice S<n>: <name>
 
 Status: TODO | ACTIVE | COMPLETED | BLOCKED | DEFERRED
+Type: HITL | AFK
 Risk: LOW | MEDIUM | HIGH
+Blocked By: <slice ids or none>
+User Stories / Requirements Covered:
+- <source requirement or none>
 
 #### Outcome
+#### End-to-End Path
+- Data / state:
+- Interface / API / command:
+- UI / user-visible behavior:
+- Tests / verification:
+
 #### Entry Conditions
 #### Scope
 #### Out of Scope
@@ -118,7 +152,7 @@ Risk: LOW | MEDIUM | HIGH
 #### Completion Evidence
 ```
 
-Exactly one slice starts as `ACTIVE`. Others start as `TODO`.
+Exactly one slice starts as `ACTIVE`. Others start as `TODO`. Every slice must pass the Vertical Slice Gate before approval. Each non-active slice keeps its `Blocked By` value so future parallelization remains possible, but GuanFu still executes one active slice at a time.
 
 ## Autonomous execution contract
 
@@ -175,4 +209,3 @@ Execution Mode: AUTOMATED_AFTER_PLAN
 ```
 
 Then continue to `/gf-work`.
-

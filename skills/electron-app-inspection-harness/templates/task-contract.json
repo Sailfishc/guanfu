@@ -1,6 +1,6 @@
 {
-  "schemaVersion": "4.0.0",
-  "goal": "Implement the UI described by the Electron inspection pack.",
+  "schemaVersion": "4.1.0",
+  "goal": "Implement the UI and interaction parity described by the Electron inspection pack.",
   "readOrder": [
     "00-meta/manifest.json",
     "00-meta/app-context.json",
@@ -9,14 +9,21 @@
     "05-ui-ux-report/design-tokens.json",
     "05-ui-ux-report/component-inventory.md",
     "05-ui-ux-report/interaction-matrix.md",
+    "07-parity/parity-matrix.md",
+    "07-parity/implementation-slices.json",
     "06-codex-tasks/acceptance-checklist.md"
   ],
   "slices": [
     {
-      "id": "slice-01",
-      "title": "Render first visible component with tokens",
-      "deliverables": ["component", "story/example", "visual check"],
-      "acceptance": ["default state matches inspected evidence", "tokens are centralized", "unknown states are documented"],
+      "id": "slice-01-note-detail-static-shell",
+      "title": "Render first visible screen with tokens",
+      "goal": "Produce a visible, reviewable screen from inspected evidence before adding interaction complexity.",
+      "status": "ready",
+      "atoms": ["window shell", "sidebar", "topbar", "content column", "typography", "backlinks"],
+      "inputs": ["design-tokens.json", "component-inventory.md", "parity-matrix.md", "screenshots"],
+      "outputs": ["centralized tokens", "route/story/example", "before/after screenshot", "gap table"],
+      "acceptance": ["default state matches inspected evidence", "tokens are centralized", "unknown states are documented", "visual check exists"],
+      "evidenceRequired": ["runtime-cdp or screenshot evidence", "computed CSS where available"],
       "provenanceRequired": true
     }
   ],

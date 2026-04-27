@@ -18,6 +18,8 @@ OPTIONAL=(
   "06-codex-tasks/codex-implementation-prompt.md"
   "06-codex-tasks/task-contract.json"
   "06-codex-tasks/acceptance-checklist.md"
+  "07-parity/parity-matrix.md"
+  "07-parity/implementation-slices.json"
 )
 MISSING=0
 {
@@ -38,4 +40,7 @@ MISSING=0
   echo "Missing required: $MISSING"
 } > "$REPORT"
 cat "$REPORT"
+if [ -f "$(dirname "$0")/validate-parity-pack.mjs" ]; then
+  node "$(dirname "$0")/validate-parity-pack.mjs" "$DOC_ROOT" || true
+fi
 [ "$MISSING" -eq 0 ] || exit 1

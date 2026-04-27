@@ -39,8 +39,9 @@ Plan Status: ACTIVE | PAUSED | COMPLETED | ABANDONED | UNKNOWN
 Plan Approval: APPROVED | DRAFT | UNKNOWN
 Execution Mode: AUTOMATED_AFTER_PLAN | DISABLED | UNKNOWN
 Active Slice: <slice id or none>
+Active Slice Status: TODO | ACTIVE | COMPLETED | BLOCKED | DEFERRED | UNKNOWN
 Multiple Active Plans Found: yes/no
-Decision: WORK | MARK_BLOCKED | RETURN_TO_PLAN
+Decision: WORK | REVERIFY | ROUTE_TO_REVIEW | MARK_BLOCKED | RETURN_TO_PLAN
 ```
 
 Rules:
@@ -48,6 +49,44 @@ Rules:
 - `Plan Approval: APPROVED` and `Execution Mode: AUTOMATED_AFTER_PLAN` are required for normal work.
 - Multiple active plans -> choose the one matching the user request or most recent approved plan, then record the choice.
 - Missing active slice -> mark plan blocked and route to `/gf-doc-review`.
+- Completed active slice with fresh evidence -> `ROUTE_TO_REVIEW`.
+- Completed active slice with stale or unknown evidence -> `REVERIFY`.
+
+## Re-run behavior
+
+Re-running `/gf-work` means running the work entry check again. Actions are idempotent; verification is not. Never mark a slice complete from stale evidence.
+
+Output this check before changing files:
+
+```markdown
+## Re-run Check
+Invocation: initial | rerun
+Existing Slice Status: TODO | ACTIVE | COMPLETED | BLOCKED | DEFERRED | UNKNOWN
+Prior Completion Evidence Present: yes/no
+Code Changed Since Prior Evidence: yes/no/unknown
+Completion Evidence Fresh: yes/no/unknown
+Decision: WORK | REVERIFY | ROUTE_TO_REVIEW | MARK_BLOCKED | RETURN_TO_PLAN
+```
+
+Rules:
+
+- Re-read the active plan, active slice status, completion evidence, implementation log, anomaly log, recent reviews, and current git status on every invocation.
+- If the active slice is already `COMPLETED`, route to `/gf-code-review` unless completion evidence is stale.
+- Evidence is stale when files changed after recorded verification, verification command/result is missing, result is not `PASS`, or evidence no longer covers the current exit criteria.
+- If evidence is stale, keep or restore the slice as `ACTIVE`, append a rerun log entry, and re-run verification before any completion claim.
+- If a failing test already exists, re-run it and confirm it still fails before implementation.
+- If implementation already exists, verify it against the current exit criteria instead of duplicating work.
+- Do not duplicate work log entries. Append a rerun note with reason and timestamp.
+- Re-run verification whenever code changed or evidence is stale, even when a prior run claimed success.
+
+Forbidden shortcuts:
+
+| Shortcut | Required response |
+|---|---|
+| "Already done last run" | Re-check evidence freshness and current git diff. |
+| "No code changed in this turn" | Confirm no relevant files changed since recorded verification. |
+| "The plan says completed" | Treat plan status as a claim until evidence is fresh. |
+| "Verification was expensive" | Run the narrowest command that still proves the exit criteria, or mark concerns. |
 
 ## Load relevant compound memory
 
@@ -105,14 +144,20 @@ Before marking complete, run:
 ```markdown
 ## Fresh Verification Check
 Last code change: <timestamp or git diff summary>
+Evidence source: new run | rerun | prior run revalidated
+Prior completion evidence: <path/section or none>
 Verification command: <command>
+Verification ran in this gf-work invocation: yes/no
 Verification ran after final code change: yes/no
+Code changed since prior evidence: yes/no/unknown
 Result: PASS | FAIL | SKIPPED
 Covers Exit Criteria: yes/no
-Decision: MARK_COMPLETED | KEEP_ACTIVE | BLOCKED
+Decision: MARK_COMPLETED | UPDATE_EVIDENCE | KEEP_ACTIVE | BLOCKED
 ```
 
-A completed slice requires verification after final code change. If verification cannot run, mark `DONE_WITH_CONCERNS` and record the reason.
+A completed slice requires verification after the final relevant change. Prior completion evidence is acceptable only when the Re-run Check says it is fresh. If verification cannot run, mark `DONE_WITH_CONCERNS` and record the reason.
+
+No completion claim may rely only on old text in the plan, an earlier assistant summary, or confidence.
 
 ## Update living plan
 
@@ -122,7 +167,9 @@ Set slice status to `COMPLETED` or `BLOCKED`. Record:
 #### Completion Evidence
 - Command: `<command>`
 - Result: PASS | FAIL | SKIPPED
+- Ran in this gf-work invocation: yes/no
 - Ran after final code change: yes/no
+- Prior evidence reused: yes/no, with freshness reason
 - Files changed: <files>
 - Assumptions made: <list>
 - Review focus: <what review must inspect>
@@ -144,4 +191,3 @@ VERIFICATION: <commands and results>
 ASSUMPTIONS_RECORDED: yes/no
 NEXT: /gf-code-review
 ```
-

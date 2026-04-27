@@ -62,6 +62,7 @@ async function main() {
           style: {
             display: s.display, position: s.position, zIndex: s.zIndex,
             fontFamily: s.fontFamily, fontSize: s.fontSize, fontWeight: s.fontWeight,
+            lineHeight: s.lineHeight, letterSpacing: s.letterSpacing,
             color: s.color, backgroundColor: s.backgroundColor,
             padding: s.padding, margin: s.margin, border: s.border,
             borderRadius: s.borderRadius, boxShadow: s.boxShadow,

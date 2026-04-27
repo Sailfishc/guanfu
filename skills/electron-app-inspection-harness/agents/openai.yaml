@@ -1,6 +1,6 @@
 interface:
   display_name: "Electron App Inspection Harness"
-  short_description: "Inspect Electron apps with MCP, CDP, Playwright/Puppeteer, asar analysis, OS automation, and Codex-ready tasks."
+  short_description: "Inspect Electron apps with MCP, CDP, Playwright/Puppeteer, asar analysis, OS automation, interaction parity, screenshot diffs, and Codex-ready tasks."
 policy:
   allow_implicit_invocation: true
 dependencies:

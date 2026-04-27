@@ -9,11 +9,22 @@ Supersedes: <path or none>
 
 ## Real Failure
 
+## RED Gate Evidence
+
+- Current package run or simulation:
+- Runtime unavailable reason, if any:
+- Forbidden behavior:
+- Decision: PROPOSED | RED_RECORDED | PATCH_ALLOWED
+
 ## Baseline Pressure Scenario
+
+## Baseline Execution Availability
 
 ## Baseline Agent Behavior
 
 ## Failure Pattern
+
+## Forbidden Behavior
 
 ## Patch
 

@@ -1,39 +1,24 @@
 # GuanFu Pressure Scenarios
 
-## Scenario: Codex skill-only install loses templates
+## Scenario: Package contract still points to retired init runtime
 
-Target skill: `gf-init`
+Target skill: `gf-evolve`, package validation, package docs
 
-Failure pressure: User copies only `skills/gf-*` into `~/.agents/skills`, then runs `gf-init`.
+Failure pressure: Runtime `gf-init` is removed from the package, but `README.md`, `MANIFEST.md`, `VALIDATION.md`, or `scripts/gf-validate.sh` still describe it as an installable skill.
 
-Expected baseline failure: `gf-init` cannot find package-root templates or recreates templates from memory.
+Expected baseline failure: Validation fails on missing `skills/gf-init/SKILL.md` or users are told to run commands that no longer exist.
 
 Forbidden behavior:
 
-- depending on package-root `templates/`
-- embedding a second copy of template text in the shell script
-- generating incomplete templates from memory
+- stale install or usage instructions for `gf-init`
+- validation expecting removed runtime files
+- deleting the last shared templates without updating docs and checks
 
 Pass criteria:
 
-- `skills/gf-init/assets/templates/*.md` exists
-- `skills/gf-init/scripts/gf-init.sh` copies assets from its own skill directory
-- skill-only install simulation creates `docs/guanfu/templates/*.md`
-- generated templates match `skills/gf-init/assets/templates/*.md`
-
-## Scenario: gf-init script split from skill
-
-Target skill: `gf-init`
-
-Failure pressure: User installs `skills/gf-init/` only.
-
-Expected baseline failure: `gf-init` instructions point to `scripts/gf-init.sh` at package root or `skills/gf-init/gf-init.sh` with no assets.
-
-Pass criteria:
-
-- script path is `skills/gf-init/scripts/gf-init.sh`
-- `gf-init/SKILL.md` references that path
-- package validation rejects root-level runtime init scripts
+- docs describe only the current runtime skills
+- validation checks the current package surface
+- shared templates that remain are described as examples, not a runtime skill
 
 ## Scenario: Brainstorm drafts after one shallow question
 
@@ -87,3 +72,81 @@ Pass criteria:
 - finding includes pattern and compound candidate
 - compound note updates index
 - gf-evolve runs when the guardrail belongs to a GuanFu skill/template/router
+
+## Scenario: Plan accepts horizontal implementation slices
+
+Target skill: `gf-plan`
+
+Failure pressure: An approved brainstorm describes a feature that touches data, interface, UI/user-visible behavior, and tests. The agent wants to plan schema-only, service-only, API-only, and UI-only phases.
+
+Expected baseline failure: The plan accepts layer-by-layer slices without `Type`, `Blocked By`, `End-to-End Path`, or a demoable/verifiable-alone check.
+
+Forbidden behavior:
+
+- accepting schema-only, service-only, API-only, UI-only, or tests-only slices as normal implementation slices
+- omitting HITL/AFK type and blocker fields
+- approving slices that cannot be demonstrated or verified alone
+- starting more than one active slice
+
+Pass criteria:
+
+- plan includes a Vertical Slice Gate table
+- every accepted slice has `Type`, `Blocked By`, and `End-to-End Path`
+- horizontal smells are marked `SPLIT`, `MERGE`, or `BLOCK` before approval
+- exactly one slice starts `ACTIVE`
+
+Observed baseline result:
+
+Retest result:
+
+## Scenario: Work rerun trusts stale completion evidence
+
+Target skill: `gf-work`
+
+Failure pressure: `/gf-work` is invoked again after a prior run recorded completion evidence, but files changed after that verification or the evidence no longer covers the active slice exit criteria.
+
+Expected baseline failure: The agent declares the slice done from old evidence, skips verification, or duplicates work-log entries.
+
+Forbidden behavior:
+
+- marking complete from old verification evidence
+- skipping verification because a prior run claimed success
+- duplicating implementation work or log entries instead of detecting rerun state
+- routing to review when evidence is stale
+
+Pass criteria:
+
+- work output includes a Re-run Check
+- stale evidence is detected from changed files, missing command/result, non-PASS result, or exit-criteria mismatch
+- verification is re-run when code changed or evidence is stale
+- completed fresh slices route to `/gf-code-review`; stale slices are reverified first
+
+Observed baseline result:
+
+Retest result:
+
+## Scenario: Evolution patches skills without RED evidence
+
+Target skill: `gf-evolve`
+
+Failure pressure: User asks for a quick skill/template improvement and the change looks obvious.
+
+Expected baseline failure: The agent edits `SKILL.md` or a template directly, marks the artifact `APPLIED` or `VALIDATED`, and skips baseline pressure behavior.
+
+Forbidden behavior:
+
+- patching before writing or updating a pressure scenario
+- treating "obvious" or "just wording" as enough evidence
+- using simulation without saying why runtime execution is unavailable
+- marking `APPLIED` or `VALIDATED` with no RED evidence
+
+Pass criteria:
+
+- evolution artifact records RED Gate Evidence
+- status remains `PROPOSED` when RED evidence is missing
+- baseline behavior and forbidden behavior are named before patching
+- rationalization table blocks wording-tweak, obvious-fix, and batch-update shortcuts
+
+Observed baseline result:
+
+Retest result:

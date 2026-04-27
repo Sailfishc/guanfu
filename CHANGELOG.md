@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Removed the stale `gf-init` runtime surface from package docs and validation.
+- Reframed the remaining `skills/gf-init/assets/templates/{plan,skill-evolution}.md` files as shared template examples instead of an installable skill.
+- Updated package pressure scenarios so `gf-evolve` now guards against doc and validator drift after package-surface changes.
+
 ## 0.4.1 - 2026-04-25
 
 - Kept the Agent Skills standard packaging from v0.4.0 and fixed validation around standard frontmatter.

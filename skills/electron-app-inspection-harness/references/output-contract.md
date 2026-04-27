@@ -42,6 +42,14 @@ analysis/<app-slug>/
     task-contract.json
     acceptance-checklist.md
     inspection-kanban.md
+  07-parity/
+    references/
+    state-captures/
+    measurements/
+    diffs/
+    parity-matrix.md
+    implementation-slices.json
+    codex-parity-prompt.md
 ```
 
 ## `capability-ledger.json`
@@ -92,3 +100,32 @@ analysis/<app-slug>/
   ]
 }
 ```
+
+
+## `07-parity/implementation-slices.json`
+
+```json
+{
+  "schemaVersion": "4.1.0",
+  "profile": "sumink-note-editor",
+  "slices": [
+    {
+      "id": "slice-01-note-detail-static-shell",
+      "goal": "Render the note detail static shell from evidence.",
+      "atoms": ["window shell", "sidebar", "topbar", "content column", "typography", "backlinks"],
+      "inputs": ["design-tokens.json", "parity-matrix.md", "screenshots"],
+      "acceptance": ["visible route exists", "tokens are centralized", "screenshot gap table is updated"]
+    }
+  ]
+}
+```
+
+## Parity evidence confidence
+
+| Evidence | Confidence | Use |
+|---|---|---|
+| computed CSS + DOM rect | high | typography, spacing, state geometry |
+| accessibility tree | high | roles, names, keyboard affordances |
+| screenshot diff | medium-high | visual similarity and regressions |
+| screenshot-only measurement | medium | approximate visual reconstruction |
+| inference | low | TODO or follow-up capture |

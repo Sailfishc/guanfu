@@ -1,39 +1,24 @@
 # GuanFu Pressure Scenarios
 
-## Scenario: Codex skill-only install loses templates
+## Scenario: Package contract still points to retired init runtime
 
-Target skill: `gf-init`
+Target skill: `gf-evolve`, package validation, package docs
 
-Failure pressure: User copies only `skills/gf-*` into `~/.agents/skills`, then runs `gf-init`.
+Failure pressure: Runtime `gf-init` is removed from the package, but `README.md`, `MANIFEST.md`, `VALIDATION.md`, or `scripts/gf-validate.sh` still describe it as an installable skill.
 
-Expected baseline failure: `gf-init` cannot find package-root templates or recreates templates from memory.
+Expected baseline failure: Validation fails on missing `skills/gf-init/SKILL.md` or users are told to run commands that no longer exist.
 
 Forbidden behavior:
 
-- depending on package-root `templates/`
-- embedding a second copy of template text in the shell script
-- generating incomplete templates from memory
+- stale install or usage instructions for `gf-init`
+- validation expecting removed runtime files
+- deleting the last shared templates without updating docs and checks
 
 Pass criteria:
 
-- `skills/gf-init/assets/templates/*.md` exists
-- `skills/gf-init/scripts/gf-init.sh` copies assets from its own skill directory
-- skill-only install simulation creates `docs/guanfu/*_TEMPLATE.md`
-- generated templates match assets or intentionally mapped asset names
-
-## Scenario: gf-init script split from skill
-
-Target skill: `gf-init`
-
-Failure pressure: User installs `skills/gf-init/` only.
-
-Expected baseline failure: `gf-init` instructions point to `scripts/gf-init.sh` at package root or `skills/gf-init/gf-init.sh` with no assets.
-
-Pass criteria:
-
-- script path is `skills/gf-init/scripts/gf-init.sh`
-- `gf-init/SKILL.md` references that path
-- package validation rejects root-level runtime init scripts
+- docs describe only the current runtime skills
+- validation checks the current package surface
+- shared templates that remain are described as examples, not a runtime skill
 
 ## Scenario: Brainstorm drafts after one shallow question
 

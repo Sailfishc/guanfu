@@ -1,0 +1,42 @@
+{
+  "name": "sumink-note-detail-core-states",
+  "description": "Example state capture plan for Sumink-like note detail parity. Adjust selectors/text to match the running app.",
+  "states": [
+    {
+      "label": "note-detail-default",
+      "actions": [
+        { "type": "wait", "ms": 500 }
+      ]
+    },
+    {
+      "label": "sidebar-home-hover",
+      "actions": [
+        { "type": "hover", "text": "Home", "afterMs": 250 }
+      ]
+    },
+    {
+      "label": "sidebar-active-note",
+      "actions": [
+        { "type": "click", "text": "Task Decomposition", "afterMs": 300 }
+      ]
+    },
+    {
+      "label": "editor-title-focus",
+      "actions": [
+        { "type": "click", "text": "Task Decomposition", "afterMs": 250 }
+      ]
+    },
+    {
+      "label": "backlinks-hover",
+      "actions": [
+        { "type": "hover", "text": "Backlinks", "afterMs": 250 }
+      ]
+    },
+    {
+      "label": "note-detail-resize-1280x800",
+      "actions": [
+        { "type": "resize", "width": 1280, "height": 800, "afterMs": 400 }
+      ]
+    }
+  ]
+}

@@ -4,9 +4,6 @@ Version: 0.4.1
 
 ## Runtime skills
 
-- `skills/gf-init/SKILL.md`
-- `skills/gf-init/scripts/gf-init.sh`
-- `skills/gf-init/assets/templates/*.md`
 - `skills/gf-brainstorm/SKILL.md`
 - `skills/gf-plan/SKILL.md`
 - `skills/gf-work/SKILL.md`
@@ -14,8 +11,12 @@ Version: 0.4.1
 - `skills/gf-doc-review/SKILL.md`
 - `skills/gf-compound/SKILL.md`
 - `skills/gf-evolve/SKILL.md`
-- `skills/gf-evolve/references/skill-packaging-contract.md`
 - `skills/gf-evolve/references/pressure-scenarios.md`
+
+## Shared template examples
+
+- `skills/gf-init/assets/templates/plan.md`
+- `skills/gf-init/assets/templates/skill-evolution.md`
 
 ## Package helpers
 
@@ -24,4 +25,4 @@ Version: 0.4.1
 
 ## Runtime source of truth
 
-`gf-init` owns runtime initialization assets. Package-root `templates/`, `scripts/gf-init.sh`, and `bin/gf-init.sh` are intentionally absent.
+Package-root `templates/`, `scripts/gf-init.sh`, and `bin/gf-init.sh` are intentionally absent. The remaining `skills/gf-init/assets/templates/` files are shared examples, not an installable runtime skill surface.

@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
-DOC_ROOT="${1:-}"; [ -n "$DOC_ROOT" ] || { echo "Usage: bootstrap-inspection-tooling.sh <doc-root> [--profile minimal|runtime|visual|full] [--install-browsers]" >&2; exit 64; }
+DOC_ROOT="${1:-}"; [ -n "$DOC_ROOT" ] || { echo "Usage: bootstrap-inspection-tooling.sh <doc-root> [--profile minimal|runtime|visual|parity|full] [--install-browsers]" >&2; exit 64; }
 shift || true
 PROFILE="runtime"; INSTALL_BROWSERS=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --profile) PROFILE="${2:-}"; shift 2 ;;
     --install-browsers) INSTALL_BROWSERS=1; shift ;;
-    -h|--help) echo "Usage: bootstrap-inspection-tooling.sh <doc-root> [--profile minimal|runtime|visual|full] [--install-browsers]"; exit 0 ;;
+    -h|--help) echo "Usage: bootstrap-inspection-tooling.sh <doc-root> [--profile minimal|runtime|visual|parity|full] [--install-browsers]"; exit 0 ;;
     *) echo "UNKNOWN_ARG: $1" >&2; exit 64 ;;
   esac
 done
-case "$PROFILE" in minimal|runtime|visual|full) ;; *) echo "INVALID_PROFILE: $PROFILE" >&2; exit 64 ;; esac
+case "$PROFILE" in minimal|runtime|visual|parity|full) ;; *) echo "INVALID_PROFILE: $PROFILE" >&2; exit 64 ;; esac
 command -v node >/dev/null 2>&1 || { echo "NEEDS_NODE" >&2; exit 69; }
 command -v npm >/dev/null 2>&1 || { echo "NEEDS_NPM" >&2; exit 69; }
 TOOLING="$DOC_ROOT/.tooling"; mkdir -p "$TOOLING"
@@ -22,7 +22,7 @@ JSON
 case "$PROFILE" in
   minimal) PACKAGES=("@electron/asar") ;;
   runtime) PACKAGES=("@electron/asar" "chrome-remote-interface" "puppeteer-core" "playwright") ;;
-  visual|full) PACKAGES=("@electron/asar" "chrome-remote-interface" "puppeteer-core" "playwright" "pixelmatch" "pngjs") ;;
+  visual|parity|full) PACKAGES=("@electron/asar" "chrome-remote-interface" "puppeteer-core" "playwright" "pixelmatch" "pngjs") ;;
 esac
 PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install --no-audit --no-fund "${PACKAGES[@]}"
 if [ "$INSTALL_BROWSERS" = "1" ]; then npx playwright install chromium; fi

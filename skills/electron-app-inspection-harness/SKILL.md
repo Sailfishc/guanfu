@@ -1,7 +1,7 @@
 ---
 name: electron-app-inspection-harness
-version: 4.0.0
-description: Use when inspecting a specified Electron app, app.asar archive, running renderer, UI flow, or component with AI agents; especially when MCP, CDP, Playwright, Puppeteer, asar static analysis, OS automation, debug bridge instrumentation, UI/UX findings, or Codex-ready implementation tasks are involved.
+version: 4.1.0
+description: Use when inspecting a specified Electron app or app.asar, especially for UI/UX interaction parity, Sumink-like note/editor/canvas analysis, MCP/CDP/Playwright/Puppeteer runtime capture, asar static analysis, OS automation, design-token extraction, screenshot diffing, and Codex-ready vertical implementation tasks.
 ---
 
 # Electron App Inspection Harness
@@ -21,9 +21,40 @@ analysis/<app-slug>/
   04-os-automation/
   05-ui-ux-report/
   06-codex-tasks/
+  07-parity/
 ```
 
 This skill is agent-first. Use Codex/Claude/MCP capabilities to inspect the app. Use bundled scripts for deterministic capture, validation, and repeatability.
+
+## Sumink / interaction parity layer
+
+Use parity mode when the objective is to recreate a polished Electron app interaction, such as Sumink note detail, sidebar, editor blocks, canvas/cards, backlinks, hover/focus/selection, or input behavior.
+
+Parity mode adds a seventh output layer:
+
+```text
+07-parity/
+  references/              reference screenshots, videos, or captured source states
+  state-captures/          per-state DOM/CSS/AX/screenshot summaries
+  measurements/            measured rects, typography, spacing, state metadata
+  diffs/                   screenshot comparison outputs
+  parity-matrix.md         observed states, gaps, confidence, next capture
+  implementation-slices.json
+  codex-parity-prompt.md
+```
+
+For Sumink-like work, the agent must convert broad goals into inspectable interaction atoms:
+
+```text
+shell/window → sidebar item → topbar → content column → title block → paragraph block → ordered list → code block → backlinks → selection/cursor → scroll/resize
+```
+
+Each atom gets:
+
+```text
+reference state → current capture → gap table → smallest implementation slice → visual/interaction verification → acceptance update
+```
+
 
 ## Core principle
 
@@ -131,6 +162,9 @@ Inspection Progress:
 - [ ] Use OS automation for DOM-external interactions when needed
 - [ ] Produce UI/UX findings with provenance
 - [ ] Produce Codex task contract and implementation prompt
+- [ ] If parity is requested, capture state sequences and generate parity slices
+- [ ] Extract tokens from computed CSS when runtime DOM evidence exists
+- [ ] Compare screenshots when references are available
 - [ ] Validate the pack
 ```
 
@@ -196,6 +230,7 @@ Profiles:
 minimal: @electron/asar
 runtime: @electron/asar, chrome-remote-interface, puppeteer-core, playwright package without browser downloads
 visual:  runtime + pixelmatch + pngjs
+parity:  alias of visual, intended for state capture + screenshot diff workflows
 full:    visual + optional browser install when explicitly requested
 ```
 
@@ -224,6 +259,17 @@ node scripts/capture-cdp.js \
   --port 9222 \
   --label default
 ```
+
+For interaction parity, capture named states from a scenario file:
+
+```bash
+node scripts/capture-state-sequence.mjs \
+  --doc-root "$DOC_ROOT" \
+  --port 9222 \
+  --scenario references/sumink-note-detail.scenario.json
+```
+
+A scenario state can use `hover`, `click`, `type`, `key`, `wait`, `resize`, and `evaluate` actions. Prefer semantic text/role selectors first, then CSS selectors.
 
 ## Step 5: MCP exploration
 
@@ -296,6 +342,26 @@ tray/menu bar items
 
 Ask for macOS Screen Recording or Accessibility permissions when needed. Record denied permissions in `00-meta/capability-ledger.json`.
 
+## Step 7a: parity extraction and comparison
+
+Run these commands after at least one runtime capture exists:
+
+```bash
+node scripts/extract-design-tokens-from-cdp.mjs "$DOC_ROOT"
+node scripts/generate-parity-slices.mjs "$DOC_ROOT" --profile sumink-note-editor
+```
+
+When a reference screenshot exists:
+
+```bash
+node scripts/compare-screenshots.mjs \
+  --reference "$DOC_ROOT/07-parity/references/note-detail-default.png" \
+  --current "$DOC_ROOT/01-runtime/screenshots/default.png" \
+  --out "$DOC_ROOT/07-parity/diffs/note-detail-default"
+```
+
+Update `07-parity/parity-matrix.md` after every capture or diff. Keep measurements approximate when they come from screenshots, and high confidence when they come from computed CSS or DOM rects.
+
 ## Step 8: write the inspection report and Codex handoff
 
 Create a starter handoff from artifacts when useful:
@@ -312,9 +378,14 @@ Then refine the generated files with real findings. Minimum final files:
 05-ui-ux-report/component-inventory.md
 05-ui-ux-report/interaction-matrix.md
 05-ui-ux-report/verification-report.md
+07-parity/parity-matrix.md
+07-parity/implementation-slices.json
+07-parity/codex-parity-prompt.md
 06-codex-tasks/codex-implementation-prompt.md
 06-codex-tasks/task-contract.json
 06-codex-tasks/acceptance-checklist.md
+07-parity/parity-matrix.md
+07-parity/implementation-slices.json
 ```
 
 For frontend rebuilds, the Codex task contract must be vertical-slice based:
@@ -361,6 +432,8 @@ If the pack is used for code generation, tell Codex to read this order:
 05-ui-ux-report/interaction-matrix.md
 06-codex-tasks/task-contract.json
 06-codex-tasks/acceptance-checklist.md
+07-parity/parity-matrix.md
+07-parity/implementation-slices.json
 ```
 
 ## Common failure modes
