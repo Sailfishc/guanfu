@@ -1,24 +1,35 @@
-# Publication Gates
+# Publication Gates v7
 
 ## Reader Gain Gate
 
-Before outlining, define:
+Before drafting, define:
 
 ```text
 Primary reader:
 Their current confusion:
-What they understand after reading:
-What decision they make differently:
-What sentence they can repeat:
-What section creates the strongest payoff:
-Reader gain artifact:
+What they will understand after reading:
+What decision they can make differently:
+What sentence they can repeat to another person:
+Which paragraph creates the strongest “I got something” moment:
+Reader-gain artifact:
 ```
 
-Hard fail when the first 300 words do not make the reader feel the problem.
+Score 1-5:
+
+| Gate | 5/5 |
+|---|---|
+| Self-relevance | Reader sees themselves in the opening |
+| Surprise | The thesis reframes a familiar thing |
+| Actionability | Reader can change a decision or workflow |
+| Shareability | Reader can forward it with one sentence |
+| Emotional clarity | The article has stakes, tension, or relief |
+| Artifact value | The article includes a useful decision tool |
+
+Any score below 4 requires a revised thesis, reader, opening, or artifact.
 
 ## One Spine Gate
 
-Choose one spine:
+Pick one main spine:
 
 - Career transition
 - Team operating system
@@ -29,65 +40,58 @@ Choose one spine:
 - Product workflow
 - Tool-selection decision
 - Work process change
-- Organization design
 
-Move competing insights to future article ideas.
+Secondary concepts must serve the spine. Competing concepts go to future article ideas.
 
 ## Publication Hygiene Gate
 
-The final public article starts with title and article body. Keep these internal:
+The public article starts with title and body. Keep these out unless explicitly requested:
 
-```text
-source map
-old assumption list
-cost-change table
-thesis tournament
-quality scorecard
-title scoring
-roadmap
-generation notes
-prompt notes
-```
+- Source map
+- Thesis tournament
+- Old assumption list
+- Internal cost table
+- Quality score
+- Prompt notes
+- Roadmap
+- Generation notes
+- “how this was generated” explanations
 
-Use a short `资料来源` section only when needed.
+Use `资料来源` when sources are public, current, technical, interview/podcast/report-based, or when factual traceability helps the reader. Keep it compact: source title, platform/publication, date if known, link when available.
+
+## Framework-to-prose translation
+
+| Internal tool | Public expression |
+|---|---|
+| Old assumption | Why the old way used to work |
+| Cost-change table | What became cheap, what became scarce |
+| New scarcity | The new bottleneck |
+| Thesis tournament | Not shown |
+| Quality score | Not shown |
+| Roadmap | Not shown |
+| Source-relative originality | Reflected by a fresh angle, not named |
 
 ## Concept Restraint Gate
 
-A strong essay usually has:
+A publishable article usually has:
 
 - One main thesis.
-- One named mechanism or none.
-- Three to six sub-mechanisms.
-- One reader artifact.
+- One main mechanism name, optional.
+- Up to three supporting concepts.
+- One major table or artifact, unless the article is a decision matrix.
 
-If three concepts all feel like titles, choose one and save the rest.
-
-## Opening Gate
-
-The opening should do at least two:
-
-- Show a concrete failure.
-- Name a familiar reader situation.
-- Expose a tension.
-- Raise the decision the article will change.
-
-If a polished reference exists, the opening must differ.
-
-## Publish-Polish Gate
-
-Before final output, check:
-
-- Title is natural.
-- Headings are natural.
-- Reader artifact works.
-- Claims are calibrated.
-- Direct positive claim pass is complete.
-- No workbench content leaks into the article.
+If the article reads like a taxonomy, reduce concepts before rewriting sentences.
 
 
-## Source Voice Integrity Gate
+## Editor Hard Gates v7
 
-Before final output, verify how the author knows each named fact. Podcasts, transcripts, clippings, and reference essays should be attributed as materials. First-person interview language is reserved for actual first-hand interviews.
+Run these before final output:
 
-Failing example: `当我问 Cat Wu...`
-Passing example: `Cat Wu 在 Lenny’s Podcast 访谈里说...`
+| Gate | Failure | Fix |
+|---|---|---|
+| Source traceability | Important claims cannot be traced | Add source notes or remove unsupported precision |
+| Primary source title distance | H1 is a translation/paraphrase of source title | Name article-owned mechanism or reader decision |
+| Series anti-rut | Repeats recent article skeleton and scarcity | Change reader, mechanism, artifact, or ending decision |
+| Artifact extraction | Tool cannot be copied into a meeting doc | Add owner/default/exit/escalation or rewrite rows |
+
+Failure on any hard gate means the article needs one rewrite pass before publication.

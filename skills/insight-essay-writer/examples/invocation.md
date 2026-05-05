@@ -1,25 +1,43 @@
-# Invocation examples
+# Invocation Examples
 
-## Draft from materials
+## Article only
 
 ```text
-Use insight-essay-writer. Read these attached materials and write a publishable Chinese longform essay. Keep the source map, thesis tournament, scorecard, and process notes internal. The article should include one usable reader-facing decision tool.
+Use insight-essay-writer. Read the attached transcript and write a publishable Chinese essay. Keep all research notes internal.
 ```
 
-## Draft with a polished reference
+## Multiple documents
 
 ```text
-Use insight-essay-writer. One attachment is a polished reference essay. Use it as a quality target and comparison point, then write from a fresh angle. Do not copy its opening, title pattern, section order, or main metaphor.
+Use insight-essay-writer. These articles and events look related. Find the strongest thesis and produce a publishable article with a natural title, source traceability, and one usable reader artifact.
 ```
 
-## Compare multiple model outputs
+## Same source plus polished reference
 
 ```text
-Use insight-essay-writer in Best-of-N mode. Compare these model outputs from the same source material. Pick one champion, preserve its spine, salvage the best modules from the others, and recommend a merged publication version.
+Use insight-essay-writer. One attachment is a polished reference essay and another is the raw source. Write our article from a fresh angle. Do not reuse the reference opening, title pattern, source-title translation, or section order. Include a reader-facing decision tool.
 ```
 
-## Review a draft
+## Recent series continuation
 
 ```text
-Use insight-essay-writer in review mode. Score this draft for insight, reader gain, source transformation, source voice integrity, title quality, heading naturalness, artifact quality, claim calibration, and publishability. Return 好的 / 不好的 / 改进.
+Use insight-essay-writer. These three links are recent essays in the same Agent series. Write the next article without repeating the same title skeleton, mechanism, artifact type, or ending decision.
+```
+
+## Expert memo
+
+```text
+Use insight-essay-writer. Write for AI product team leaders. Prioritize mechanism depth, original angle, source traceability, and actionable team changes.
+```
+
+## Review mode
+
+```text
+Use insight-essay-writer in review mode. Score this draft for insight, reader gain, title quality, source-relative originality, source traceability, artifact quality, and publication cleanliness. Return 好的 / 不好的 / 改进.
+```
+
+## Full process requested
+
+```text
+Use insight-essay-writer. Return two files: article.md and analysis_pack.md.
 ```

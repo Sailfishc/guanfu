@@ -1,42 +1,70 @@
-# Quality Rubric v6
+# Quality Rubric v7
 
-Score the finished article as a public article, not as a research memo.
+Use this for final drafts and review mode.
 
-| Dimension | Points | High score means |
-|---|---:|---|
-| Thesis sharpness | 10 | One clear, decision-changing claim |
-| Source transformation | 10 | Source material becomes a portable mechanism |
-| Source-relative originality | 10 | Differs from polished references in angle, examples, structure, or tool |
-| Reader self-relevance | 10 | Target reader sees themselves early |
-| Reader actionability | 10 | Reader knows what decision changes |
-| Reader-gain artifact quality | 10 | The artifact can guide real work |
-| Narrative smoothness | 10 | The article flows without framework drag |
-| Title and heading quality | 10 | Natural, specific, reader-facing, directly positive |
-| Evidence and boundary cases | 8 | Concrete details plus credible edge cases |
-| Chinese naturalness and direct positive style | 6 | Clean Chinese prose with direct claims |
-| Claim calibration | 4 | Bold claims are scoped and fair |
-| Source voice integrity | 2 | No invented first-hand access |
+| Dimension | Excellent | Weak |
+|---|---|---|
+| Thesis sharpness | Specific, surprising, decision-changing | Broad topic statement |
+| Source transformation | Material becomes a new argument | Reads like recap |
+| Source-relative originality | Clear new angle against reference and source titles | Looks like smoother rewrite |
+| Reader self-relevance | Opening makes reader feel the stakes | Reader payoff unclear |
+| Reader actionability | Reader can change a concrete decision | Ending inspirational only |
+| Reader-gain artifact | Useful table/checklist/model tied to thesis | No usable artifact |
+| Narrative smoothness | Scene → mechanism feels natural | Notes stitched together |
+| Title and heading quality | Natural, specific, curiosity-creating | Internal framework label or source-title clone |
+| Evidence and boundary | Strong details and edge cases | Thin evidence or no limits |
+| Chinese naturalness | Direct, concrete, publishable | Generic AI cadence |
+| Claim calibration | Bold claims are scoped | Overbroad trend language |
+| Source traceability | Key claims can be traced | Vague or missing source notes |
+| Source voice integrity | True relationship to material is preserved | Invents first-hand access |
+
+## Score allocation
+
+| Dimension | Points |
+|---|---:|
+| Thesis sharpness | 10 |
+| Source transformation | 10 |
+| Source-relative originality | 9 |
+| Reader self-relevance | 9 |
+| Reader actionability | 9 |
+| Reader-gain artifact quality | 10 |
+| Narrative smoothness | 8 |
+| Title and heading quality | 9 |
+| Evidence and boundary cases | 8 |
+| Chinese naturalness and direct positive style | 4 |
+| Claim calibration | 4 |
+| Source traceability | 5 |
+| Source voice integrity | 5 |
 
 Target: 90+. Minimum publishable score: 88.
 
 ## Hard gates
 
+- Source traceability failure on technical/current essays: add source title, platform/date, link if available, and remove unsupported precision.
 - Source voice integrity failure: rewrite source claims before returning.
+- Primary source title distance failure: regenerate titles around mechanism, reader decision, or changed bottleneck.
+- Series anti-rut failure when prior essays are available: change at least two of reader, mechanism, artifact, source details, or ending decision.
 - Source-relative originality < 8: change opening, structure, thesis mode, or example mix.
-- Reader self-relevance < 8: rewrite opening and reader framing.
-- Reader-gain artifact quality < 8: improve the decision tool.
+- Reader self-relevance < 8: rewrite opening.
+- Reader-gain artifact < 8: add or improve decision tool.
 - Narrative smoothness < 8: reduce framework density.
 - Title and heading quality < 8: regenerate titles and headings.
 - Claim calibration < 8: scope or soften overbroad claims.
-- Publication hygiene failure: remove internal process content.
+- Publication hygiene failure: remove research scaffolding.
 
-## Review output shortcut
+## Rewrite moves
 
-```text
-Verdict:
-Score:
-好的:
-不好的:
-改进:
-Skill/process changes needed:
-```
+| Weak score | Rewrite move |
+|---|---|
+| Thesis | Rewrite title, opening, thesis paragraph |
+| Originality | Switch to adjacent or missing-angle thesis; replace first example |
+| Source-title distance | Generate titles without the primary source actor or novelty phrase |
+| Series distance | Change reader, mechanism, artifact type, or ending decision |
+| Reader gain | Add reader pain, decision change, and artifact |
+| Artifact | Turn advice into a copyable table, checklist, or operating model |
+| Smoothness | Convert framework sections into causal narrative |
+| Title | Generate 20 titles across four families, then run title-distance gate |
+| Evidence | Return to source map and add underused details |
+| Boundary | Add where the mechanism breaks |
+| Traceability | Add source title, platform/date, link if available, and internal locator |
+| Language | Shorten paragraphs, use actors and verbs |

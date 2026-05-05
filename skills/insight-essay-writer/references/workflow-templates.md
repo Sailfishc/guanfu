@@ -1,54 +1,71 @@
-# Workflow Templates v5
+# Workflow Templates v4
 
-Use these internally. Do not paste these tables into the public article unless the user requests process transparency.
+## Source classification
 
-## Source map
+| Source | Type: raw / polished reference / target style | Use | Risk |
+|---|---|---|---|
+|  |  |  |  |
 
-| Key fact | Source | Surface topic | Old assumption | Changed cost | New scarcity | Reader relevance | Evidence | Underused detail | Boundary |
-|---|---|---|---|---|---|---|---|---|---|
+## Internal source map
 
-## Old assumption list
+| # | Key fact | Source | Surface topic | Old assumption | Changed cost | New scarcity | Reader relevance | Evidence | Underused detail | Boundary |
+|---:|---|---|---|---|---|---|---|---|---|---|
+| 1 |  |  |  |  |  |  |  |  |  |  |
+
+## Old assumptions
 
 ```text
-Old assumption:
-Why it used to be rational:
-What changed in the material:
-New scarcity:
-Reader decision that should change:
+1. Old assumption:
+   Why it used to be rational:
+   What changed:
+   New scarcity:
+   Reader decision change:
 ```
 
 ## Internal cost-change table
 
 | Old cost condition | New cost condition | New bottleneck | Who feels it | Decision change |
 |---|---|---|---|---|
+|  |  |  |  |  |
 
 ## Thesis tournament
 
-| # | Title promise | One-sentence thesis | Explanation | Surprise | Transfer | Action | Evidence | Reader gain | Shareability | Originality | Naming |
-|---:|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| # | Thesis | Mode | Target reader | Reader gain | Explains | Old assumption | New scarcity | Action frame | Boundary | Originality | Score /45 |
+|---:|---|---|---|---|---|---|---|---|---|---|---:|
+| 1 |  | same / adjacent / missing-angle |  |  |  |  |  |  |  |  |  |
+
+Scoring:
+
+```text
+Explanatory power: 1-5
+Surprise: 1-5
+Transferability: 1-5
+Actionability: 1-5
+Evidence strength: 1-5
+Reader gain: 1-5
+Shareability: 1-5
+Source-relative originality: 1-5
+Naming potential: 1-5
+```
 
 ## Source-relative originality audit
 
 ```text
-Reference title:
-Our title:
 Reference thesis:
 Our thesis:
 Reference opening:
 Our opening:
 Reference section path:
 Our section path:
-Reference artifact:
-Our artifact:
-Underused source details we will use:
-Ending decision difference:
-Pass / fail:
+Underused material we will use:
+New reader-gain artifact:
 ```
 
 ## Title tournament
 
 | # | Title | Family | Direct | Curious | Natural | Specific | Gain | Original | Notes |
 |---:|---|---|---:|---:|---:|---:|---:|---:|---|
+| 1 |  | Problem / Mechanism / Decision / Reader-gain |  |  |  |  |  |  |  |
 
 ## Reader-facing outline
 
@@ -79,23 +96,4 @@ Ending sentence:
 [Publishable article body]
 
 [Optional short 资料来源 section only when needed]
-```
-
-## Review output shape
-
-```text
-Verdict:
-Score:
-Target reader:
-Reader gain:
-Good:
-Bad:
-Concrete improvements:
-Title diagnosis:
-Heading diagnosis:
-Originality / reference-distance diagnosis:
-Reader-gain artifact diagnosis:
-Claim calibration diagnosis:
-Most important rewrite direction:
-Skill/process changes needed:
 ```

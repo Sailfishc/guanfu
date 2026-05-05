@@ -1,64 +1,57 @@
-# Reader Gain Artifacts
+# Reader-Gain Artifacts
 
-Every publishable essay should give the reader one usable object. The object turns insight into action.
+Every publishable essay must give the reader one concrete thing to carry away. Pick one artifact that fits the primary reader.
 
-## Choose one artifact
+## Artifact types
 
-| Artifact | Best for | Example use |
+| Artifact | Best for | Shape |
 |---|---|---|
-| Decision table | Tool/model/process choices | Which model, process, or demand path to choose |
-| Role-change checklist | Career or team role shifts | What PMs, engineers, or founders should do differently |
-| Operating model | Team process changes | How to run fast product releases |
-| Failure-mode list | Safety, trust, reliability | Where this workflow breaks |
-| Action framework | Strategy or workflow | What to change this week |
-| Before/after workflow | Process transformation | Old PM loop vs AI-native loop |
-| Question list | Meetings, planning, reviews | What to ask before implementation |
-| Task-routing matrix | Agent/model/team delegation | What AI can do and what humans keep |
-| Field guide | New ambiguous terrain | How to classify situations in practice |
+| Decision table | Tool choice, model choice, role judgment | Scenario → choose → why |
+| Checklist | Workflow change, team habit, risk review | 5-9 checks |
+| Operating model | Team or org mechanism | Components and handoffs |
+| Failure-mode list | Safety, trust, AI agent work, product quality | Failure → cause → guardrail |
+| Before/after workflow | Career or process shift | Old action → new action |
+| Field guide | Role transition | Situation → what to watch → what to do |
+| Diagnostic questions | Product, strategy, customer materials | Questions that reveal the real issue |
 
-## Artifact QA Gate
+## Placement
 
-The artifact must pass all checks:
+Place the artifact after the core mechanism has been explained. The reader should understand why the tool exists before seeing it.
 
-1. Title matches the content. If the title says three scenes, the artifact has three scenes.
-2. Rows are mutually distinct.
-3. Each row changes a real decision.
-4. Language faces the primary reader, not the author's research process.
-5. The article introduces the artifact before it appears.
-6. The article interprets the artifact after it appears.
-7. The artifact is compact enough to remember.
+## Quality rules
 
-If any check fails, revise the artifact before final output.
+A good artifact:
 
-## Good examples
+- Uses reader language, not author process language.
+- Has 5 to 9 rows or checks for most essays.
+- Changes a decision the reader makes this week.
+- Avoids generic advice like “communicate more” or “align stakeholders”.
+- Connects each row to the essay’s mechanism.
 
-### PM demand-routing table
+## Examples
 
-| Situation | PM judgment |
+### PM article
+
+| Situation | PM's new judgment |
 |---|---|
-| Small UX tweak with low risk | Ship a small experiment and observe |
-| Change touches permissions, billing, or enterprise security | Plan seriously before implementation |
-| Feature compensates for model weakness | Recheck after each model upgrade |
-| Users cannot see what AI is doing | Productize visibility and trust |
-| Feature becomes less useful after a model upgrade | Reduce, reframe, or remove it |
+| Small UX change | Run a low-cost experiment and watch real behavior |
+| Feature touches permissions or billing | Treat as infrastructure decision |
+| Model limitation creates friction | Decide between prompt, harness, UI, or waiting for model improvement |
+| Users cannot see what AI is doing | Add trust and observability to the product surface |
+| Model upgrade changes capability | Reprice the old feature and decide whether to remove, shrink, or keep it |
 
-### AI coding task-routing matrix
+### AI coding article
 
-| Stage | Give to AI | Human keeps |
+| Scenario | Give to AI | Human keeps |
 |---|---|---|
-| Early ambiguity | Ask hard questions and map options | Make tradeoffs |
-| Implementation | Work inside sandbox | Set module boundaries |
-| Verification | Run tests and type checks | Judge real risk coverage |
-| UI polish | Generate options | Decide taste and fit |
+| Early vague idea | Ask aggressive clarifying questions | Make tradeoffs and set boundaries |
+| Implementation task | Build inside sandbox/worktree | Define module interface and test boundary |
+| Verification | Run tests, type checks, reviewer agent | Judge whether feedback covers real risk |
+| UI experience | Generate throwaway prototype | Decide taste, flow, and product quality |
 
-## Anti-patterns
+## Artifact anti-patterns
 
-| Bad artifact | Why |
-|---|---|
-| Source map | Helps author, not reader |
-| Thesis tournament | Exposes process, kills flow |
-| Quality scorecard | Review tool, not article content |
-| Roadmap table | Often sounds like planning memo |
-| Huge taxonomy | Makes the article dry |
-| Mismatched table title | Signals weak editing |
-| Rows that overlap | Reader cannot use it for decisions |
+- A table that merely restates the essay.
+- A framework with ten abstract categories.
+- A checklist without decisions.
+- A matrix that introduces a second thesis.

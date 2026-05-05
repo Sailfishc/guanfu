@@ -1,85 +1,101 @@
-# Title Guide v6
+# Title Guide v7
 
-A title should make the reader want the article, not display the internal analysis framework.
+## Goal
 
-## Generate candidates
+A title should make the reader understand the article's promise and want to continue. It should sound like a public article title, not a research note.
 
-Generate at least 20 titles in four groups:
+## Generate four title families
 
-1. Problem titles: name a pain, mistake, or surprising scene.
-2. Mechanism titles: name the hidden force in natural language.
-3. Decision titles: name what judgment changes.
-4. Reader-gain titles: name what the reader can now do or see.
+### 1. Problem titles
 
-## Score titles
-
-Score 1-5:
-
-| Dimension | Question |
-|---|---|
-| Directness | Does the reader know the topic? |
-| Curiosity | Does the title create a reason to continue? |
-| Naturalness | Does it sound like a real public article? |
-| Specificity | Does it avoid broad trend language? |
-| Reader gain | Does it imply a useful judgment? |
-| Originality | Does it avoid polished reference title syntax? |
-| Positive claim | Does it avoid negative contrast? |
-
-Pick the highest total. If tied, pick the more natural title.
-
-## Hard rules
-
-Keep these out of H1, and usually out of H2:
+Use when the article starts from reader pain or a common failure.
 
 ```text
-旧价格表
-新价格表
-旧成本结构
-新稀缺
-成本结构
-source map
-thesis tournament
-quality gate
-roadmap
-scorecard
-分析框架
-读者决策表
+AI 编程最容易卡住的地方，正在从代码转向反馈
+为什么你的 Agent 看起来很忙，最后还是没跑通
+工程团队被 AI 加速以后，真正堵住的是哪一步
 ```
 
-Reject these title skeletons:
+### 2. Mechanism titles
+
+Use when the article has a clear hidden mechanism.
 
 ```text
-不是 A，而是 B
-A 没有消失，只是 B
-不再是 A，是 B
-真正的 X 不是 Y
+Anthropic 的速度来自发布系统
+AI 产品团队的速度，来自一套低摩擦发布通道
+Claude Code 这类产品，会把 PM 推向回路设计
 ```
 
-## Convert internal phrases
+### 3. Decision titles
 
-| Internal phrase | Public title direction |
+Use when readers need to choose a model, workflow, team design, or product strategy.
+
+```text
+什么任务该交给 Agent，什么必须留给工程师
+当代码可以隔夜写完，团队该先补哪条反馈链
+AI 产品要不要保留旧功能，先看它还在服务谁
+```
+
+### 4. Reader-gain titles
+
+Use when the article offers a practical lens.
+
+```text
+功能越来越容易写，PM 越要会判断什么值得写
+当工程开始当天反馈，产品判断该怎么跟上
+模型越强，越要重新估价那些旧功能
+```
+
+## Primary source title distance
+
+Do not translate or lightly paraphrase a strong primary source title. If the source title is `DHH's new way of writing code`, reject titles like `DHH 的新写法`.
+
+Prefer:
+
+```text
+代码变快以后，工程师的判断半径变大了
+Agent 先出手以后，工程师要重新设计工作现场
+AI 写得越快，工程师越要知道什么该留下
+```
+
+## Hard anti-patterns
+
+Avoid titles built from internal scaffolding:
+
+```text
+旧价格表 / 新价格表
+成本结构分析
+论点锦标赛
+Source Map
+Quality Gate
+Roadmap
+XX 的新价格表
+DHH 的新写法
+X 的新方式
+从 A 到 B：某某访谈的启示
+```
+
+These can be internal analysis tools. Keep them out of H1 titles and usually out of H2 section headings.
+
+## Anti-rut rules
+
+- Avoid using the same title skeleton in consecutive drafts.
+- Avoid preserving a source title skeleton, especially named actor + novelty phrase.
+- If a prior draft used `当 X，Y 该 Z`, generate at least 15 candidates outside that pattern.
+- If a reference essay starts with a role and a future, choose a problem, decision, or mechanism title.
+- If the article has one strong sentence in the body, test it as a title.
+
+## Title scoring
+
+Score each candidate 1-5:
+
+| Gate | Question |
 |---|---|
-| 新价格表 | 代码变便宜以后，什么开始变贵 |
-| 反馈基础设施 | AI 写代码的上限，取决于反馈怎么设计 |
-| 发布作业场 | AI 产品团队为什么能把想法更快送到用户面前 |
-| 拐杖产品学 | 好功能也会过期 |
-| 学习回路 | 团队怎样更快从现实里学到东西 |
+| Directness | Does the reader know the point? |
+| Curiosity | Does it create a reason to read? |
+| Naturalness | Does it sound publishable? |
+| Specificity | Does it name a role, product, domain, or decision? |
+| Reader gain | Does it imply what the reader will get? |
+| Originality | Does it differ from polished references and prior drafts? |
 
-## Repetition check
-
-When multiple drafts were generated recently, avoid repeating the same skeleton:
-
-- `当 X，Y 该 Z`
-- `X 的新 Y`
-- `X 没有消失，只是 Y`
-- `X 的新价格表`
-
-Repeat a skeleton only when it is clearly the best title.
-
-## Strong title patterns
-
-- Concrete changed condition + new judgment.
-- Familiar role + new bottleneck.
-- Source-specific scene + portable implication.
-- Surprising product behavior + decision payoff.
-- Team workflow + what it must learn to support.
+Choose the highest-scoring title. If two titles tie, pick the one with lower framework language and lower overlap with the reference.

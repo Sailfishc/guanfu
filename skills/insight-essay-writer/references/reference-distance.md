@@ -47,6 +47,23 @@ If it differs on fewer than two, restart in adjacent-thesis or missing-angle mod
 
 ```text
 Would someone who read the reference still learn a new decision from this article?
-Can the new title stand apart from the reference title?
+Can the new title stand apart from both the reference title and primary source title?
 Does the article use source details the reference skipped?
 ```
+
+
+## Primary source title add-on
+
+Even when the body differs from a polished reference, reject the title if it keeps the primary source title skeleton.
+
+```text
+Primary source title:
+Candidate title:
+Same actor? yes/no
+Same novelty phrase or metaphor? yes/no
+Article-owned mechanism named? yes/no
+Reader decision named? yes/no
+Pass / reject:
+```
+
+If it fails, generate titles from changed bottleneck, reader decision, mechanism, or failure mode rather than from the source title.

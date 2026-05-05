@@ -1,0 +1,7 @@
+interface:
+  display_name: "Refactor"
+  short_description: "Best-practice restructuring for existing code without behavior changes"
+  default_prompt: "/refactor"
+
+policy:
+  allow_implicit_invocation: false

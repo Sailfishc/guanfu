@@ -1,26 +1,28 @@
-# Direct Positive Claims
+# Direct Positive Claim Pass
 
-Use direct positive claims in public prose. The insight should land as a clean assertion.
+The user's preferred prose states the positive claim directly. Rewrite contrastive negative constructions before final output.
 
-## Rewrite these patterns
+## Rewrite targets
+
+Scan for patterns like:
 
 ```text
 不是 A，而是 B
 A 不是重点，B 才是重点
 不是因为 X，而是因为 Y
-A 没有消失，只是 B
-不再是 A，是 B
+不只是 A，更是 B
+并不是 A，而是 B
 ```
 
-## Preferred rewrites
+## Convert into direct claims
 
-| Contrastive draft | Direct claim |
+| Draft | Rewrite |
 |---|---|
-| 真正的变化不是模型，而是发布系统 | 发布系统解释了团队速度 |
-| 产品经理没有消失，只是换了瓶颈 | 产品经理的新瓶颈是判断 |
-| AI coding 不是写代码，而是设计反馈 | AI coding 的上限来自反馈设计 |
-| 代码贵的不是时间，而是判断 | 代码变便宜以后，判断更贵 |
+| 这不是流程更轻，而是反馈更快 | 这套流程真正降低的是从想法到反馈的距离 |
+| PM 不是消失，而是换了瓶颈 | PM 的瓶颈换到了判断、验证和反馈设计 |
+| 这不只是技术动作，而是产品判断 | 这是一个产品判断：什么时候加，什么时候删，什么时候重估 |
+| AI 不是让工程纪律过时，而是重新定价 | AI 把工程纪律重新定价了 |
 
-## Use with care
+## Exception
 
-Formal logic and explicit necessary/sufficient condition statements can use negation when precision requires it. Public essay headlines and thesis sentences should use direct claims.
+Formal logic, math, legal precision, and safety constraints can use precise negation when needed. Public essays should default to direct positive claims.

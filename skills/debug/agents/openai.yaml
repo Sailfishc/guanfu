@@ -1,0 +1,7 @@
+interface:
+  display_name: "Debug"
+  short_description: "Deep root-cause diagnosis for special bug scenarios"
+  default_prompt: "/debug"
+
+policy:
+  allow_implicit_invocation: false

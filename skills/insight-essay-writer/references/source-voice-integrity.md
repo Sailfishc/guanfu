@@ -1,4 +1,4 @@
-# Source Voice Integrity Gate
+# Source Voice Integrity Gate v7
 
 Keep source relationships honest. A polished essay loses trust when it invents direct access.
 
@@ -35,3 +35,11 @@ Only use first-person access when the author actually conducted the interview, e
 Every named fact should answer: how does the article know this?
 
 Acceptable answers: source transcript, podcast, report, user-provided notes, public release, author's own interview, author's own experiment.
+
+
+## Pair with traceability
+
+Voice integrity asks: did we preserve the true relationship to the source?
+Source traceability asks: can a reader find the source behind important claims?
+
+Both must pass. A draft can name the source honestly but still fail because `资料来源` is too vague.
